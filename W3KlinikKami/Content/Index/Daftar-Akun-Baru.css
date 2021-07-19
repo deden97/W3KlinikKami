@@ -5,7 +5,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    visibility: visible;
+    visibility: hidden;
     background: rgba(157, 182, 169, 0.50);
     z-index: 9999;
 }
@@ -32,13 +32,13 @@
         color: #24252A;
     }
 
-    .form-daftar-akun hr {
+/*    .form-daftar-akun hr {
         border: 1px solid #24252A;
         background-color: #24252A;
         height: 0;
         width: 90%;
         margin: auto;
-    }
+    }*/
 
 .close-form-daftar-akun {
     position: absolute;
@@ -92,7 +92,7 @@
 
 select {
     width: 462px;
-    text-align: center;
+    text-align: left;
 }
 
     select:focus,
@@ -102,7 +102,33 @@ select {
         border: 1px solid red;
     }
 
-.btn {
+textarea {
+    font-family: Arial;
+    font-size: 20px;
+    text-align: center;
+    width: 420px;
+    min-width: 420px;
+    max-width: 420px;
+    height: 50px;
+    min-height: 50px;
+    max-height: 150px;
+    border: 1px solid white;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    padding: 20px;
+    outline: none;
+}
+
+textarea:hover{
+    border: 1px solid red;
+}
+
+    textarea:focus {
+        text-align: left;
+    }
+
+.btnn {
     position: relative;
     width: max-content;
     height: min-content;
@@ -113,18 +139,21 @@ select {
 }
 
     /* button submit */
-    .btn input {
-        width: 300px;
+    .btnn input {
+        width: 450px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 15px;
         background-color: indianred;
         color: azure;
     }
 
-        .btn input:hover {
-            width: 300px;
+        .btnn input:hover {
+            width: 450px;
             color: indianred;
             background-color: azure;
         }
 
-    .btn input:hover {
-        cursor: pointer;
-    }
+        .btnn input:hover {
+            cursor: pointer;
+        }

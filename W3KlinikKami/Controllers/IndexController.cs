@@ -36,9 +36,27 @@ namespace W3KlinikKami.Controllers
             return View();
         }
 
-        public ActionResult DaftarAkunBaru()
+        [HttpGet]
+        public JsonResult GetJabatan()
         {
-            return View();
+            try
+            {
+                this.db.Configuration.ProxyCreationEnabled = false;
+                return Json(this.db.TB_JABATAN.ToList(), JsonRequestBehavior.AllowGet);
+            }
+            finally
+            {
+                this.db.Configuration.ProxyCreationEnabled = true;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DaftarAkunBaru(TB_USER dt)
+        {
+            dt.FOTO = "~/image/profile_user.png";
+            this.db.TB_USER.Add(dt);
+            this.db.SaveChanges();
+            return RedirectToAction("Login");
         }
     }
 }

@@ -69,8 +69,8 @@ D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MV
 D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MVC\W3KlinikKami\W3KlinikKami\obj\Debug\W3KlinikKami.csproj.CopyComplete
 D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MVC\W3KlinikKami\W3KlinikKami\obj\Debug\W3KlinikKami.dll
 D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MVC\W3KlinikKami\W3KlinikKami\obj\Debug\W3KlinikKami.pdb
-D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MVC\W3KlinikKami\W3KlinikKami\obj\Debug\W3KlinikKami.csprojAssemblyReference.cache
 D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MVC\W3KlinikKami\W3KlinikKami\bin\EntityFramework.dll
 D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MVC\W3KlinikKami\W3KlinikKami\bin\EntityFramework.SqlServer.dll
 D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MVC\W3KlinikKami\W3KlinikKami\bin\EntityFramework.xml
 D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MVC\W3KlinikKami\W3KlinikKami\bin\EntityFramework.SqlServer.xml
+D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MVC\W3KlinikKami\W3KlinikKami\obj\Debug\W3KlinikKami.csprojAssemblyReference.cache

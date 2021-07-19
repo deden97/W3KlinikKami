@@ -4,14 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace W3KlinikKami.App_Start
+namespace W3KlinikKami.Controllers
 {
     public class HomeController : Controller
     {
         // GET: Home
         public string Index()
         {
-            return "welcome";
+            return "Welcome";
         }
     }
 }
