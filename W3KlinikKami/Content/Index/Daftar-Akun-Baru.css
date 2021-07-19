@@ -1,0 +1,130 @@
+﻿/* login.cshtml */
+#pop-up-daftar-akun {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    visibility: visible;
+    background: rgba(157, 182, 169, 0.50);
+    z-index: 9999;
+}
+
+.form-daftar-akun {
+    position: relative;
+    font-family: Arial;
+    border-radius: 10px;
+    background-color: rgba(0, 136, 169, 1);
+    width: max-content;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    margin: 50px auto;
+}
+
+    .form-daftar-akun h2 {
+        margin-top: 5px;
+        margin-bottom: 6px;
+        font-size: 35px;
+        text-align: center;
+        color: #24252A;
+    }
+
+    .form-daftar-akun hr {
+        border: 1px solid #24252A;
+        background-color: #24252A;
+        height: 0;
+        width: 90%;
+        margin: auto;
+    }
+
+.close-form-daftar-akun {
+    position: absolute;
+    padding-top: 2px;
+    padding-left: 1px;
+    padding-right: 1px;
+    border: 2px solid black;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    top: -10px;
+    right: -10px;
+    text-align: center;
+    background-color: orangered;
+    color: azure;
+    cursor: pointer;
+}
+
+    .close-form-daftar-akun:hover {
+        background-color: mediumvioletred;
+    }
+
+/* DaftarAkunBaru.cshtml */
+.input-daftar-akun-container {
+    position: relative;
+    margin-top: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 0;
+    width: min-content;
+    height: max-content;
+    text-align: center;
+/*    border: 10px solid red;*/
+}
+    select,
+    .input-daftar-akun-container input {
+        font-size: 20px;
+        text-align: center;
+        color: #24252A;
+        border: 1px solid white;
+        border-radius: 20px;
+        outline: none;
+        width: 300px;
+        background-color: none;
+        padding: 5px;
+    }
+
+        .input-daftar-akun-container input:hover,
+        .input-daftar-akun-containerr input:focus {
+            border: 1px solid red;
+        }
+
+select {
+    width: 312px;
+    text-align: center;
+}
+
+    select:focus,
+    select:hover {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border: 1px solid red;
+    }
+
+.btn {
+    position: relative;
+    width: max-content;
+    height: min-content;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+}
+
+    /* button submit */
+    .btn input {
+        width: 300px;
+        background-color: indianred;
+        color: azure;
+    }
+
+        .btn input:hover {
+            width: 300px;
+            color: indianred;
+            background-color: azure;
+        }
+
+    .btn input:hover {
+        cursor: pointer;
+    }

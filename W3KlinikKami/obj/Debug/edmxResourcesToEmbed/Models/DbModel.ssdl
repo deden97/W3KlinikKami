@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TB_AKUN">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="USERNAME" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="PASSWORD_AKUN" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TB_JABATAN">
+    <Key>
+      <PropertyRef Name="KODE_JABATAN" />
+    </Key>
+    <Property Name="KODE_JABATAN" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="JABATAN" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TB_USER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAMA" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="JENIS_KELAMIN" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="NO_HP" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="ALAMAT" Type="text" Nullable="false" />
+    <Property Name="FOTO" Type="nvarchar(max)" />
+    <Property Name="JABATAN" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK__TB_AKUN__ID__2A4B4B5E">
+    <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="1" />
+    <End Role="TB_AKUN" Type="Self.TB_AKUN" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TB_USER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TB_AKUN">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TB_USER__JABATAN__276EDEB3">
+    <End Role="TB_JABATAN" Type="Self.TB_JABATAN" Multiplicity="0..1" />
+    <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_JABATAN">
+        <PropertyRef Name="KODE_JABATAN" />
+      </Principal>
+      <Dependent Role="TB_USER">
+        <PropertyRef Name="JABATAN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelsStoreContainer">
+    <EntitySet Name="TB_AKUN" EntityType="Self.TB_AKUN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_JABATAN" EntityType="Self.TB_JABATAN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_USER" EntityType="Self.TB_USER" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__TB_AKUN__ID__2A4B4B5E" Association="Self.FK__TB_AKUN__ID__2A4B4B5E">
+      <End Role="TB_USER" EntitySet="TB_USER" />
+      <End Role="TB_AKUN" EntitySet="TB_AKUN" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TB_USER__JABATAN__276EDEB3" Association="Self.FK__TB_USER__JABATAN__276EDEB3">
+      <End Role="TB_JABATAN" EntitySet="TB_JABATAN" />
+      <End Role="TB_USER" EntitySet="TB_USER" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

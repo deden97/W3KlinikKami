@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TB_AKUN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="USERNAME" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="PASSWORD_AKUN" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_JABATAN">
+          <Key>
+            <PropertyRef Name="KODE_JABATAN" />
+          </Key>
+          <Property Name="KODE_JABATAN" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="JABATAN" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAMA" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="JENIS_KELAMIN" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="NO_HP" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ALAMAT" Type="text" Nullable="false" />
+          <Property Name="FOTO" Type="nvarchar(max)" />
+          <Property Name="JABATAN" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK__TB_AKUN__ID__2A4B4B5E">
+          <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="1" />
+          <End Role="TB_AKUN" Type="Self.TB_AKUN" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TB_USER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TB_AKUN">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_USER__JABATAN__276EDEB3">
+          <End Role="TB_JABATAN" Type="Self.TB_JABATAN" Multiplicity="0..1" />
+          <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_JABATAN">
+              <PropertyRef Name="KODE_JABATAN" />
+            </Principal>
+            <Dependent Role="TB_USER">
+              <PropertyRef Name="JABATAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelsStoreContainer">
+          <EntitySet Name="TB_AKUN" EntityType="Self.TB_AKUN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_JABATAN" EntityType="Self.TB_JABATAN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_USER" EntityType="Self.TB_USER" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__TB_AKUN__ID__2A4B4B5E" Association="Self.FK__TB_AKUN__ID__2A4B4B5E">
+            <End Role="TB_USER" EntitySet="TB_USER" />
+            <End Role="TB_AKUN" EntitySet="TB_AKUN" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_USER__JABATAN__276EDEB3" Association="Self.FK__TB_USER__JABATAN__276EDEB3">
+            <End Role="TB_JABATAN" EntitySet="TB_JABATAN" />
+            <End Role="TB_USER" EntitySet="TB_USER" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TB_AKUN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="USERNAME" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PASSWORD_AKUN" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TB_USER" Relationship="Self.FK__TB_AKUN__ID__2A4B4B5E" FromRole="TB_AKUN" ToRole="TB_USER" />
+        </EntityType>
+        <EntityType Name="TB_JABATAN">
+          <Key>
+            <PropertyRef Name="KODE_JABATAN" />
+          </Key>
+          <Property Name="KODE_JABATAN" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="JABATAN" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TB_USER" Relationship="Self.FK__TB_USER__JABATAN__276EDEB3" FromRole="TB_JABATAN" ToRole="TB_USER" />
+        </EntityType>
+        <EntityType Name="TB_USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAMA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="JENIS_KELAMIN" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NO_HP" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ALAMAT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FOTO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="JABATAN" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TB_AKUN" Relationship="Self.FK__TB_AKUN__ID__2A4B4B5E" FromRole="TB_USER" ToRole="TB_AKUN" />
+          <NavigationProperty Name="TB_JABATAN" Relationship="Self.FK__TB_USER__JABATAN__276EDEB3" FromRole="TB_USER" ToRole="TB_JABATAN" />
+        </EntityType>
+        <Association Name="FK__TB_AKUN__ID__2A4B4B5E">
+          <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="1" />
+          <End Role="TB_AKUN" Type="Self.TB_AKUN" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TB_USER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TB_AKUN">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_USER__JABATAN__276EDEB3">
+          <End Role="TB_JABATAN" Type="Self.TB_JABATAN" Multiplicity="0..1" />
+          <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_JABATAN">
+              <PropertyRef Name="KODE_JABATAN" />
+            </Principal>
+            <Dependent Role="TB_USER">
+              <PropertyRef Name="JABATAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TB_AKUN" EntityType="Self.TB_AKUN" />
+          <EntitySet Name="TB_JABATAN" EntityType="Self.TB_JABATAN" />
+          <EntitySet Name="TB_USER" EntityType="Self.TB_USER" />
+          <AssociationSet Name="FK__TB_AKUN__ID__2A4B4B5E" Association="Self.FK__TB_AKUN__ID__2A4B4B5E">
+            <End Role="TB_USER" EntitySet="TB_USER" />
+            <End Role="TB_AKUN" EntitySet="TB_AKUN" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_USER__JABATAN__276EDEB3" Association="Self.FK__TB_USER__JABATAN__276EDEB3">
+            <End Role="TB_JABATAN" EntitySet="TB_JABATAN" />
+            <End Role="TB_USER" EntitySet="TB_USER" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="DbEntities">
+          <EntitySetMapping Name="TB_AKUN">
+            <EntityTypeMapping TypeName="Models.TB_AKUN">
+              <MappingFragment StoreEntitySet="TB_AKUN">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+                <ScalarProperty Name="PASSWORD_AKUN" ColumnName="PASSWORD_AKUN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_JABATAN">
+            <EntityTypeMapping TypeName="Models.TB_JABATAN">
+              <MappingFragment StoreEntitySet="TB_JABATAN">
+                <ScalarProperty Name="KODE_JABATAN" ColumnName="KODE_JABATAN" />
+                <ScalarProperty Name="JABATAN" ColumnName="JABATAN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_USER">
+            <EntityTypeMapping TypeName="Models.TB_USER">
+              <MappingFragment StoreEntitySet="TB_USER">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAMA" ColumnName="NAMA" />
+                <ScalarProperty Name="JENIS_KELAMIN" ColumnName="JENIS_KELAMIN" />
+                <ScalarProperty Name="NO_HP" ColumnName="NO_HP" />
+                <ScalarProperty Name="ALAMAT" ColumnName="ALAMAT" />
+                <ScalarProperty Name="FOTO" ColumnName="FOTO" />
+                <ScalarProperty Name="JABATAN" ColumnName="JABATAN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
