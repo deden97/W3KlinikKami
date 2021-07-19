@@ -10,6 +10,7 @@
     z-index: 9999;
 }
 
+/* DaftarAkunBaru.cshtml */
 .form-daftar-akun {
     position: relative;
     font-family: Arial;
@@ -60,7 +61,6 @@
         background-color: mediumvioletred;
     }
 
-/* DaftarAkunBaru.cshtml */
 .input-daftar-akun-container {
     position: relative;
     margin-top: 15px;
@@ -80,7 +80,7 @@
         border: 1px solid white;
         border-radius: 20px;
         outline: none;
-        width: 300px;
+        width: 450px;
         background-color: none;
         padding: 5px;
     }
@@ -91,7 +91,7 @@
         }
 
 select {
-    width: 312px;
+    width: 462px;
     text-align: center;
 }
 
