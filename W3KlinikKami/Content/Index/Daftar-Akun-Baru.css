@@ -1,5 +1,5 @@
 ﻿/* login.cshtml */
-#pop-up-daftar-akun {
+/*#pop-up-daftar-akun {
     position: fixed;
     top: 0;
     left: 0;
@@ -8,9 +8,15 @@
     visibility: hidden;
     background: rgba(157, 182, 169, 0.50);
     z-index: 9999;
-}
+}*/
 
 /* DaftarAkunBaru.cshtml */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #24252A;
+}
+
 .form-daftar-akun {
     position: relative;
     font-family: Arial;
@@ -32,13 +38,13 @@
         color: #24252A;
     }
 
-/*    .form-daftar-akun hr {
+    .form-daftar-akun hr {
         border: 1px solid #24252A;
         background-color: #24252A;
         height: 0;
         width: 90%;
         margin: auto;
-    }*/
+    }
 
 .close-form-daftar-akun {
     position: absolute;
@@ -128,6 +134,18 @@ textarea:hover{
         text-align: left;
     }
 
+.ckb-show-password {
+    position: relative;
+    width: max-content;
+    margin: auto;
+    font-weight: 100;
+    font-size: 13px;
+}
+
+    .ckb-show-password input, label {
+        cursor: pointer;
+    }
+
 .btnn {
     position: relative;
     width: max-content;
@@ -139,7 +157,7 @@ textarea:hover{
 }
 
     /* button submit */
-    .btnn input {
+    .btnn input, a {
         width: 450px;
         padding: 5px 10px;
         border: none;
@@ -154,6 +172,18 @@ textarea:hover{
             background-color: azure;
         }
 
-        .btnn input:hover {
+        .btnn input, a:hover {
             cursor: pointer;
+        }
+
+    .btnn a {
+        background-color: greenyellow;
+        color: brown;
+        font-size: 13px;
+        text-decoration: none;
+    }
+
+        .btnn a:hover {
+            color: greenyellow;
+            background-color: brown;
         }

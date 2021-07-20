@@ -211,6 +211,7 @@
     <Content Include="Scripts\jquery-3.6.0.min.map" />
     <Content Include="Views\Index\Login.cshtml" />
     <Content Include="Views\Index\DaftarAkunBaru.cshtml" />
+    <Content Include="Views\Templated\Form\TB_USER.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

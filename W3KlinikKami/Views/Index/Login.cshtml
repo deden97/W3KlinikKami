@@ -49,14 +49,15 @@
 
         @* button datar akun baru *@
         <div class="btn">
-            <button type="button" onclick="document.getElementById('pop-up-daftar-akun').style.visibility = 'visible'">
+            @Html.ActionLink("Daftar Akun Baru", "DaftarAkunBaru", "Index")
+            @*<button type="button" onclick="document.getElementById('pop-up-daftar-akun').style.visibility = 'visible'">
                 Daftar Akun Baru
-            </button>
+            </button>*@
         </div>
     </div>
 
-    <div id="pop-up-daftar-akun">
+    @*<div id="pop-up-daftar-akun">
         @Html.Partial("DaftarAkunBaru")
-    </div>
+    </div>*@
 </body>
 </html>

@@ -1,88 +1,42 @@
 ﻿@model W3KlinikKami.Models.TB_USER
 
-<div class="form-daftar-akun">
-    <div class="close-form-daftar-akun" onclick="document.getElementById('pop-up-daftar-akun').style.visibility = 'hidden'">X</div>
-    @using (Html.BeginForm("DaftarAkunBaru", "Index", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-        <h2><u>Daftar Akun Baru</u></h2>
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+@{
+    Layout = null;
+}
 
-        @* Nama Lengkap *@
-        <div class="input-daftar-akun-container">
-            @Html.EditorFor(model => model.NAMA, new { htmlAttributes = new { @placeholder = "Nama Lengkap", @autocomplete = "off" } })
-            @Html.ValidationMessageFor(model => model.NAMA, "", new { @class = "text-danger" })
-        </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Daftar Akun Baru</title>
+    <link href="~/Content/Index/Daftar-Akun-Baru.css" rel="stylesheet" />
+    <script src="~/Scripts/Index/DaftarAkunBaru.js"></script>
+    <script src="~/Scripts/Index/Login.js"></script>
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+</head>
+<body>
+    <div class="form-daftar-akun">
+        @using (Html.BeginForm("DaftarAkunBaru", "Index", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <h2>
+                <u>Daftar Akun Baru</u>
+            </h2>
 
-        @* Jenis Kelamin *@
-        <div class="input-daftar-akun-container">
-            @Html.DropDownListFor(model => model.JENIS_KELAMIN, new List<SelectListItem>()
-            {
-                new SelectListItem{Text = "Pria", Value = "Pria"},
-                new SelectListItem{Text = "Wanita", Value = "Wanita"}
-            }, "--Jenis Kelamin--", new { @placeholder = "Jenis Kelamin" })
-            @Html.ValidationMessageFor(model => model.JENIS_KELAMIN, "", new { @class = "text-danger" })
-        </div>
+            @* render form "~/Views/Templated/Form/TB_USER.cshtml" *@
+            @Html.Partial("~/Views/Templated/Form/TB_USER.cshtml")
 
-        @* Nomor HP *@
-        <div class="input-daftar-akun-container">
-            @Html.EditorFor(model => model.NO_HP, new { htmlAttributes = new { @placeholder = "Nomor HP", @autocomplete = "off" } })
-            @Html.ValidationMessageFor(model => model.NO_HP, "", new { @class = "text-danger" })
-        </div>
+            @* Button create *@
+            <div class="btnn">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+            <hr />
+        }
 
-        @* Alamat *@
-        <div class="input-daftar-akun-container">
-            @Html.TextAreaFor(model => model.ALAMAT, new { @placeholder = "Alamat" })
-            @Html.ValidationMessageFor(model => model.ALAMAT, "", new { @class = "text-danger" })
-        </div>
-
-        @* Jabatan *@
-        <div class="input-daftar-akun-container">
-            <select name="JABATAN" id="jbt"></select>
-            @Html.ValidationMessageFor(model => model.JABATAN, "", new { @class = "text-danger" })
-
-            @* Script Untuk menambah item jabatan*@
-            <script src="~/Scripts/jquery-3.6.0.js"></script>
-            <script type="text/javascript">
-                $.ajax({
-                    type: 'get',
-                    url: '/index/getjabatan',
-                    data: null,
-                    success: function (data) {
-                        let dtJabatan = $('#jbt').html('');
-                        dtJabatan = "<option value=\"\">--Jabatan--</option>";
-                        for (let i = 0; i < data.length; i++) {
-                            dtJabatan += "<option value=\"" + data[i].KODE_JABATAN + "\">" + data[i].JABATAN + "</option>";
-                        }
-                        $('#jbt').html(dtJabatan);
-                    },
-                    error: function () { console.log('error');}
-                });
-            </script>
-        </div>
-
-        @* Username *@
-        <div class="input-daftar-akun-container">
-            @Html.EditorFor(model => model.TB_AKUN.USERNAME, new { htmlAttributes = new { @placeholder = "Username", @autocomplete = "off" } })
-            @Html.ValidationMessageFor(model => model.TB_AKUN.USERNAME, "", new { @class = "text-danger" })
-        </div>
-
-        @* Password *@
-        <div class="input-daftar-akun-container">
-            @Html.PasswordFor(model => model.TB_AKUN.PASSWORD_AKUN, new { @placeholder = "Password", @id = "pss-dft" })
-            @Html.ValidationMessageFor(model => model.TB_AKUN.PASSWORD_AKUN, "", new { @class = "text-danger" })
-        </div>
-
-        @* Tampilkan Password *@
-        <script src="~/Scripts/Index/DaftarAkunBaru.js"></script>
-        <div class="ckb-show-password">
-            <input type="checkbox" id="showDft" onclick="showPasswordDft(this.checked)" />
-            <label for="showDft">Show Password</label>
-        </div>
-
-        @* Button create *@
+        @* Kembali ke login *@
         <div class="btnn">
-            <input type="submit" value="Create" class="btn btn-default" />
+            @Html.ActionLink("Kembali Ke Login", "Login", "Index")
         </div>
-    }
-</div>
+    </div>
+</body>
+</html>

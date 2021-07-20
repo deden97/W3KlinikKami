@@ -99,22 +99,24 @@
         }
 
     /* button daftar akun baru */
-    .btn button{
+    .btn a{
         background-color: greenyellow;
         color: brown;
+        font-size: 13px;
+        text-decoration: none;
     }
 
-        .btn button:hover {
+        .btn a:hover {
             color: greenyellow;
             background-color: brown;
         }
 
-    .btn input, button{
+    .btn input, a{
         padding: 5px 10px;
         border: none;
         border-radius: 15px;
     }
 
-    .btn input, button:hover {
+    .btn input, a:hover {
         cursor: pointer;
     }
