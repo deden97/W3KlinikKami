@@ -112,8 +112,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Global.css" />
     <Content Include="Content\Index\Daftar-Akun-Baru.css" />
     <Content Include="Content\Index\Login.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
     <EntityDeploy Include="Models\DbModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -161,6 +163,7 @@
       <DependentUpon>DbModel.edmx</DependentUpon>
       <LastGenOutput>DbModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\Global.js" />
     <Content Include="Scripts\Index\DaftarAkunBaru.js" />
     <Content Include="Scripts\Index\Login.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
@@ -212,6 +215,13 @@
     <Content Include="Views\Index\Login.cshtml" />
     <Content Include="Views\Index\DaftarAkunBaru.cshtml" />
     <Content Include="Views\Templated\Form\TB_USER.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Index\EditData.cshtml" />
+    <Content Include="Views\Index\Form-EditData\Data.cshtml" />
+    <Content Include="Views\Index\Form-EditData\Username.cshtml" />
+    <Content Include="Views\Index\Form-EditData\Password.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -222,7 +232,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Image\" />
-    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

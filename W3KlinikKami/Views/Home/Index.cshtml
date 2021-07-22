@@ -1,0 +1,15 @@
+﻿@model W3KlinikKami.Models.TB_USER
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 style="text-align: center">Index</h2>
+<p>@Model.NAMA</p>
+<p>@Model.TB_JABATAN.JABATAN</p>
+
+@{ 
+    ViewBag.foto = Model.FOTO;
+}
+
+@*<img src="@Url.Content(Model.FOTO)" style="width: 40px; height: 40px"/>*@

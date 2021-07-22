@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/Global.css" rel="stylesheet" />
+</head>
+<body>
+    <header id="head">
+        <h2>
+            @Html.ActionLink("W3.Klinik.Kami", "Index", "Home")
+        </h2>
+        @{
+            if (Convert.ToString(Session["JABATAN"]) == "DKR")
+            {
+                <nav id="Dokter">
+                    <ul class="nav-menu">
+                        <li>@Html.ActionLink("menu dokter", "#", null, new { @class = "btn-nav-menu" })</li>
+                        <li>@Html.ActionLink("menu dokter", "#", null, new { @class = "btn-nav-menu" })</li>
+                        <li>@Html.ActionLink("menu dokter", "#", null, new { @class = "btn-nav-menu" })</li>
+                    </ul>
+                </nav>
+            }
+            else if (Convert.ToString(Session["JABATAN"]) == "APR")
+            {
+                <nav id="Apoteker">
+                    <ul class="nav-menu">
+                        <li>@Html.ActionLink("menu apoteker", "#", null, new { @class = "btn-nav-menu" })</li>
+                        <li>@Html.ActionLink("menu apoteker", "#", null, new { @class = "btn-nav-menu" })</li>
+                        <li>@Html.ActionLink("menu apoteker", "#", null, new { @class = "btn-nav-menu" })</li>
+                    </ul>
+                </nav>
+            }
+            else
+            {
+                <nav id="Resepsionis">
+                    <ul class="nav-menu">
+                        <li>@Html.ActionLink("menu resepsionis", "#", null, new { @class = "btn-nav-menu" })</li>
+                        <li>@Html.ActionLink("menu resepsionis", "#", null, new { @class = "btn-nav-menu" })</li>
+                        <li>@Html.ActionLink("menu resepsionis", "#", null, new { @class = "btn-nav-menu" })</li>
+                    </ul>
+                </nav>
+            }
+        }
+
+        <nav>
+            <ul class="nav-menu">
+                <li>@Html.ActionLink("Edit", "EditData", "Index", null, new { @class = "btn-edit" })</li>
+                <li>@Html.ActionLink("Logout", "Logout", "Index", null, new { @class = "btn-logout" })</li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="head2">
+        <b>Nama</b>
+    </div>
+
+    <div class="content">
+        @RenderBody()
+    </div>
+
+    <div class="back-top">
+        <a href="#head"><b>Top</b></a>
+    </div>
+</body>
+</html>

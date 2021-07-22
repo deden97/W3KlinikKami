@@ -11,9 +11,17 @@ namespace W3KlinikKami.Controllers
     {
         private readonly DbEntities db = new DbEntities();
 
+        private bool CekSession()
+        {
+            int id = Convert.ToInt32(Session["ID"]);
+            string jabatan = Convert.ToString(Session["JABATAN"]);
+            return this.db.TB_USER.Any(j => j.ID == id && j.JABATAN == jabatan);
+        }
+
         public ActionResult Login()
         {
-            return View();
+            if (this.CekSession()) return RedirectToAction("Index", "Home");
+            else return View();
         }
 
         [HttpPost]
@@ -51,8 +59,15 @@ namespace W3KlinikKami.Controllers
 
         public ActionResult DaftarAkunBaru()
         {
-            ViewData["JABATAN"] = new SelectList(this.db.TB_JABATAN, "KODE_JABATAN", "JABATAN");
-            return View();
+            if (this.CekSession())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ViewData["JABATAN"] = new SelectList(this.db.TB_JABATAN, "KODE_JABATAN", "JABATAN");
+                return View();
+            }
         }
 
         [HttpPost]
@@ -82,6 +97,70 @@ namespace W3KlinikKami.Controllers
 
             ViewData["JABATAN"] = new SelectList(this.db.TB_JABATAN, "KODE_JABATAN", "JABATAN");
             return View();
+        }
+
+        public ActionResult EditData()
+        {
+            if (this.CekSession())
+            {
+                ViewBag.EditMode = "Edit Data";
+                int id = Convert.ToInt32(Session["ID"]);
+                return View("EditData", this.db.TB_USER.Find(id));
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+        //[HttpPost]
+        //public ActionResult EditData(TB_USER dt)
+        //{
+        //    return View();
+        //}
+
+        public ActionResult EditUsername()
+        {
+            if (this.CekSession())
+            {
+                ViewBag.EditMode = "Edit Username";
+                return View("EditData");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+        //[HttpPost]
+        //public ActionResult EditUsername(TB_AKUN dt)
+        //{
+        //    return View();
+        //}
+
+        public ActionResult EditPassword()
+        {
+            if (this.CekSession())
+            {
+                ViewBag.EditMode = "Edit Password";
+                return View("EditData");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+        //[HttpPost]
+        //public ActionResult EditPassword(TB_AKUN dt)
+        //{
+        //    return View();
+        //}
+
+        public ActionResult Logout()
+        {
+            Session.RemoveAll();
+            return RedirectToAction("Login");
         }
     }
 }

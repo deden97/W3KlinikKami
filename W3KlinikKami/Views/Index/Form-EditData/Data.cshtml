@@ -1,0 +1,14 @@
+﻿@model W3KlinikKami.Models.TB_USER
+
+@using (Html.BeginForm("EditData", "Index", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <h2><u>Edit Data</u></h2>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @* username *@
+    <div class="txt-login-container">
+        @Html.TextBoxFor(model => model.NAMA, null, new { @placeholder = "Username", @autocomplete = "off" })
+        @Html.ValidationMessageFor(model => model.NAMA, "", new { @class = "text-danger" })
+    </div>
+}

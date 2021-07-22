@@ -1,0 +1,120 @@
+﻿body {
+    box-sizing: border-box;
+    background-color: azure;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #24252A;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10%;
+    color: white;
+    font-family: Arial;
+    z-index: 999;
+}
+
+header a{
+    text-decoration: none;
+    color: azure;
+}
+
+.nav-menu{
+    text-align: center;
+    list-style: none;
+    /*border: 1px solid red;*/
+}
+
+.nav-menu li{
+    display: inline-block;
+}
+
+.btn-nav-menu {
+    border: 1px solid black;
+    border-radius: 25px;
+    padding: 10px 25px;
+    background-color: rgba(0, 136, 169, 1);
+}
+
+    .btn-nav-menu:hover {
+        background-color: rgba(0, 136, 236, 1);
+    }
+
+.btn-edit,
+.btn-logout {
+    border: 1px solid black;
+    border-radius: 25px;
+    padding: 10px 25px;
+    color: azure;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btn-edit {
+    background-color: forestgreen;
+}
+.btn-edit:hover,
+.menu:hover{
+    background-color: darkgreen;
+}
+
+.btn-logout{
+    background-color: orangered;
+}
+
+    .btn-logout:hover {
+        background-color: indianred;
+    }
+
+.menu {
+    position: absolute;
+    border: 1px solid black;
+    background-color: forestgreen;
+    padding: 5px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    height: max-content;
+    width: max-content;
+}
+
+.head2 {
+    justify-content: center;
+    border-bottom: 1px solid black;
+    display: flex;
+    background-color: #40424a;
+    align-items: center;
+    align-items: center;
+}
+
+.back-top {
+    position: fixed;
+    border: 2px solid #40424a;
+    bottom: 2px;
+    right: 2px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    text-align: center;
+    vertical-align: central;
+    cursor: pointer;
+    background-color: #24252A;
+    z-index: 100;
+}
+
+    .back-top a {
+        line-height: 49px;
+        text-decoration: none;
+        color: azure;
+    }
+
+.content {
+    position: relative;
+    margin: auto;
+    width: 80%;
+    top: 0px;
+    bottom: 0px;
+    padding: 10px;
+    font-family: Arial;
+}
