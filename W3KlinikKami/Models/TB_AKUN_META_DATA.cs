@@ -10,7 +10,7 @@ namespace W3KlinikKami.Models
     [MetadataType(typeof(TB_AKUN_META_DATA))]
     public partial class TB_AKUN
     {
-       
+        public string PASSWORD_BARU { get; set; }
     }
 
     public class TB_AKUN_META_DATA

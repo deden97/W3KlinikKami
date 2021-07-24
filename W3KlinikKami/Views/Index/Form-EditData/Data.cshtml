@@ -1,14 +1,58 @@
 ﻿@model W3KlinikKami.Models.TB_USER
 
-@using (Html.BeginForm("EditData", "Index", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    <h2><u>Edit Data</u></h2>
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="form-content">
+    @using (Html.BeginForm("EditData", "Index", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-error" })
 
-    @* username *@
-    <div class="txt-login-container">
-        @Html.TextBoxFor(model => model.NAMA, null, new { @placeholder = "Username", @autocomplete = "off" })
-        @Html.ValidationMessageFor(model => model.NAMA, "", new { @class = "text-danger" })
-    </div>
-}
+        <div class="form-item">
+            <h2><u>Edit Data</u></h2>
+        </div>
+
+        @* nama lengkap *@
+        <div class="form-item">
+            @Html.TextBoxFor(model => model.NAMA, null, new { @placeholder = "Username", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.NAMA, "", new { @class = "text-error" })
+        </div>
+
+        @* jenis kelamin *@
+        <div class="form-item">
+            @Html.DropDownList("JENIS_KELAMIN", new List<SelectListItem>()
+            {
+                new SelectListItem{Text = "Pria", Value = "Pria", Selected = Model.JENIS_KELAMIN == "Pria"},
+                new SelectListItem{Text = "Wanita", Value = "Wanita", Selected = Model.JENIS_KELAMIN == "Wanita"}
+            }, "--Jenis Kelamin--")
+            @Html.ValidationMessageFor(model => model.JENIS_KELAMIN, "", new { @class = "text-error" })
+        </div>
+
+        @* nomor HP *@
+        <div class="form-item">
+            @Html.TextBoxFor(model => model.NO_HP, null, new { @placeholder = "Nomor HP", @type = "number", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.NO_HP, "", new { @class = "text-error" })
+        </div>
+
+        @* alamat *@
+        <div class="form-item">
+            @Html.TextAreaFor(model => model.ALAMAT, new { @placeholder = "Alamat" })
+            @Html.ValidationMessageFor(model => model.ALAMAT, "", new { @class = "text-error" })
+        </div>
+
+        @* foto *@
+        <div class="form-item">
+            <img src="@Url.Content(String.IsNullOrEmpty(Model.FOTO) ? "~/image/profile_user.png" : Model.FOTO)" alt="Foto Profil-@Model.NAMA" title="Foto Profil-@Model.NAMA" />
+            @Html.LabelFor(Model => Model.FOTO, "Ganti Foto Profil", new { @title = "Foto Akan Diupdate Setelah Submit." })
+            <input type="file" name="FOTO_TERPILIH" id="FOTO" accept="image/*" title="Foto Akan Diupdate Setelah Submit." />
+        </div>
+
+        @* jabatan *@
+        <div class="form-item">
+            @Html.DropDownList("JABATAN", null, "--Jabatan--")
+            @Html.ValidationMessageFor(model => model.JABATAN, "", new { @class = "text-error" })
+        </div>
+
+        <div class="form-item">
+            <input type="submit" value="Submit Perubahan" />
+        </div>
+    }
+</div>

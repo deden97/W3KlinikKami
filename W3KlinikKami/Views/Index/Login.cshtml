@@ -24,7 +24,7 @@
 
             @* username *@
             <div class="txt-login-container">
-                @Html.TextBoxFor(Model => Model.USERNAME, null, new { @placeholder = "Username", @autocomplete = "off" })
+                @Html.TextBoxFor(Model => Model.USERNAME, null, new { @placeholder = "Username", @autocomplete = "off", @autofocus = "true" })
                 @Html.ValidationMessageFor(model => model.USERNAME, "", new { @class = "text-danger" })
             </div>
 
@@ -50,14 +50,7 @@
         @* button datar akun baru *@
         <div class="btn">
             @Html.ActionLink("Daftar Akun Baru", "DaftarAkunBaru", "Index")
-            @*<button type="button" onclick="document.getElementById('pop-up-daftar-akun').style.visibility = 'visible'">
-                Daftar Akun Baru
-            </button>*@
         </div>
     </div>
-
-    @*<div id="pop-up-daftar-akun">
-        @Html.Partial("DaftarAkunBaru")
-    </div>*@
 </body>
 </html>

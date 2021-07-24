@@ -91,8 +91,8 @@ header a{
 .back-top {
     position: fixed;
     border: 2px solid #40424a;
-    bottom: 2px;
-    right: 2px;
+    bottom: 20px;
+    right: 20px;
     width: 50px;
     height: 50px;
     border-radius: 50px;
@@ -117,4 +117,179 @@ header a{
     bottom: 0px;
     padding: 10px;
     font-family: Arial;
+}
+
+/* Isi dari content */
+.edit-body {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.edit-submenu {
+    position: relative;
+    background-color: #24252A;
+    width: max-content;
+    height: max-content;
+    border: 2px solid #40424a;
+    border-radius: 10px;
+    padding: 25px 10px;
+}
+
+.btn-edit-submenu-active {
+    position: relative;
+    padding: 5px;
+    margin: 5px;
+    width: 148px;
+    border: 2px solid rgba(0, 136, 169, 1);
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+    .btn-edit-submenu-active:hover {
+        background-color: rgba(0, 101, 180, 1);
+    }
+
+    .btn-edit-submenu-active a {
+        text-decoration: none;
+        color: azure;
+    }
+
+.btn-edit-submenu {
+    position: relative;
+    padding: 5px;
+    margin: 5px;
+    width: 150px;
+    background-color: rgba(0, 136, 169, 1);
+    border: 1px solid #40424a;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+    .btn-edit-submenu:hover {
+        background-color: rgba(0, 101, 180, 1);
+    }
+    
+    .btn-edit-submenu a {
+        text-decoration: none;
+        color: azure;
+    }
+
+.edit-content {
+    position: relative;
+    margin-left: 5px;
+    width: 100%;
+    height: 670px;
+    padding: 5px;
+}
+
+.form-content {
+    background-color: whitesmoke;
+    border: 2px solid #40424a;
+    border-radius: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 15px;
+    min-height: 500px;
+}
+
+.form-item {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: max-content;
+    display: grid;
+    text-align: center;
+}
+
+    .form-item input {
+        width: 500px;
+        border: 2px solid black;
+        border-radius: 15px;
+        outline: none;
+        padding: 5px;
+        font-size: 16px;
+    }
+
+        .form-item input:hover {
+            border: 2px solid red;
+        }
+
+    .form-item select {
+        width: 515px;
+        border: 2px solid black;
+        border-radius: 15px;
+        outline: none;
+        padding: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+        .form-item select:hover {
+            border: 2px solid red;
+        }
+
+    .form-item textarea {
+        width: 502px;
+        border: 2px solid black;
+        border-radius: 15px;
+        outline: none;
+        min-width: 502px;
+        max-width: 501px;
+        min-height: 50px;
+        max-height: 200px;
+        border-radius: 10px;
+        border-bottom-right-radius: 0;
+        padding: 5px;
+        font-size: 16px;
+    }
+
+        .form-item textarea:hover {
+            border: 2px solid red;
+        }
+
+    .form-item label{
+        cursor: pointer;
+    }
+
+    .form-item img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .form-item img:hover {
+        width: 155px;
+    }
+
+    .form-item input[type="file"] {
+        background-color: white;
+    }
+
+    .form-item input[type="submit"] {
+        width: max-content;
+        padding: 5px 25px;
+        background-color: forestgreen;
+        cursor: pointer;
+        color: azure;
+    }
+
+    .form-item input[type="submit"]:hover {
+        background-color: darkgreen;
+    }
+
+.form-item-flex {
+    display: flex;
+    width: max-content;
+    margin: 2px auto;
+}
+
+input[type="checkbox"] {
+    cursor: pointer;
+    padding: 0;
+    width: min-content;
+}
+
+.text-error {
+    font-size: 15px;
+    font-weight: bold;
+    color: red;
 }

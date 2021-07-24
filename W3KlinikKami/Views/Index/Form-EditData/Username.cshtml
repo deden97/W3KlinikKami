@@ -1,19 +1,33 @@
 ﻿@model W3KlinikKami.Models.TB_AKUN
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <h2><u>Edit Username</u></h2>
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="form-content">
+    @using (Html.BeginForm("EditUsername", "Index", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-error" })
 
-    @* username *@
-    <div class="txt-login-container">
-        @Html.TextBoxFor(model => model.USERNAME, null, new { @placeholder = "Username", @autocomplete = "off" })
-        @Html.ValidationMessageFor(model => model.USERNAME, "", new { @class = "text-danger" })
-    </div>
+        <div class="form-item">
+            <h2><u>Edit Username</u></h2>
+        </div>
 
-    <div class="txt-login-container">
-        @Html.TextBoxFor(model => model.PASSWORD_AKUN, null, new { @placeholder = "Username", @autocomplete = "off" })
-        @Html.ValidationMessageFor(model => model.PASSWORD_AKUN, "", new { @class = "text-danger" })
-    </div>
+        @* username baru *@
+        <div class="form-item">
+            @Html.TextBoxFor(model => model.USERNAME, null, new { @placeholder = "Username Baru", @autocomplete = "off", @autofocus = "true" })
+            @Html.ValidationMessageFor(model => model.USERNAME, "", new { @class = "text-error" })
+        </div>
+
+        @* Password *@
+        <div class="form-item">
+            @Html.PasswordFor(model => model.PASSWORD_AKUN, new { @placeholder = "Password Saat Ini", @id = "pss" })
+            @Html.ValidationMessageFor(model => model.PASSWORD_AKUN, "", new { @class = "text-error" })
+            <div class="form-item-flex">
+                @Html.CheckBox("ShowPassword", false, new { @id = "sp", @onclick = "ckbShowPassword(this.checked, 'pss')" })
+                @Html.Label("Show Password", new { @for = "sp" })
+            </div>
+        </div>
+
+        <div class="form-item">
+            <input type="submit" value="Submit Perubahan" />
+        </div>
     }
+</div>

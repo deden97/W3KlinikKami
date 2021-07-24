@@ -9,23 +9,25 @@ namespace W3KlinikKami.Models
     [MetadataType(typeof(TB_USER_META_DATA))]
     public partial class TB_USER
     {
-        
+        public HttpPostedFileBase FOTO_TERPILIH { get; set; }
     }
 
     public class TB_USER_META_DATA
     {
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "Nama Tidak Boleh Konsong.")]
+        [MaxLength(50, ErrorMessage = "Maksimal 50 Karakter, Nama Bisa Disingkat.")]
+        [Required(ErrorMessage = "Nama Tidak Boleh Kosong.")]
         public string NAMA { get; set; }
 
         [Required(ErrorMessage = "Jenis Kelamin Harus Dipilih.")]
         public string JENIS_KELAMIN { get; set; }
 
-        [Required(ErrorMessage = "Nomor HP Tidak Boleh Konsong.")]
+        [MaxLength(18, ErrorMessage = "Maksimal 18 Karakter, Masukan Nomor HP Yang Benar.")]
+        [Required(ErrorMessage = "Nomor HP Tidak Boleh Kosong.")]
         public decimal NO_HP { get; set; }
 
-        [Required(ErrorMessage = "Alamat Tidak Boleh Konsong.")]
+        [Required(ErrorMessage = "Alamat Tidak Boleh Kosong.")]
         public string ALAMAT { get; set; }
 
         public string FOTO { get; set; }

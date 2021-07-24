@@ -4,59 +4,40 @@
     ViewBag.Title = "Edit";
 }
 
-<style>
-    .edit-body {
-        position: relative;
-        display: flex;
-        justify-content: center;
-    }
-
-    .edit-submenu {
-        position: relative;
-        width: max-content;
-        height: max-content;
-        border: 1px solid red;
-        border-radius: 10px;
-        padding: 10px;
-    }
-
-    .btn-edit-submenu {
-        position: relative;
-        padding: 5px;
-        margin: 5px;
-        width: 150px;
-        border: 1px solid red;
-    }
-
-    .edit-content {
-        position: relative;
-        border-left: 1px solid red;
-        margin-left: 5px;
-        width: 100%;
-        height: 670px;
-        padding: 5px;
-    }
-</style>
-
 <div class="edit-body">
     <div class="edit-submenu">
-        <div class="btn-edit-submenu">@Html.ActionLink("Edit Data", "EditData", "Index")</div>
-        <div class="btn-edit-submenu">@Html.ActionLink("Edit Username", "EditUsername", "Index")</div>
-        <div class="btn-edit-submenu">@Html.ActionLink("Edit Password", "EditPassword", "Index")</div>
+        <div id="dt" class="btn-edit-submenu" onclick="clickLinkByDiv('btn-dt')">
+            @Html.ActionLink("Edit Data", "EditData", "Index", null, new { id = "btn-dt" })
+        </div>
+        <div id="us" class="btn-edit-submenu" onclick="clickLinkByDiv('btn-us')">
+            @Html.ActionLink("Edit Username", "EditUsername", "Index", null, new { id = "btn-us" })
+        </div>
+        <div id="ps" class="btn-edit-submenu" onclick="clickLinkByDiv('btn-ps')">
+            @Html.ActionLink("Edit Password", "EditPassword", "Index", null, new { id = "btn-ps" })
+        </div>
     </div>
 
     <div class="edit-content">
+        <script type="text/javascript">
+            const arrId = ["dt", "us", "ps"];
+            function clickBtnSubmenu(btn) {
+                changeClassName(arrId, btn, "btn-edit-submenu", "btn-edit-submenu-active");
+            }
+        </script>
         @{
             if (ViewBag.EditMode == "Edit Data")
             {
+                <script type="text/javascript">clickBtnSubmenu("dt");</script>
                 @Html.Partial("~/Views/Index/Form-EditData/Data.cshtml", Model)
             }
             else if (ViewBag.EditMode == "Edit Username")
             {
+                <script type="text/javascript">clickBtnSubmenu("us");</script>
                 @Html.Partial("~/Views/Index/Form-EditData/Username.cshtml")
             }
             else
             {
+                <script type="text/javascript">clickBtnSubmenu("ps");</script>
                 @Html.Partial("~/Views/Index/Form-EditData/Password.cshtml")
             }
         }

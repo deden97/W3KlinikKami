@@ -1,18 +1,16 @@
-﻿/// <reference path="jquery-3.6.0.js" />
-function showMenu() {
-    let idM = document.getElementById('menu');
-    let btn = document.getElementById('btnEdit');
-    let btnL, btnR;
-    if (idM.style.visibility == "hidden") {
-        idM.style.visibility = "visible";
-        btnL = 0;
-        btnR = 0;
-    } else {
-        idM.style.visibility = "hidden";
-        btnL = "25px";
-        btnR = "25px";
-    }
+﻿// ketika div di click maka, <a href"#"> akan ter click.
+function clickLinkByDiv(id) {
+    document.getElementById(id).click();
+}
 
-    btn.style.borderBottomLeftRadius = btnL;
-    btn.style.borderBottomRightRadius = btnR;
+// mengganti class saat suatu element di click
+function changeClassName(arrId, activeId, nClass, nActClass) {
+    for (let i = 0; i < arrId.length; i++) {
+        document.getElementById(arrId[i]).className = (arrId[i] == activeId) ? nActClass : nClass;
+    }
+}
+
+// checkbox untuk menampilkan password
+function ckbShowPassword(checked, idTarget) {
+    document.getElementById(idTarget).type = checked ? "text" : "password";
 }
