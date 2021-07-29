@@ -12,7 +12,14 @@
         <h2>
             @Html.ActionLink("W3.Klinik.Kami", "Index", "Home")
         </h2>
-        @{
+        <nav id="Dokter">
+            <ul class="nav-menu">
+                <li>@Html.ActionLink("menu", "#", null, new { @class = "btn-nav-menu" })</li>
+                <li>@Html.ActionLink("menu", "#", null, new { @class = "btn-nav-menu" })</li>
+                <li>@Html.ActionLink("menu", "#", null, new { @class = "btn-nav-menu" })</li>
+            </ul>
+        </nav>
+        @*@{
             if (Convert.ToString(Session["JABATAN"]) == "DKR")
             {
                 <nav id="Dokter">
@@ -43,7 +50,7 @@
                     </ul>
                 </nav>
             }
-        }
+        }*@
 
         <nav>
             <ul class="nav-menu">
@@ -61,8 +68,8 @@
         @RenderBody()
     </div>
 
-    <div class="back-top">
-        <a href="#head"><b>Top</b></a>
+    <div class="back-top" onclick="clickLinkByDiv('top')">
+        <a href="#head" id="top"><b>Top</b></a>
     </div>
 </body>
 </html>

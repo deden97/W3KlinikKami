@@ -174,6 +174,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ADMController.cs" />
+    <Compile Include="Controllers\DKRController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Global.asax.cs">
@@ -222,6 +224,8 @@
     <Content Include="Views\Index\Form-EditData\Data.cshtml" />
     <Content Include="Views\Index\Form-EditData\Username.cshtml" />
     <Content Include="Views\Index\Form-EditData\Password.cshtml" />
+    <Content Include="Views\ADM\Index.cshtml" />
+    <Content Include="Views\ADM\Form-ADM\DaftarPasienBaru.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -232,6 +236,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Image\" />
+    <Folder Include="Views\DKR\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

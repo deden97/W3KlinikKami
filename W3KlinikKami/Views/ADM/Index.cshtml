@@ -1,0 +1,87 @@
+﻿@model W3KlinikKami.Models.TB_USER
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 style="text-align: center">Admin Pelayanan</h2>
+
+<style>
+    /* background color -> white smoke */
+    .bg-clr-ws {
+        border-radius: 15px;
+        background-color: whitesmoke;
+        padding: 5px;
+    }
+
+    .foto-profil {
+        width: 60px;
+        height: 60px;
+        border: 2px solid black;
+        border-radius: 50px;
+        margin: 2px 2px;
+    }
+
+    .margin-bottom-15px {
+        margin-bottom: 15px;
+    }
+
+    .width-200px {
+        width: 200px;
+    }
+
+    .notif-btn-submenu {
+        position: absolute;
+        padding: 2px 6px;
+        border: 2px solid black;
+        border-radius: 50%;
+        background-color: orangered;
+        color: azure;
+        width: max-content;
+        height: max-content;
+        right: -15px;
+        top: -10px;
+    }
+</style>
+
+<div class="body-content">
+    <div class="submenu-body-content">
+        <div class="form-item-flex bg-clr-ws margin-bottom-15px">
+            <img src="@Url.Content(Model.FOTO)" alt="Foto - @Model.NAMA" title="@Model.NAMA" class="foto-profil" />
+            <div class="form-item">
+                @Html.Label(Model.NAMA)
+                @Html.Label(Model.TB_JABATAN.JABATAN)
+            </div>
+        </div>
+
+        <div id="DaftarPasienBaru" class="btn-submenu width-200px margin-bottom-15px" onclick="clickLinkByDiv('daftar')">
+            <div class="notif-btn-submenu" id="notif">10</div>
+            @Html.ActionLink("Daftar Pasien Baru", "TanganiPasien", "ADM", new { @tangani = "DaftarPasienBaru" }, new { id = "daftar" })
+        </div>
+
+        <div id="BerobatPasien" class="btn-submenu width-200px margin-bottom-15px" onclick="clickLinkByDiv('berobat')">
+            <div class="notif-btn-submenu" id="notif">10</div>
+            @Html.ActionLink("Berobat Pasien", "TanganiPasien", "ADM", new { @tangani = "BerobatPasien" }, new { id = "berobat" })
+        </div>
+
+        <div id="PengambilanObat" class="btn-submenu width-200px margin-bottom-15px" onclick="clickLinkByDiv('obat')">
+            <div class="notif-btn-submenu" id="notif">10</div>
+            @Html.ActionLink("PengambilanObat", "TanganiPasien", "ADM", new { @tangani = "PengambilanObat" }, new { id = "obat" })
+        </div>
+    </div>
+
+    <div class="content-body-content">
+        <div class="form-content">
+            <input type="text" id="mode" value="@ViewBag.ModePenanganan" hidden />
+            <script type="text/javascript">
+                changeClassName(
+                    ["DaftarPasienBaru", "BerobatPasien", "PengambilanObat"],
+                    document.getElementById('mode').value,
+                    "btn-submenu width-200px margin-bottom-15px",
+                    "btn-submenu-active width-200px margin-bottom-15px"
+                );
+            </script>
+            @Html.Partial($"~/Views/ADM/Form-ADM/{ViewBag.ModePenanganan}.cshtml")
+        </div>
+    </div>
+</div>

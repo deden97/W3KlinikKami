@@ -4,24 +4,24 @@
     ViewBag.Title = "Edit";
 }
 
-<div class="edit-body">
-    <div class="edit-submenu">
-        <div id="dt" class="btn-edit-submenu" onclick="clickLinkByDiv('btn-dt')">
+<div class="body-content">
+    <div class="submenu-body-content">
+        <div id="dt" class="btn-submenu" onclick="clickLinkByDiv('btn-dt')">
             @Html.ActionLink("Edit Data", "EditData", "Index", null, new { id = "btn-dt" })
         </div>
-        <div id="us" class="btn-edit-submenu" onclick="clickLinkByDiv('btn-us')">
+        <div id="us" class="btn-submenu" onclick="clickLinkByDiv('btn-us')">
             @Html.ActionLink("Edit Username", "EditUsername", "Index", null, new { id = "btn-us" })
         </div>
-        <div id="ps" class="btn-edit-submenu" onclick="clickLinkByDiv('btn-ps')">
+        <div id="ps" class="btn-submenu" onclick="clickLinkByDiv('btn-ps')">
             @Html.ActionLink("Edit Password", "EditPassword", "Index", null, new { id = "btn-ps" })
         </div>
     </div>
 
-    <div class="edit-content">
+    <div class="content-body-content">
         <script type="text/javascript">
             const arrId = ["dt", "us", "ps"];
             function clickBtnSubmenu(btn) {
-                changeClassName(arrId, btn, "btn-edit-submenu", "btn-edit-submenu-active");
+                changeClassName(arrId, btn, "btn-submenu", "btn-submenu-active");
             }
         </script>
         @{

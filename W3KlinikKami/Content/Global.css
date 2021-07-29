@@ -120,13 +120,13 @@ header a{
 }
 
 /* Isi dari content */
-.edit-body {
+.body-content {
     position: relative;
     display: flex;
     justify-content: center;
 }
 
-.edit-submenu {
+.submenu-body-content {
     position: relative;
     background-color: #24252A;
     width: max-content;
@@ -136,7 +136,7 @@ header a{
     padding: 25px 10px;
 }
 
-.btn-edit-submenu-active {
+.btn-submenu-active {
     position: relative;
     padding: 5px;
     margin: 5px;
@@ -146,16 +146,16 @@ header a{
     cursor: pointer;
 }
 
-    .btn-edit-submenu-active:hover {
+    .btn-submenu-active:hover {
         background-color: rgba(0, 101, 180, 1);
     }
 
-    .btn-edit-submenu-active a {
+    .btn-submenu-active a {
         text-decoration: none;
         color: azure;
     }
 
-.btn-edit-submenu {
+.btn-submenu {
     position: relative;
     padding: 5px;
     margin: 5px;
@@ -166,16 +166,16 @@ header a{
     cursor: pointer;
 }
 
-    .btn-edit-submenu:hover {
+    .btn-submenu:hover {
         background-color: rgba(0, 101, 180, 1);
     }
     
-    .btn-edit-submenu a {
+    .btn-submenu a {
         text-decoration: none;
         color: azure;
     }
 
-.edit-content {
+.content-body-content {
     position: relative;
     margin-left: 5px;
     width: 100%;
@@ -285,6 +285,7 @@ header a{
 
 .form-item-flex {
     display: flex;
+    align-items: center;
     width: max-content;
     margin: 2px auto;
 }

@@ -22,11 +22,15 @@ namespace W3KlinikKami.Controllers
             return this.db.TB_USER.Any(j => j.ID == id && j.JABATAN == jabatan);
         }
 
+        public ActionResult Index() => RedirectToAction("Login");
+
         // Login Get
         public ActionResult Login()
         {
-            if (this.CekSession()) return RedirectToAction("Index", "Home");
-            else return View();
+            if (this.CekSession())
+                return RedirectToAction("Index", Convert.ToString(Session["JABATAN"]));
+            else
+                return View();
         }
 
         // Login Post -> verifikasi username dan password
@@ -37,13 +41,15 @@ namespace W3KlinikKami.Controllers
             {
                 try
                 {
-                    if (this.db.TB_AKUN.Any(l => l.USERNAME == login.USERNAME)) // jika username terdaftar pada Db
+                    // jika username terdaftar pada Db
+                    if (this.db.TB_AKUN.Any(l => l.USERNAME == login.USERNAME))
                     {
-                        if (this.db.TB_AKUN.Any(l => l.USERNAME == login.USERNAME && l.PASSWORD_AKUN == login.PASSWORD_AKUN)) // jika password sesuai dengan username
+                        // jika password sesuai dengan username
+                        if (this.db.TB_AKUN.Any(l => l.USERNAME == login.USERNAME && l.PASSWORD_AKUN == login.PASSWORD_AKUN))
                         {
                             Session["ID"] = this.db.TB_AKUN.Single(l => l.USERNAME == login.USERNAME && l.PASSWORD_AKUN == login.PASSWORD_AKUN).ID;
                             Session["JABATAN"] = this.db.TB_USER.Find(Session["ID"]).JABATAN;
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", Convert.ToString(Session["JABATAN"]));
                         }
                         else // jika password tidak sesuai dengan username
                         {
