@@ -14,6 +14,7 @@ namespace W3KlinikKami.Controllers
     {
         private readonly DbEntities db = new DbEntities();
 
+        // cek session -> (ID, JABATAN(kode jabatan))
         private bool CekSession()
         {
             int id = Convert.ToInt32(Session["ID"]);
@@ -21,12 +22,14 @@ namespace W3KlinikKami.Controllers
             return this.db.TB_USER.Any(j => j.ID == id && j.JABATAN == jabatan);
         }
 
+        // Login Get
         public ActionResult Login()
         {
             if (this.CekSession()) return RedirectToAction("Index", "Home");
             else return View();
         }
 
+        // Login Post -> verifikasi username dan password
         [HttpPost]
         public ActionResult Login([Bind(Exclude = "ID, PASSWORD_BARU")] TB_AKUN login)
         {
@@ -60,6 +63,7 @@ namespace W3KlinikKami.Controllers
             return View();
         }
 
+        // DaftarAkunBaru Get
         public ActionResult DaftarAkunBaru()
         {
             if (this.CekSession())
@@ -73,6 +77,7 @@ namespace W3KlinikKami.Controllers
             }
         }
 
+        // DaftarAkunBaru Get menerima dan menyimpan data baru.
         [HttpPost]
         public ActionResult DaftarAkunBaru([Bind(Exclude = "ID, FOTO")] TB_USER dt)
         {
@@ -83,6 +88,7 @@ namespace W3KlinikKami.Controllers
                     if(!this.db.TB_AKUN.Any(d => d.USERNAME == dt.TB_AKUN.USERNAME)) // jika username belum terdaftar
                     {
                         dt.FOTO = "~/image/profile_user.png";
+                        dt.TERDAFTAR = DateTime.Now;
                         this.db.TB_USER.Add(dt);
                         this.db.SaveChanges();
                         return RedirectToAction("Login");
@@ -102,6 +108,7 @@ namespace W3KlinikKami.Controllers
             return View();
         }
 
+        // EditData get
         public ActionResult EditData()
         {
             if (this.CekSession())
@@ -116,53 +123,54 @@ namespace W3KlinikKami.Controllers
             }
         }
 
+        // EditData post -> menerima data user yg telah diedit dan menyimpan perubahan data.
         [HttpPost]
-        public ActionResult EditData([Bind(Exclude = "ID, TB_AKUN, TB_JABATAN")] TB_USER dt)
+        public ActionResult EditData([Bind(Include = "NAMA, NO_HP, ALAMAT, FOTO, FOTO_TERPILIH")] TB_USER dt)
         {
             // cek session -> ID, jika belum login diarahkan ke form login
             if (!this.CekSession()) return RedirectToAction("Login");
 
-            if (ModelState.IsValid)
+            try
             {
-                try
+                TB_USER updateDt = new TB_USER();
+                updateDt = this.db.TB_USER.Find(Session["ID"]);
+                updateDt.NAMA = dt.NAMA;
+                updateDt.NO_HP = dt.NO_HP;
+                updateDt.ALAMAT = dt.ALAMAT;
+
+                if (dt.FOTO_TERPILIH != null)
                 {
-                    // isi ID dari 'Session["ID"]'
-                    dt.ID = Convert.ToInt32(Session["ID"]);
+                    StringBuilder namaFoto = new StringBuilder();
 
-                    if(dt.FOTO_TERPILIH != null)
-                    {
-                        StringBuilder namaFoto = new StringBuilder();
+                    // tambah tanggal dan waktu hari ini
+                    namaFoto.Append($"{DateTime.Now.ToString("dd-MM-yyyy H-m-s")}_");
 
-                        // tambah tanggal dan waktu hari ini
-                        namaFoto.Append($"{DateTime.Now.ToString("dd-MM-yyyy H-m-s")}_");
+                    // tambah nama file dengan ekstensi contoh: '<n_img>.jpg'
+                    namaFoto.Append(Path.GetFileName(dt.FOTO_TERPILIH.FileName));
 
-                        // tambah nama file dengan ekstensi contoh: '<n_img>.jpg'
-                        namaFoto.Append(Path.GetFileName(dt.FOTO_TERPILIH.FileName));
+                    // simpan direktori foto ke 'dt.FOTO' untuk di simpan di Db
+                    updateDt.FOTO = $"~/Image/{namaFoto.ToString()}";
 
-                        // simpan direktori foto ke 'dt.FOTO' untuk di simpan di Db
-                        dt.FOTO = $"~/Image/{namaFoto.ToString()}";
+                    // masukan path direktori secara lengkap contoh: D:/Folder/img.jpg
+                    namaFoto.Replace(namaFoto.ToString(), Path.Combine(Server.MapPath("~/Image/"), namaFoto.ToString()));
 
-                        // masukan path direktori secara lengkap contoh: D:/Folder/img.jpg
-                        namaFoto.Replace(namaFoto.ToString(), Path.Combine(Server.MapPath("~/Image/"), namaFoto.ToString()));
-
-                        // simpan foto di direktori lokal atau pada web server 'W3KlinikKami/Image'
-                        dt.FOTO_TERPILIH.SaveAs(namaFoto.ToString());
-                    }
-
-                    this.db.Entry(dt).State = EntityState.Modified;
-                    this.db.SaveChanges();
+                    // simpan foto di direktori lokal atau pada web server 'W3KlinikKami/Image'
+                    dt.FOTO_TERPILIH.SaveAs(namaFoto.ToString());
                 }
-                catch(Exception e)
-                {
-                    e.ToString();
-                }
+
+                this.db.Entry(updateDt).State = EntityState.Modified;
+                this.db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                e.ToString();
             }
 
             ViewBag.EditMode = "Edit Data";
-            ViewData["JABATAN"] = new SelectList(this.db.TB_JABATAN, "KODE_JABATAN", "JABATAN");
             return View(this.db.TB_USER.Find(Session["ID"]));
         }
 
+        // EditUsername get
         public ActionResult EditUsername()
         {
             if (this.CekSession())
@@ -176,6 +184,7 @@ namespace W3KlinikKami.Controllers
             }
         }
 
+        // EditUsername post -> menerima username baru dan menyimpan perubahan username.
         [HttpPost]
         public ActionResult EditUsername([Bind(Exclude = "ID, TB_USER")] TB_AKUN dt)
         {
@@ -207,6 +216,7 @@ namespace W3KlinikKami.Controllers
             return View("EditData");
         }
 
+        // EditPassword get
         public ActionResult EditPassword()
         {
             if (this.CekSession())
@@ -220,6 +230,7 @@ namespace W3KlinikKami.Controllers
             }
         }
 
+        // EditPassword post -> menerima password baru dan menyimpan perubahan password.
         [HttpPost]
         public ActionResult EditPassword([Bind(Exclude = "ID, USERNAME, TB_USER")] TB_AKUN dt)
         {
@@ -256,6 +267,7 @@ namespace W3KlinikKami.Controllers
             return View("EditData");
         }
 
+        // Logout
         public ActionResult Logout()
         {
             Session.RemoveAll();

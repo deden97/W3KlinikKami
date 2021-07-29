@@ -21,6 +21,7 @@ namespace W3KlinikKami.Models
         public string ALAMAT { get; set; }
         public string FOTO { get; set; }
         public string JABATAN { get; set; }
+        public System.DateTime TERDAFTAR { get; set; }
     
         public virtual TB_AKUN TB_AKUN { get; set; }
         public virtual TB_JABATAN TB_JABATAN { get; set; }

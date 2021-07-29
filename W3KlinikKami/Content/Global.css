@@ -276,6 +276,13 @@ header a{
         background-color: darkgreen;
     }
 
+.label-form-item {
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 10px;
+    display: flex;
+}
+
 .form-item-flex {
     display: flex;
     width: max-content;

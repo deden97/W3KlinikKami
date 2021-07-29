@@ -30,6 +30,7 @@
     <Property Name="JABATAN" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="TB_AKUN" Relationship="Self.FK__TB_AKUN__ID__2A4B4B5E" FromRole="TB_USER" ToRole="TB_AKUN" />
     <NavigationProperty Name="TB_JABATAN" Relationship="Self.FK__TB_USER__JABATAN__276EDEB3" FromRole="TB_USER" ToRole="TB_JABATAN" />
+    <Property Name="TERDAFTAR" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
   <Association Name="FK__TB_AKUN__ID__2A4B4B5E">
     <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="1" />

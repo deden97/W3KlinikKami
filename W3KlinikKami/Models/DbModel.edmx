@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="TB_AKUN">
           <Key>
             <PropertyRef Name="ID" />
@@ -31,6 +31,7 @@
           <Property Name="ALAMAT" Type="text" Nullable="false" />
           <Property Name="FOTO" Type="nvarchar(max)" />
           <Property Name="JABATAN" Type="nvarchar" MaxLength="10" />
+          <Property Name="TERDAFTAR" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK__TB_AKUN__ID__2A4B4B5E">
           <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="1" />
@@ -69,8 +70,7 @@
             <End Role="TB_USER" EntitySet="TB_USER" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -104,6 +104,7 @@
           <Property Name="JABATAN" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TB_AKUN" Relationship="Self.FK__TB_AKUN__ID__2A4B4B5E" FromRole="TB_USER" ToRole="TB_AKUN" />
           <NavigationProperty Name="TB_JABATAN" Relationship="Self.FK__TB_USER__JABATAN__276EDEB3" FromRole="TB_USER" ToRole="TB_JABATAN" />
+          <Property Name="TERDAFTAR" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK__TB_AKUN__ID__2A4B4B5E">
           <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="1" />
@@ -168,6 +169,7 @@
           <EntitySetMapping Name="TB_USER">
             <EntityTypeMapping TypeName="Models.TB_USER">
               <MappingFragment StoreEntitySet="TB_USER">
+                <ScalarProperty Name="TERDAFTAR" ColumnName="TERDAFTAR" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="NAMA" ColumnName="NAMA" />
                 <ScalarProperty Name="JENIS_KELAMIN" ColumnName="JENIS_KELAMIN" />

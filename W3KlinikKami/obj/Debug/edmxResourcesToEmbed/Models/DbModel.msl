@@ -21,6 +21,7 @@
     <EntitySetMapping Name="TB_USER">
       <EntityTypeMapping TypeName="Models.TB_USER">
         <MappingFragment StoreEntitySet="TB_USER">
+          <ScalarProperty Name="TERDAFTAR" ColumnName="TERDAFTAR" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAMA" ColumnName="NAMA" />
           <ScalarProperty Name="JENIS_KELAMIN" ColumnName="JENIS_KELAMIN" />

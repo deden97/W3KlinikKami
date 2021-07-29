@@ -4,7 +4,7 @@
 
 @* Nama Lengkap *@
 <div class="input-daftar-akun-container">
-    @Html.EditorFor(model => model.NAMA, new { htmlAttributes = new { @placeholder = "Nama Lengkap", @autocomplete = "off" } })
+    @Html.EditorFor(model => model.NAMA, new { htmlAttributes = new { @placeholder = "Nama Lengkap", @autocomplete = "off", @autofocus = "true" } })
     @Html.ValidationMessageFor(model => model.NAMA, "", new { @class = "text-danger" })
 </div>
 

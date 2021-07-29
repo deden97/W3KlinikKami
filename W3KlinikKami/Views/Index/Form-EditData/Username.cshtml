@@ -12,16 +12,18 @@
 
         @* username baru *@
         <div class="form-item">
+            <div class="label-form-item">@Html.Label("Username Baru", new { @for = "USERNAME" })</div>
             @Html.TextBoxFor(model => model.USERNAME, null, new { @placeholder = "Username Baru", @autocomplete = "off", @autofocus = "true" })
             @Html.ValidationMessageFor(model => model.USERNAME, "", new { @class = "text-error" })
         </div>
 
         @* Password *@
         <div class="form-item">
-            @Html.PasswordFor(model => model.PASSWORD_AKUN, new { @placeholder = "Password Saat Ini", @id = "pss" })
+            <div class="label-form-item">@Html.Label("Password Saat Ini", new { @for = "PASSWORD_AKUN" })</div>
+            @Html.PasswordFor(model => model.PASSWORD_AKUN, new { @placeholder = "Password Saat Ini" })
             @Html.ValidationMessageFor(model => model.PASSWORD_AKUN, "", new { @class = "text-error" })
             <div class="form-item-flex">
-                @Html.CheckBox("ShowPassword", false, new { @id = "sp", @onclick = "ckbShowPassword(this.checked, 'pss')" })
+                @Html.CheckBox("ShowPassword", false, new { @id = "sp", @onclick = "ckbShowPassword(this.checked, 'PASSWORD_AKUN')" })
                 @Html.Label("Show Password", new { @for = "sp" })
             </div>
         </div>

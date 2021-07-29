@@ -12,28 +12,27 @@
 
         @* nama lengkap *@
         <div class="form-item">
-            @Html.TextBoxFor(model => model.NAMA, null, new { @placeholder = "Username", @autocomplete = "off" })
+            <div class="label-form-item">@Html.LabelFor(model => model.NAMA)</div>
+            @Html.TextBoxFor(model => model.NAMA, null, new { @placeholder = "Nama Lengkap", @autocomplete = "off" })
             @Html.ValidationMessageFor(model => model.NAMA, "", new { @class = "text-error" })
         </div>
 
         @* jenis kelamin *@
         <div class="form-item">
-            @Html.DropDownList("JENIS_KELAMIN", new List<SelectListItem>()
-            {
-                new SelectListItem{Text = "Pria", Value = "Pria", Selected = Model.JENIS_KELAMIN == "Pria"},
-                new SelectListItem{Text = "Wanita", Value = "Wanita", Selected = Model.JENIS_KELAMIN == "Wanita"}
-            }, "--Jenis Kelamin--")
-            @Html.ValidationMessageFor(model => model.JENIS_KELAMIN, "", new { @class = "text-error" })
+            <div class="label-form-item">@Html.LabelFor(model => model.JENIS_KELAMIN)</div>
+            @Html.TextBoxFor(model => model.JENIS_KELAMIN, new { @readonly = "true", @title = "Jenis Kelamin Tidak Bisa Diubah" })
         </div>
 
         @* nomor HP *@
         <div class="form-item">
+            <div class="label-form-item">@Html.LabelFor(model => model.NO_HP)</div>
             @Html.TextBoxFor(model => model.NO_HP, null, new { @placeholder = "Nomor HP", @type = "number", @autocomplete = "off" })
             @Html.ValidationMessageFor(model => model.NO_HP, "", new { @class = "text-error" })
         </div>
 
         @* alamat *@
         <div class="form-item">
+            <div class="label-form-item">@Html.LabelFor(model => model.ALAMAT)</div>
             @Html.TextAreaFor(model => model.ALAMAT, new { @placeholder = "Alamat" })
             @Html.ValidationMessageFor(model => model.ALAMAT, "", new { @class = "text-error" })
         </div>
@@ -41,14 +40,22 @@
         @* foto *@
         <div class="form-item">
             <img src="@Url.Content(String.IsNullOrEmpty(Model.FOTO) ? "~/image/profile_user.png" : Model.FOTO)" alt="Foto Profil-@Model.NAMA" title="Foto Profil-@Model.NAMA" />
-            @Html.LabelFor(Model => Model.FOTO, "Ganti Foto Profil", new { @title = "Foto Akan Diupdate Setelah Submit." })
+            <div class="label-form-item">
+                @Html.LabelFor(Model => Model.FOTO, "Ganti Foto Profil", new { @title = "Foto Akan Diupdate Setelah Submit." })
+            </div>
             <input type="file" name="FOTO_TERPILIH" id="FOTO" accept="image/*" title="Foto Akan Diupdate Setelah Submit." />
         </div>
 
         @* jabatan *@
         <div class="form-item">
-            @Html.DropDownList("JABATAN", null, "--Jabatan--")
-            @Html.ValidationMessageFor(model => model.JABATAN, "", new { @class = "text-error" })
+            <div class="label-form-item">@Html.LabelFor(model => model.JABATAN)</div>
+            @Html.TextBoxFor(model => model.TB_JABATAN.JABATAN, new { @readonly = "true", @title = "Jabatan Tidak Bisa Diubah" })
+        </div>
+
+        @* Terdaftar *@
+        <div class="form-item">
+            <div class="label-form-item">@Html.LabelFor(model => model.TERDAFTAR)</div>
+            @Html.TextBoxFor(model => model.TERDAFTAR, new { @readonly = "true", @title = "Terdaftar Tidak Bisa Diubah" })
         </div>
 
         <div class="form-item">

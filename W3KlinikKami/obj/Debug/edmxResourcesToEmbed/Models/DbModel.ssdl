@@ -26,6 +26,7 @@
     <Property Name="ALAMAT" Type="text" Nullable="false" />
     <Property Name="FOTO" Type="nvarchar(max)" />
     <Property Name="JABATAN" Type="nvarchar" MaxLength="10" />
+    <Property Name="TERDAFTAR" Type="datetime" Nullable="false" />
   </EntityType>
   <Association Name="FK__TB_AKUN__ID__2A4B4B5E">
     <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="1" />
