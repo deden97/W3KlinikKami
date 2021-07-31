@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using W3KlinikKami.Models;
+using System.Data.Entity;
+using W3KlinikKami.Messege;
 
 namespace W3KlinikKami.Controllers
 {
@@ -33,11 +35,14 @@ namespace W3KlinikKami.Controllers
             if (this.CekSession())
             {
                 ViewBag.ModePenanganan = PenangananPasien.DaftarPasienBaru.ToString();
-                return View(this.db.TB_USER.Find(this.id));
+                ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
+                ViewBag.DT_PASIEN = new TB_PASIEN();
+                return View();
             }
             else
             {
-                return RedirectToAction("Login", "Index");
+                FlashMessage.TemFlashMessageLogin();
+                return RedirectToAction("Index", "Index");
             }
         }
 
@@ -46,19 +51,70 @@ namespace W3KlinikKami.Controllers
             if (this.CekSession())
             {
                 string tanganiPasien = Request.QueryString["tangani"];
+
+                // jika mode penanganan pasien tidak ada yang sesuai
                 if (tanganiPasien != PenangananPasien.DaftarPasienBaru.ToString() &&
                     tanganiPasien != PenangananPasien.BerobatPasien.ToString() &&
                     tanganiPasien != PenangananPasien.PengambilanObat.ToString())
                 {
                     return new HttpNotFoundResult();
                 }
+                else
+                {
+                    // jika ModePenanganan = BerobatPasien || PengambilanObat
+                    if (tanganiPasien == PenangananPasien.BerobatPasien.ToString() ||
+                        tanganiPasien == PenangananPasien.PengambilanObat.ToString())
+                    {
+                        ViewData["DT_PASIEN"] = this.db.TB_PASIEN.ToList();
+                    }
+                }
+
+                // ModePenanganan untuk menentukan 'menu'
                 ViewBag.ModePenanganan = tanganiPasien;
-                return View("Index", this.db.TB_USER.Find(this.id));
+
+                // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
+                ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
+                return View("Index");
             }
             else
             {
+                FlashMessage.TemFlashMessageLogin();
                 return RedirectToAction("Index", "Index");
             }
+        }
+
+        public ActionResult DaftarPasienBaru([Bind(Exclude = "ID, TERDAFTAR")] TB_PASIEN dt)
+        {
+            if (!this.CekSession())
+            {
+                FlashMessage.TemFlashMessageLogin();
+                return RedirectToAction("Index", "Index");
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    dt.TERDAFTAR = DateTime.Now;
+                    this.db.Entry(dt).State = EntityState.Added;
+                    this.db.SaveChanges();
+
+                    FlashMessage.SetFlashMessage("Data Pasien Berhasil Disimpan.",
+                        FlashMessage.FlashMessageType.Success,
+                        FlashMessage.Page.Off);
+                }
+                catch(Exception e)
+                {
+                    e.ToString();
+                }
+            }
+
+            // ModePenanganan untuk menentukan 'menu'
+            ViewBag.ModePenanganan = PenangananPasien.DaftarPasienBaru.ToString();
+
+            // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
+            ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
+            return View("Index");
         }
     }
 }

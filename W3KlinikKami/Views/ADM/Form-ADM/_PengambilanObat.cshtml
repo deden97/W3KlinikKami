@@ -1,0 +1,13 @@
+﻿@model IEnumerable<TB_PASIEN>
+@using W3KlinikKami.Messege
+
+<p>
+    pengambilan obat
+</p>
+
+@{ 
+    if(FlashMessage.PageDestination == FlashMessage.Page.PengambilanObat)
+    {
+        Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
+    }
+}

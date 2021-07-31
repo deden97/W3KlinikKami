@@ -301,3 +301,39 @@ input[type="checkbox"] {
     font-weight: bold;
     color: red;
 }
+
+/* background color -> white smoke */
+.bg-clr-ws {
+    border-radius: 15px;
+    background-color: whitesmoke;
+    padding: 5px;
+}
+
+.foto-profil {
+    width: 60px;
+    height: 60px;
+    border: 2px solid black;
+    border-radius: 50px;
+    margin: 2px 2px;
+}
+
+.margin-bottom-10px {
+    margin-bottom: 10px;
+}
+
+.width-200px {
+    width: 200px;
+}
+
+.notif-btn-submenu {
+    position: absolute;
+    padding: 2px 6px;
+    border: 2px solid black;
+    border-radius: 50%;
+    background-color: orangered;
+    color: azure;
+    width: max-content;
+    height: max-content;
+    right: 1px;
+    top: 1px;
+}

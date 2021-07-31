@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using W3KlinikKami.Models;
 using System.Text;
 using System.Data.Entity;
+using W3KlinikKami.Messege;
 
 namespace W3KlinikKami.Controllers
 {
@@ -74,7 +75,7 @@ namespace W3KlinikKami.Controllers
         {
             if (this.CekSession())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Index");
             }
             else
             {
@@ -83,7 +84,7 @@ namespace W3KlinikKami.Controllers
             }
         }
 
-        // DaftarAkunBaru Get menerima dan menyimpan data baru.
+        // DaftarAkunBaru Post menerima dan menyimpan data baru.
         [HttpPost]
         public ActionResult DaftarAkunBaru([Bind(Exclude = "ID, FOTO")] TB_USER dt)
         {
@@ -97,6 +98,7 @@ namespace W3KlinikKami.Controllers
                         dt.TERDAFTAR = DateTime.Now;
                         this.db.TB_USER.Add(dt);
                         this.db.SaveChanges();
+                        FlashMessage.TemFlashMessageLogin();
                         return RedirectToAction("Login");
                     }
                     else // jika username sudah terdaftar
@@ -125,6 +127,7 @@ namespace W3KlinikKami.Controllers
             }
             else
             {
+                FlashMessage.TemFlashMessageLogin();
                 return RedirectToAction("Login");
             }
         }
@@ -134,7 +137,11 @@ namespace W3KlinikKami.Controllers
         public ActionResult EditData([Bind(Include = "NAMA, NO_HP, ALAMAT, FOTO, FOTO_TERPILIH")] TB_USER dt)
         {
             // cek session -> ID, jika belum login diarahkan ke form login
-            if (!this.CekSession()) return RedirectToAction("Login");
+            if (!this.CekSession())
+            {
+                FlashMessage.TemFlashMessageLogin();
+                return RedirectToAction("Login");
+            }
 
             try
             {
@@ -186,6 +193,7 @@ namespace W3KlinikKami.Controllers
             }
             else
             {
+                FlashMessage.TemFlashMessageLogin();
                 return RedirectToAction("Login");
             }
         }
@@ -195,7 +203,11 @@ namespace W3KlinikKami.Controllers
         public ActionResult EditUsername([Bind(Exclude = "ID, TB_USER")] TB_AKUN dt)
         {
             // cek session -> ID, jika belum login diarahkan ke form login
-            if (!this.CekSession()) return RedirectToAction("Login");
+            if (!this.CekSession())
+            {
+                FlashMessage.TemFlashMessageLogin();
+                return RedirectToAction("Login");
+            }
 
             if (ModelState.IsValid)
             {
@@ -232,6 +244,7 @@ namespace W3KlinikKami.Controllers
             }
             else
             {
+                FlashMessage.TemFlashMessageLogin();
                 return RedirectToAction("Login");
             }
         }
@@ -241,7 +254,11 @@ namespace W3KlinikKami.Controllers
         public ActionResult EditPassword([Bind(Exclude = "ID, USERNAME, TB_USER")] TB_AKUN dt)
         {
             // cek session -> ID, jika belum login diarahkan ke form login
-            if(!this.CekSession()) return RedirectToAction("Login");
+            if(!this.CekSession())
+            {
+                FlashMessage.TemFlashMessageLogin();
+                return RedirectToAction("Login");
+            }
 
             try
             {

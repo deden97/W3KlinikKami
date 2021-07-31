@@ -15,6 +15,19 @@
     <Property Name="KODE_JABATAN" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="JABATAN" Type="varchar" MaxLength="30" Nullable="false" />
   </EntityType>
+  <EntityType Name="TB_PASIEN">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAMA" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="JENIS_KELAMIN" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="TANGGAL_LAHIR" Type="date" Nullable="false" />
+    <Property Name="GOLONGAN_DARAH" Type="nvarchar" MaxLength="5" />
+    <Property Name="NO_HP" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="ALAMAT" Type="text" Nullable="false" />
+    <Property Name="TERDAFTAR" Type="datetime" Nullable="false" />
+  </EntityType>
   <EntityType Name="TB_USER">
     <Key>
       <PropertyRef Name="ID" />
@@ -55,6 +68,7 @@
   <EntityContainer Name="ModelsStoreContainer">
     <EntitySet Name="TB_AKUN" EntityType="Self.TB_AKUN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_JABATAN" EntityType="Self.TB_JABATAN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_PASIEN" EntityType="Self.TB_PASIEN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_USER" EntityType="Self.TB_USER" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__TB_AKUN__ID__2A4B4B5E" Association="Self.FK__TB_AKUN__ID__2A4B4B5E">
       <End Role="TB_USER" EntitySet="TB_USER" />

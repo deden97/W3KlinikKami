@@ -10,6 +10,7 @@
         <EntityTypeShape EntityType="Models.TB_USER" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="Models.FK__TB_AKUN__ID__2A4B4B5E" ManuallyRouted="false" />
         <AssociationConnector Association="Models.FK__TB_USER__JABATAN__276EDEB3" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Models.TB_PASIEN" Width="1.5" PointX="0.75" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

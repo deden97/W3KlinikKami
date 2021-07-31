@@ -32,5 +32,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TB_PASIEN">
+      <EntityTypeMapping TypeName="Models.TB_PASIEN">
+        <MappingFragment StoreEntitySet="TB_PASIEN">
+          <ScalarProperty Name="TERDAFTAR" ColumnName="TERDAFTAR" />
+          <ScalarProperty Name="ALAMAT" ColumnName="ALAMAT" />
+          <ScalarProperty Name="NO_HP" ColumnName="NO_HP" />
+          <ScalarProperty Name="GOLONGAN_DARAH" ColumnName="GOLONGAN_DARAH" />
+          <ScalarProperty Name="TANGGAL_LAHIR" ColumnName="TANGGAL_LAHIR" />
+          <ScalarProperty Name="JENIS_KELAMIN" ColumnName="JENIS_KELAMIN" />
+          <ScalarProperty Name="NAMA" ColumnName="NAMA" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
