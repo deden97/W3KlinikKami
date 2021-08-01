@@ -50,7 +50,7 @@
         </td>
         <td class="custom-link">
             @Html.ActionLink("Buat Kartu Pasien", "KartuPasien.aspx", "Report", new { @Id_Pasien = item.ID }, new { @target = "_blank" }) |
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Edit", "DataPasien_Edit", "ADM", new { id = item.ID }, null) |
             <button type="button" onclick="tes('@item.ID')">Detail</button> |
             @Html.ActionLink("Delete", "Delete", new { id = item.ID })
             

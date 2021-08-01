@@ -43,45 +43,6 @@ namespace W3KlinikKami.Controllers
             }
         }
 
-        //public ActionResult TanganiPasien()
-        //{
-        //    if (this.CekSession())
-        //    {
-        //        string tanganiPasien = Request.QueryString["tangani"];
-
-        //        // jika mode penanganan pasien tidak ada yang sesuai
-        //        if (tanganiPasien != PenangananPasien.DaftarPasienBaru.ToString() &&
-        //            tanganiPasien != PenangananPasien.BerobatPasien.ToString() &&
-        //            tanganiPasien != PenangananPasien.PengambilanObat.ToString() &&
-        //            tanganiPasien != PenangananPasien.DataPasien.ToString())
-        //        {
-        //            return new HttpNotFoundResult();
-        //        }
-        //        else
-        //        {
-        //            // jika ModePenanganan = BerobatPasien || PengambilanObat || DataPasien
-        //            if (tanganiPasien == PenangananPasien.BerobatPasien.ToString() ||
-        //                tanganiPasien == PenangananPasien.PengambilanObat.ToString() ||
-        //                tanganiPasien == PenangananPasien.DataPasien.ToString())
-        //            {
-        //                ViewData["DT_PASIEN"] = this.db.TB_PASIEN.ToList();
-        //            }
-        //        }
-
-        //        // ModePenanganan untuk menentukan 'menu'
-        //        ViewBag.ModePenanganan = tanganiPasien;
-
-        //        // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
-        //        ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
-        //        return View("Index");
-        //    }
-        //    else
-        //    {
-        //        FlashMessage.TemFlashMessageLogin();
-        //        return RedirectToAction("Index", "Index");
-        //    }
-        //}
-
         public ActionResult DaftarPasienBaru()
         {
             if (this.CekSession())
@@ -185,6 +146,19 @@ namespace W3KlinikKami.Controllers
                 // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
                 ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
                 return View("Index");
+            }
+            else
+            {
+                FlashMessage.TemFlashMessageLogin();
+                return RedirectToAction("Index", "Index");
+            }
+        }
+
+        public ActionResult DataPasien_Edit(int id)
+        {
+            if (this.CekSession())
+            {
+                return View(this.db.TB_PASIEN.Find(id));
             }
             else
             {

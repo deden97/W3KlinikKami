@@ -3,10 +3,7 @@
 
 <div class="form-content">
     @{ 
-        if(FlashMessage.PageDestination == FlashMessage.Page.EditData)
-        {
-            Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
-        }
+        Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
     }
     @using (Html.BeginForm("EditData", "Index", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {

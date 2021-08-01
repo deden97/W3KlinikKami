@@ -332,12 +332,14 @@
     <Content Include="Views\Index\Form-EditData\Password.cshtml" />
     <Content Include="Views\ADM\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\ADM\Form-ADM\_DaftarPasienBaru.cshtml" />
-    <Content Include="Views\ADM\Form-ADM\_BerobatPasien.cshtml" />
-    <Content Include="Views\ADM\Form-ADM\_PengambilanObat.cshtml" />
+    <Content Include="Views\ADM\_DaftarPasienBaru.cshtml" />
+    <Content Include="Views\ADM\_BerobatPasien.cshtml" />
+    <Content Include="Views\ADM\_PengambilanObat.cshtml" />
     <Content Include="Views\Shared\FlashMessage.cshtml" />
-    <Content Include="Views\ADM\Form-ADM\_DataPasien.cshtml" />
+    <Content Include="Views\ADM\_DataPasien.cshtml" />
     <Content Include="Views\DKR\Index.cshtml" />
+    <Content Include="Views\ADM\Form\DataPasien.cshtml" />
+    <Content Include="Views\ADM\DataPasien_Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

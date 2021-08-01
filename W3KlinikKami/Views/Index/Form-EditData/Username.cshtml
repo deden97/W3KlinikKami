@@ -3,10 +3,7 @@
 
 <div class="form-content">
     @{
-        if (FlashMessage.PageDestination == FlashMessage.Page.EditUsername)
-        {
-            Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
-        }
+        Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
     }
     @using (Html.BeginForm("EditUsername", "Index", FormMethod.Post))
     {

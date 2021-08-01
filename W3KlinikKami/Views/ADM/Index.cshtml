@@ -50,7 +50,7 @@
                 1. sesuai dengan 'ViewBag.ModePenanganan' yg sudah ditentukan pada controller 'ADMController/TanganiPasien()',
                 2. ViewData["DT_PASIEN"] berisi model item dari TB_PASIEN.
             *@
-            @Html.Partial($"~/Views/ADM/Form-ADM/_{ViewBag.ModePenanganan}.cshtml", ViewData["DT_PASIEN"])
+            @Html.Partial($"~/Views/ADM/_{ViewBag.ModePenanganan}.cshtml", ViewData["DT_PASIEN"])
         </div>
     </div>
 </div>
