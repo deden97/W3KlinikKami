@@ -1,24 +1,25 @@
 ﻿@using W3KlinikKami.Messege
-<link href="~/Content/Shared/FlashMessage.css" rel="stylesheet" />
-<script type="text/javascript">
-    function CloseFM(idFm) {
-        document.getElementById(idFm).style.display = 'none';
-    }
-</script>
+
 @{
     string msg = FlashMessage.Message;
     if (!string.IsNullOrEmpty(msg))
     {
         if (FlashMessage.SelectedType != FlashMessage.FlashMessageType.Off)
         {
+            <link href="~/Content/Shared/FlashMessage.css" rel="stylesheet" />
+            <script type="text/javascript">
+                function CloseFM(idFm) {
+                    document.getElementById(idFm).style.display = 'none';
+                }
+            </script>
+
             <div class="fm-container fm-@FlashMessage.SelectedType.ToString().ToLower() " id="fm">
                 @msg
-                <div class="fm-close" onclick="CloseFM('fm')">X</div>
+                <div class="fm-close" onclick="CloseFM('fm')" title="Close">X</div>
             </div>
         }
     }
 
     FlashMessage.Message = "";
-    FlashMessage.PageDestination = FlashMessage.Page.Off;
     FlashMessage.SelectedType = FlashMessage.FlashMessageType.Off;
 }

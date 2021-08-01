@@ -9,9 +9,9 @@ namespace W3KlinikKami.Controllers
     public class DKRController : Controller
     {
         // GET: DKR
-        public string Index()
+        public ActionResult Index()
         {
-            return "dkr";
+            return View();
         }
     }
 }

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsDataPasien" targetNamespace="http://tempuri.org/dsDataPasien.xsd" xmlns:mstns="http://tempuri.org/dsDataPasien.xsd" xmlns="http://tempuri.org/dsDataPasien.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsDataPasien" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsDataPasien" msprop:Generator_UserDSName="dsDataPasien">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tb_DataPasien" msprop:Generator_TableClassName="tb_DataPasienDataTable" msprop:Generator_TableVarName="tabletb_DataPasien" msprop:Generator_TablePropName="tb_DataPasien" msprop:Generator_RowDeletingName="tb_DataPasienRowDeleting" msprop:Generator_RowChangingName="tb_DataPasienRowChanging" msprop:Generator_RowEvHandlerName="tb_DataPasienRowChangeEventHandler" msprop:Generator_RowDeletedName="tb_DataPasienRowDeleted" msprop:Generator_UserTableName="tb_DataPasien" msprop:Generator_RowChangedName="tb_DataPasienRowChanged" msprop:Generator_RowEvArgName="tb_DataPasienRowChangeEvent" msprop:Generator_RowClassName="tb_DataPasienRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" minOccurs="0" />
+              <xs:element name="NAMA" msprop:Generator_ColumnVarNameInTable="columnNAMA" msprop:Generator_ColumnPropNameInRow="NAMA" msprop:Generator_ColumnPropNameInTable="NAMAColumn" msprop:Generator_UserColumnName="NAMA" type="xs:string" minOccurs="0" />
+              <xs:element name="JENIS_KELAMIN" msprop:Generator_ColumnVarNameInTable="columnJENIS_KELAMIN" msprop:Generator_ColumnPropNameInRow="JENIS_KELAMIN" msprop:Generator_ColumnPropNameInTable="JENIS_KELAMINColumn" msprop:Generator_UserColumnName="JENIS_KELAMIN" type="xs:string" minOccurs="0" />
+              <xs:element name="TANGGAL_LAHIR" msprop:Generator_ColumnVarNameInTable="columnTANGGAL_LAHIR" msprop:Generator_ColumnPropNameInRow="TANGGAL_LAHIR" msprop:Generator_ColumnPropNameInTable="TANGGAL_LAHIRColumn" msprop:Generator_UserColumnName="TANGGAL_LAHIR" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="GOLONGAN_DARAH" msprop:Generator_ColumnVarNameInTable="columnGOLONGAN_DARAH" msprop:Generator_ColumnPropNameInRow="GOLONGAN_DARAH" msprop:Generator_ColumnPropNameInTable="GOLONGAN_DARAHColumn" msprop:Generator_UserColumnName="GOLONGAN_DARAH" type="xs:string" minOccurs="0" />
+              <xs:element name="NOMOR_HP" msprop:Generator_ColumnVarNameInTable="columnNOMOR_HP" msprop:Generator_ColumnPropNameInRow="NOMOR_HP" msprop:Generator_ColumnPropNameInTable="NOMOR_HPColumn" msprop:Generator_UserColumnName="NOMOR_HP" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ALAMAT" msprop:Generator_ColumnVarNameInTable="columnALAMAT" msprop:Generator_ColumnPropNameInRow="ALAMAT" msprop:Generator_ColumnPropNameInTable="ALAMATColumn" msprop:Generator_UserColumnName="ALAMAT" type="xs:string" minOccurs="0" />
+              <xs:element name="TERDAFTAR" msprop:Generator_ColumnVarNameInTable="columnTERDAFTAR" msprop:Generator_ColumnPropNameInRow="TERDAFTAR" msprop:Generator_ColumnPropNameInTable="TERDAFTARColumn" msprop:Generator_UserColumnName="TERDAFTAR" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

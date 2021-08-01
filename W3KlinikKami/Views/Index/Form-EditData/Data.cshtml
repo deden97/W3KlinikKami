@@ -1,6 +1,13 @@
 ﻿@model W3KlinikKami.Models.TB_USER
+@using W3KlinikKami.Messege
 
 <div class="form-content">
+    @{ 
+        if(FlashMessage.PageDestination == FlashMessage.Page.EditData)
+        {
+            Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
+        }
+    }
     @using (Html.BeginForm("EditData", "Index", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()

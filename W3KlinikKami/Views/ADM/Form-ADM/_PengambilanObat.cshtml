@@ -6,8 +6,5 @@
 </p>
 
 @{ 
-    if(FlashMessage.PageDestination == FlashMessage.Page.PengambilanObat)
-    {
-        Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
-    }
+    Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
 }

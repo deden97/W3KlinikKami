@@ -1,0 +1,180 @@
+﻿@model IEnumerable<W3KlinikKami.Models.TB_PASIEN>
+
+@{ 
+    Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
+}
+
+<div class="form-item">
+    <h3><u>Data Pasien</u></h3>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NAMA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JENIS_KELAMIN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TANGGAL_LAHIR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NO_HP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ALAMAT)
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NAMA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JENIS_KELAMIN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TANGGAL_LAHIR)
+        </td>
+        <td>
+            +62
+            @Html.DisplayFor(modelItem => item.NO_HP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ALAMAT)
+        </td>
+        <td class="custom-link">
+            @Html.ActionLink("Buat Kartu Pasien", "KartuPasien.aspx", "Report", new { @Id_Pasien = item.ID }, new { @target = "_blank" }) |
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            <button type="button" onclick="tes('@item.ID')">Detail</button> |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            
+            
+        </td>
+
+</tr>
+}
+</table>
+
+<script type="text/javascript">
+    function tes(id) {
+        document.getElementById(id).style.display = 'grid';
+    }
+
+    function close(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+</script>
+
+<style type="text/css">
+    .modal-kw-dialog {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        background: rgba(0, 136, 169, 0.59);
+    }
+
+    .modal-kw-content {
+        position: relative;
+        background-color: whitesmoke;
+        border: 2px solid black;
+        border-radius: 15px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    .close-modal-kw-dialog {
+        position: absolute;
+        margin: 0px 5px;
+        top: 5px;
+        right: 5px;
+        cursor: pointer;
+        color: dimgray;
+        font-size: 15pt;
+    }
+
+    .close-modal-kw-dialog:hover {
+        color: black;
+    }
+</style>
+
+@foreach(var item in Model) {
+    <div id="@item.ID" class="modal-kw-dialog" style="display: none">
+        <div class="modal-kw-content">
+            <div class="close-modal-kw-dialog" onclick="document.getElementById('@item.ID').style.display = 'none'" title="">
+                X
+            </div>
+            @using (Html.BeginForm("DaftarPasienBaru", "ADM", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-error" })
+            }
+                @* ID *@
+                <div class="form-item">
+                    <div class="label-form-item">@Html.DisplayNameFor(model => model.ID)</div>
+                    <input type="text" name="ID" value="@item.ID" readonly />
+                </div>
+
+                @* Nama *@
+                <div class="form-item">
+                    <div class="label-form-item">@Html.DisplayNameFor(model => model.NAMA)</div>
+                    <input type="text" name="NAMA" value="@item.NAMA" readonly />
+                </div>
+
+                @* jenis kelamin *@
+                <div class="form-item">
+                    <div class="label-form-item">@Html.DisplayNameFor(model => model.JENIS_KELAMIN)</div>
+                    <input type="text" name="JENIS_KELAMIN" value="@item.JENIS_KELAMIN" readonly />
+                </div>
+
+                @* tanggal lahir *@
+                <div class="form-item">
+                    <div class="label-form-item">@Html.DisplayNameFor(model => model.TANGGAL_LAHIR)</div>
+                    <input type="text" name="TANGGAL_LAHIR" value="@item.TANGGAL_LAHIR.ToString("dd-MM-yyyy")" readonly />
+                </div>
+
+                @* golongan darah *@
+                <div class="form-item">
+                    <div class="label-form-item">@Html.DisplayNameFor(model => model.GOLONGAN_DARAH)</div>
+                    <input type="text" name="GOLONGAN_DARAH" value="@item.GOLONGAN_DARAH" readonly />
+                </div>
+
+                @* nomor hp *@
+                <div class="form-item">
+                    <div class="label-form-item">@Html.DisplayNameFor(model => model.NO_HP)</div>
+                    <input type="text" name="NO_HP" value="@item.NO_HP" readonly />
+                </div>
+
+                @* alamat *@
+                <div class="form-item">
+                    <div class="label-form-item">@Html.DisplayNameFor(model => model.ALAMAT)</div>
+                    @Html.TextBoxFor(modelItem => item.ALAMAT, null, new { @readonly = "true" })
+                </div>
+
+                @* terdaftar *@
+                <div class="form-item">
+                    <div class="label-form-item">@Html.DisplayNameFor(model => model.TERDAFTAR)</div>
+                    <input type="text" name="ID" value="@item.TERDAFTAR" readonly />
+                </div>
+            </div>
+    </div>
+}
+
+<style type="text/css">
+    .custom-link a {
+        text-decoration: none;
+        color: dodgerblue;
+        font-weight: bold;
+    }
+    .custom-link a:hover {
+        color: darkslateblue;
+    }
+</style>

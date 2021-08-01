@@ -173,6 +173,8 @@ namespace W3KlinikKami.Controllers
 
                 this.db.Entry(updateDt).State = EntityState.Modified;
                 this.db.SaveChanges();
+
+                FlashMessage.SetFlashMessage("Perubahan Data Telah Disimpan", FlashMessage.FlashMessageType.Success);
             }
             catch (Exception e)
             {
@@ -218,6 +220,8 @@ namespace W3KlinikKami.Controllers
                     {
                         this.db.Entry(dt).State = EntityState.Modified;
                         this.db.SaveChanges();
+
+                        FlashMessage.SetFlashMessage("Username Berhasil Di-Edit", FlashMessage.FlashMessageType.Success);
                     }
                     else
                     {
@@ -271,6 +275,8 @@ namespace W3KlinikKami.Controllers
                         updateDt.PASSWORD_AKUN = dt.PASSWORD_BARU;
                         this.db.Entry(updateDt).State = EntityState.Modified;
                         this.db.SaveChanges();
+
+                        FlashMessage.SetFlashMessage("Password Berhasil Di-Edit", FlashMessage.FlashMessageType.Success);
                     }
                     else
                     {

@@ -18,10 +18,7 @@
 <body>
     <div class="login-container">
         @{
-            if (FlashMessage.PageDestination == FlashMessage.Page.Login)
-            {
-                Html.RenderPartial("FlashMessage");
-            }
+            Html.RenderPartial("FlashMessage");
         }
         @using (Html.BeginForm())
         {

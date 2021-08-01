@@ -15,18 +15,23 @@
             </div>
         </div>
 
-        <div id="DaftarPasienBaru" class="btn-submenu width-200px" onclick="clickLinkByDiv('daftar')">
-            @Html.ActionLink("Daftar Pasien Baru", "TanganiPasien", "ADM", new { @tangani = "DaftarPasienBaru" }, new { id = "daftar" })
+        <div id="DataPasien" class="btn-submenu width-200px" onclick="clickLinkByDiv('dt-pasien')">
+            @Html.ActionLink("Data Pasien", "DataPasien", "ADM", null, new { id = "dt-pasien" })
         </div>
 
         <div id="BerobatPasien" class="btn-submenu width-200px" onclick="clickLinkByDiv('berobat')">
-            @Html.ActionLink("Berobat Pasien", "TanganiPasien", "ADM", new { @tangani = "BerobatPasien" }, new { id = "berobat" })
+            @Html.ActionLink("Berobat Pasien", "BerobatPasien", "ADM", null, new { id = "berobat" })
         </div>
 
         <div id="PengambilanObat" class="btn-submenu width-200px" onclick="clickLinkByDiv('obat')">
             <div class="notif-btn-submenu" id="notif">10</div>
-            @Html.ActionLink("Pengambilan Obat", "TanganiPasien", "ADM", new { @tangani = "PengambilanObat" }, new { id = "obat" })
+            @Html.ActionLink("Pengambilan Obat", "PengambilanObat", "ADM", null, new { id = "obat" })
         </div>
+
+        <div id="DaftarPasienBaru" class="btn-submenu width-200px" onclick="clickLinkByDiv('daftar')">
+            @Html.ActionLink("Daftar Pasien Baru", "DaftarPasienBaru", "ADM", null, new { id = "daftar" })
+        </div>
+
     </div>
 
     <div class="content-body-content">
@@ -34,7 +39,7 @@
             <input type="text" id="mode" value="@ViewBag.ModePenanganan" hidden />
             <script type="text/javascript">
                 changeClassName(
-                    ["DaftarPasienBaru", "BerobatPasien", "PengambilanObat"],
+                    ["DaftarPasienBaru", "BerobatPasien", "PengambilanObat", "DataPasien"],
                     document.getElementById('mode').value,
                     "btn-submenu width-200px margin-bottom-15px",
                     "btn-submenu-active width-200px margin-bottom-15px"

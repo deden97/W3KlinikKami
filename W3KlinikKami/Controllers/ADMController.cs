@@ -14,7 +14,7 @@ namespace W3KlinikKami.Controllers
         private readonly DbEntities db = new DbEntities();
         private int id { get; set; }
         private string jabatan { get; set; }
-        private enum PenangananPasien { DaftarPasienBaru, BerobatPasien, PengambilanObat }
+        private enum PenangananPasien { DaftarPasienBaru, BerobatPasien, PengambilanObat, DataPasien }
 
         private bool CekSession()
         {
@@ -34,10 +34,7 @@ namespace W3KlinikKami.Controllers
         {
             if (this.CekSession())
             {
-                ViewBag.ModePenanganan = PenangananPasien.DaftarPasienBaru.ToString();
-                ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
-                ViewBag.DT_PASIEN = new TB_PASIEN();
-                return View();
+                return RedirectToAction("DataPasien");
             }
             else
             {
@@ -46,31 +43,51 @@ namespace W3KlinikKami.Controllers
             }
         }
 
-        public ActionResult TanganiPasien()
+        //public ActionResult TanganiPasien()
+        //{
+        //    if (this.CekSession())
+        //    {
+        //        string tanganiPasien = Request.QueryString["tangani"];
+
+        //        // jika mode penanganan pasien tidak ada yang sesuai
+        //        if (tanganiPasien != PenangananPasien.DaftarPasienBaru.ToString() &&
+        //            tanganiPasien != PenangananPasien.BerobatPasien.ToString() &&
+        //            tanganiPasien != PenangananPasien.PengambilanObat.ToString() &&
+        //            tanganiPasien != PenangananPasien.DataPasien.ToString())
+        //        {
+        //            return new HttpNotFoundResult();
+        //        }
+        //        else
+        //        {
+        //            // jika ModePenanganan = BerobatPasien || PengambilanObat || DataPasien
+        //            if (tanganiPasien == PenangananPasien.BerobatPasien.ToString() ||
+        //                tanganiPasien == PenangananPasien.PengambilanObat.ToString() ||
+        //                tanganiPasien == PenangananPasien.DataPasien.ToString())
+        //            {
+        //                ViewData["DT_PASIEN"] = this.db.TB_PASIEN.ToList();
+        //            }
+        //        }
+
+        //        // ModePenanganan untuk menentukan 'menu'
+        //        ViewBag.ModePenanganan = tanganiPasien;
+
+        //        // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
+        //        ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
+        //        return View("Index");
+        //    }
+        //    else
+        //    {
+        //        FlashMessage.TemFlashMessageLogin();
+        //        return RedirectToAction("Index", "Index");
+        //    }
+        //}
+
+        public ActionResult DaftarPasienBaru()
         {
             if (this.CekSession())
             {
-                string tanganiPasien = Request.QueryString["tangani"];
-
-                // jika mode penanganan pasien tidak ada yang sesuai
-                if (tanganiPasien != PenangananPasien.DaftarPasienBaru.ToString() &&
-                    tanganiPasien != PenangananPasien.BerobatPasien.ToString() &&
-                    tanganiPasien != PenangananPasien.PengambilanObat.ToString())
-                {
-                    return new HttpNotFoundResult();
-                }
-                else
-                {
-                    // jika ModePenanganan = BerobatPasien || PengambilanObat
-                    if (tanganiPasien == PenangananPasien.BerobatPasien.ToString() ||
-                        tanganiPasien == PenangananPasien.PengambilanObat.ToString())
-                    {
-                        ViewData["DT_PASIEN"] = this.db.TB_PASIEN.ToList();
-                    }
-                }
-
                 // ModePenanganan untuk menentukan 'menu'
-                ViewBag.ModePenanganan = tanganiPasien;
+                ViewBag.ModePenanganan = PenangananPasien.DaftarPasienBaru;
 
                 // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
                 ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
@@ -83,6 +100,7 @@ namespace W3KlinikKami.Controllers
             }
         }
 
+        [HttpPost]
         public ActionResult DaftarPasienBaru([Bind(Exclude = "ID, TERDAFTAR")] TB_PASIEN dt)
         {
             if (!this.CekSession())
@@ -99,9 +117,7 @@ namespace W3KlinikKami.Controllers
                     this.db.Entry(dt).State = EntityState.Added;
                     this.db.SaveChanges();
 
-                    FlashMessage.SetFlashMessage("Data Pasien Berhasil Disimpan.",
-                        FlashMessage.FlashMessageType.Success,
-                        FlashMessage.Page.Off);
+                    FlashMessage.SetFlashMessage("Data Pasien Berhasil Disimpan.", FlashMessage.FlashMessageType.Success);
                 }
                 catch(Exception e)
                 {
@@ -115,6 +131,66 @@ namespace W3KlinikKami.Controllers
             // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
             ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
             return View("Index");
+        }
+
+        public ActionResult BerobatPasien()
+        {
+            if (this.CekSession())
+            {
+                ViewData["DT_PASIEN"] = this.db.TB_PASIEN.ToList();
+
+                // ModePenanganan untuk menentukan 'menu'
+                ViewBag.ModePenanganan = PenangananPasien.BerobatPasien;
+
+                // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
+                ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
+                return View("Index");
+            }
+            else
+            {
+                FlashMessage.TemFlashMessageLogin();
+                return RedirectToAction("Index", "Index");
+            }
+        }
+
+        public ActionResult PengambilanObat()
+        {
+            if (this.CekSession())
+            {
+                ViewData["DT_PASIEN"] = this.db.TB_PASIEN.ToList();
+
+                // ModePenanganan untuk menentukan 'menu'
+                ViewBag.ModePenanganan = PenangananPasien.PengambilanObat;
+
+                // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
+                ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
+                return View("Index");
+            }
+            else
+            {
+                FlashMessage.TemFlashMessageLogin();
+                return RedirectToAction("Index", "Index");
+            }
+        }
+
+        public ActionResult DataPasien()
+        {
+            if (this.CekSession())
+            {
+                ViewData["DT_PASIEN"] = this.db.TB_PASIEN.ToList();
+
+                // ModePenanganan untuk menentukan 'menu'
+                ViewBag.ModePenanganan = PenangananPasien.DataPasien;
+
+                // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
+                ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
+                return View("Index");
+            }
+            else
+            {
+                FlashMessage.TemFlashMessageLogin();
+                return RedirectToAction("Index", "Index");
+            }
         }
     }
 }

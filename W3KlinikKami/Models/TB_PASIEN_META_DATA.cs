@@ -10,7 +10,6 @@ namespace W3KlinikKami.Models
     [MetadataType(typeof(TB_PASIEN_META_DATA))]
     public partial class TB_PASIEN
     {
-       
     }
 
     public class TB_PASIEN_META_DATA
@@ -31,6 +30,7 @@ namespace W3KlinikKami.Models
         public System.DateTime TANGGAL_LAHIR { get; set; }
 
         [DisplayName("Golongan Darah")]
+        [DisplayFormat(NullDisplayText = "-")]
         public string GOLONGAN_DARAH { get; set; }
 
         [Required(ErrorMessage = "Nomor HP Harus Diisi.")]
