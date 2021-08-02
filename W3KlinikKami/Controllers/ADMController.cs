@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using W3KlinikKami.Models;
 using System.Data.Entity;
 using W3KlinikKami.Messege;
+using PagedList;
+using PagedList.Mvc;
 
 namespace W3KlinikKami.Controllers
 {
@@ -134,11 +136,13 @@ namespace W3KlinikKami.Controllers
             }
         }
 
-        public ActionResult DataPasien()
+        public ActionResult DataPasien(int? page)
         {
             if (this.CekSession())
             {
-                ViewData["DT_PASIEN"] = this.db.TB_PASIEN.ToList();
+                ViewData["DT_PASIEN"] = this.db.TB_PASIEN
+                    .OrderByDescending(d => d.TERDAFTAR)
+                    .ToPagedList(page ?? 1, 3);
 
                 // ModePenanganan untuk menentukan 'menu'
                 ViewBag.ModePenanganan = PenangananPasien.DataPasien;
@@ -154,17 +158,34 @@ namespace W3KlinikKami.Controllers
             }
         }
 
-        public ActionResult DataPasien_Edit(int id)
+        [HttpPost]
+        public ActionResult DataPasien_Edit([Bind(Exclude = "TERDAFTAR")] TB_PASIEN dt, int? page)
         {
-            if (this.CekSession())
-            {
-                return View(this.db.TB_PASIEN.Find(id));
-            }
-            else
+            if (!this.CekSession())
             {
                 FlashMessage.TemFlashMessageLogin();
                 return RedirectToAction("Index", "Index");
             }
+
+            if (ModelState.IsValid)
+            {
+                var tes = "";
+            }
+            else
+            {
+                TempData["ShowIdEdit"] = dt.ID;
+            }
+
+            return RedirectToAction("DataPasien", new { @page = page });
+        }
+
+        [HttpPost]
+        public ActionResult DataPasien_Delete([Bind(Include = "ID")] TB_PASIEN dt)
+        {
+            this.db.Entry(dt).State = EntityState.Deleted;
+            this.db.SaveChanges();
+            FlashMessage.SetFlashMessage("Data Telah Dihapus.", FlashMessage.FlashMessageType.Success);
+            return RedirectToAction("DataPasien");
         }
     }
 }

@@ -13,7 +13,7 @@
                   <TextRun>
                     <Value>W3KlinikKami</Value>
                     <Style>
-                      <FontSize>22pt</FontSize>
+                      <FontSize>20pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <TextDecoration>Underline</TextDecoration>
                     </Style>
@@ -23,8 +23,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Height>1.0445cm</Height>
-            <Width>6.03483cm</Width>
+            <Height>0.89633cm</Height>
+            <Width>5.14583cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -43,7 +43,9 @@
                 <TextRuns>
                   <TextRun>
                     <Value>=Fields!ID.Value</Value>
-                    <Style />
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
                   </TextRun>
                 </TextRuns>
                 <Style>
@@ -52,9 +54,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox3</rd:DefaultName>
-            <Top>1.72692cm</Top>
+            <Top>1.28242cm</Top>
             <Left>2.59173cm</Left>
-            <Height>0.6cm</Height>
+            <Height>0.43067cm</Height>
             <Width>5.84433cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
@@ -75,7 +77,9 @@
                 <TextRuns>
                   <TextRun>
                     <Value>=Fields!NAMA.Value</Value>
-                    <Style />
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
                   </TextRun>
                 </TextRuns>
                 <Style>
@@ -84,9 +88,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>2.39747cm</Top>
+            <Top>1.76247cm</Top>
             <Left>2.59173cm</Left>
-            <Height>0.6cm</Height>
+            <Height>0.43067cm</Height>
             <Width>5.84433cm</Width>
             <ZIndex>2</ZIndex>
             <Style>
@@ -107,7 +111,9 @@
                 <TextRuns>
                   <TextRun>
                     <Value>=Fields!GOLONGAN_DARAH.Value</Value>
-                    <Style />
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
                   </TextRun>
                 </TextRuns>
                 <Style>
@@ -116,9 +122,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox6</rd:DefaultName>
-            <Top>3.06803cm</Top>
+            <Top>2.27428cm</Top>
             <Left>2.59173cm</Left>
-            <Height>0.6cm</Height>
+            <Height>0.43067cm</Height>
             <Width>5.84433cm</Width>
             <ZIndex>3</ZIndex>
             <Style>
@@ -139,16 +145,18 @@
                 <TextRuns>
                   <TextRun>
                     <Value>ID</Value>
-                    <Style />
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
                   </TextRun>
                 </TextRuns>
                 <Style />
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>1.72692cm</Top>
+            <Top>1.28242cm</Top>
             <Left>0.28695cm</Left>
-            <Height>0.6cm</Height>
+            <Height>0.43067cm</Height>
             <Width>1.90733cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
@@ -169,16 +177,18 @@
                 <TextRuns>
                   <TextRun>
                     <Value>Nama</Value>
-                    <Style />
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
                   </TextRun>
                 </TextRuns>
                 <Style />
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>2.39747cm</Top>
+            <Top>1.76247cm</Top>
             <Left>0.28695cm</Left>
-            <Height>0.6cm</Height>
+            <Height>0.43067cm</Height>
             <Width>1.90733cm</Width>
             <ZIndex>5</ZIndex>
             <Style>
@@ -199,16 +209,18 @@
                 <TextRuns>
                   <TextRun>
                     <Value>Gol. Darah</Value>
-                    <Style />
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
                   </TextRun>
                 </TextRuns>
                 <Style />
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>3.06803cm</Top>
+            <Top>2.27428cm</Top>
             <Left>0.28695cm</Left>
-            <Height>0.6cm</Height>
+            <Height>0.43067cm</Height>
             <Width>1.90733cm</Width>
             <ZIndex>6</ZIndex>
             <Style>
@@ -229,16 +241,18 @@
                 <TextRuns>
                   <TextRun>
                     <Value>:</Value>
-                    <Style />
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
                   </TextRun>
                 </TextRuns>
                 <Style />
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>1.72692cm</Top>
+            <Top>1.28242cm</Top>
             <Left>2.26484cm</Left>
-            <Height>0.6cm</Height>
+            <Height>0.43067cm</Height>
             <Width>0.25633cm</Width>
             <ZIndex>7</ZIndex>
             <Style>
@@ -259,16 +273,18 @@
                 <TextRuns>
                   <TextRun>
                     <Value>:</Value>
-                    <Style />
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
                   </TextRun>
                 </TextRuns>
                 <Style />
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>2.39747cm</Top>
+            <Top>1.76247cm</Top>
             <Left>2.26484cm</Left>
-            <Height>0.6cm</Height>
+            <Height>0.43067cm</Height>
             <Width>0.25633cm</Width>
             <ZIndex>8</ZIndex>
             <Style>
@@ -289,18 +305,217 @@
                 <TextRuns>
                   <TextRun>
                     <Value>:</Value>
-                    <Style />
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
                   </TextRun>
                 </TextRuns>
                 <Style />
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>3.06803cm</Top>
+            <Top>2.27428cm</Top>
             <Left>2.26484cm</Left>
-            <Height>0.6cm</Height>
+            <Height>0.43067cm</Height>
             <Width>0.25633cm</Width>
             <ZIndex>9</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox11">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Fields!NOMOR_HP.Value</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                      <Format>0.</Format>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox6</rd:DefaultName>
+            <Top>2.75975cm</Top>
+            <Left>2.59173cm</Left>
+            <Height>0.43067cm</Height>
+            <Width>5.84433cm</Width>
+            <ZIndex>10</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox12">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>No. HP</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>2.75975cm</Top>
+            <Left>0.28695cm</Left>
+            <Height>0.43067cm</Height>
+            <Width>1.90733cm</Width>
+            <ZIndex>11</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox13">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>:</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>2.75975cm</Top>
+            <Left>2.26484cm</Left>
+            <Height>0.43067cm</Height>
+            <Width>0.25633cm</Width>
+            <ZIndex>12</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox14">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Fields!ALAMAT.Value</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox6</rd:DefaultName>
+            <Top>3.26097cm</Top>
+            <Left>2.59173cm</Left>
+            <Height>1.44667cm</Height>
+            <Width>5.84433cm</Width>
+            <ZIndex>13</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox15">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Alamat</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>3.26097cm</Top>
+            <Left>0.28695cm</Left>
+            <Height>0.43067cm</Height>
+            <Width>1.90733cm</Width>
+            <ZIndex>14</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox16">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>:</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>3.26097cm</Top>
+            <Left>2.26484cm</Left>
+            <Height>0.43067cm</Height>
+            <Width>0.25633cm</Width>
+            <ZIndex>15</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>

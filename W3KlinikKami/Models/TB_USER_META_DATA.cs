@@ -29,6 +29,7 @@ namespace W3KlinikKami.Models
         //[MaxLength(18, ErrorMessage = "Maksimal 18 Karakter, Masukan Nomor HP Yang Benar.")]
         [Required(ErrorMessage = "Nomor HP Tidak Boleh Kosong.")]
         [DisplayName("Nomor HP")]
+        [DisplayFormat(DataFormatString = "+62 {0:0}")]
         public decimal NO_HP { get; set; }
 
         [Required(ErrorMessage = "Alamat Tidak Boleh Kosong.")]

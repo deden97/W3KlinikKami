@@ -156,3 +156,7 @@ D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MV
 D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MVC\W3KlinikKami\W3KlinikKami\bin\zh-CHT\Microsoft.ReportViewer.WinForms.resources.dll
 D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MVC\W3KlinikKami\W3KlinikKami\obj\Debug\RdlCompile.cache
 D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MVC\W3KlinikKami\W3KlinikKami\obj\Debug\RdlCompile.compiled
+D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MVC\W3KlinikKami\W3KlinikKami\bin\PagedList.dll
+D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MVC\W3KlinikKami\W3KlinikKami\bin\PagedList.Mvc.dll
+D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MVC\W3KlinikKami\W3KlinikKami\bin\PagedList.xml
+D:\Belajar\CSharp_Latihan-Project\_WebForm-dotnet frameword-Visual Studio\ASP MVC\W3KlinikKami\W3KlinikKami\bin\PagedList.Mvc.xml

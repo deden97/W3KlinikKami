@@ -35,6 +35,7 @@ namespace W3KlinikKami.Models
 
         [Required(ErrorMessage = "Nomor HP Harus Diisi.")]
         [DisplayName("Nomor HP")]
+        [DisplayFormat(DataFormatString = "+62 {0:0}")]
         public decimal NO_HP { get; set; }
 
         [Required(ErrorMessage = "Alamat Harus Diisi.")]

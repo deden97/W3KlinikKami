@@ -23,13 +23,15 @@
 
 @* tanggal lahir *@
 <div class="form-item">
-
+    @{ 
+        int clsDate = Model != null ? Model.ID : 0;
+    }
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.6.0.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script type="text/javascript">
         $(function () {
-            $('#date').datepicker({
+            $('#date-@clsDate').datepicker({
                 defaultDate: new Date(),
                 dateFormat: "dd-mm-yy",
                 yearRange: "1940:" + new Date().getFullYear,
@@ -59,8 +61,8 @@
     @Html.TextBoxFor(
         model => model.TANGGAL_LAHIR,
         ViewData.TemplateInfo.FormattedModelValue.ToString(),
-        new { @id = "date", @autocomplete = "off" })
-    @Html.ValidationMessageFor(model => model.JENIS_KELAMIN, "", new { @class = "text-error" })
+        new { @id = $"date-{clsDate}", @autocomplete = "off" })
+    @Html.ValidationMessageFor(model => model.TANGGAL_LAHIR, "", new { @class = "text-error" })
 </div>
 
 @* golongan darah *@
@@ -78,7 +80,8 @@
 @* nomor HP *@
 <div class="form-item">
     <div class="label-form-item">@Html.LabelFor(model => model.NO_HP)</div>
-    @Html.EditorFor(model => model.NO_HP, new { htmlAttributes = new { @type = "number", @placeholder = "Nomor HP", @autocomplete = "off" } })
+    @*@Html.EditorFor(model => model.NO_HP, new { htmlAttributes = new { @type = "number", @placeholder = "Nomor HP", @autocomplete = "off" } })*@
+    @Html.TextBoxFor(model => model.NO_HP, null, new { @placeholder = "Nomor HP", @type = "number", @autocomplete = "off" })
     @Html.ValidationMessageFor(model => model.NO_HP, "", new { @class = "text-error" })
 </div>
 
