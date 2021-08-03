@@ -3,99 +3,180 @@
 @using PagedList.Mvc;
 @{
     Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
+    int pageSts = (Convert.ToInt32(Request.QueryString["page"]) < 1) ? 1 : Convert.ToInt32(Request.QueryString["page"]);
+    string search = Request.QueryString["search"] ?? "";
+    int pageSize = (Convert.ToInt32(Request.QueryString["pageSize"]) < 1) ? 5 : Convert.ToInt32(Request.QueryString["pageSize"]);
 }
 
 <div class="form-item">
     <h3><u>Data Pasien</u></h3>
 </div>
 
-<style type="text/css">
-    .table-csm {
-        width: 100%;
-        background-color: azure;
-        border-collapse: collapse;
-        text-align: center;
+<div class="form-item-flex flex-sb-w100persen">
+    <div>
+        <b>order by</b>
+        @Html.DropDownList("order", new List<SelectListItem>()
+        {
+            new SelectListItem{Text="tes1", Value="1"},
+            new SelectListItem{Text="tes2", Value="2"}
+        }, new { @onchange = "alert(this.value)", @class = "dr-kw" })
+
+        <b>row data</b>
+        @Html.DropDownList("pageSize", new List<SelectListItem>()
+        {
+            new SelectListItem{Text="3", Value="3"},
+            new SelectListItem{Text="5", Value="5"},
+            new SelectListItem{Text="8", Value="8"},
+            new SelectListItem{Text="10", Value="10"},
+            new SelectListItem{Text="15", Value="15"},
+            new SelectListItem{Text="20", Value="20"}
+        }, new { @onchange = $"location.href = '/ADM/DataPasien?page={pageSts}&search={search}&pageSize=' + this.value;", @class = "dr-kw" })
+    </div>
+
+    <div class="search">
+        @using (Html.BeginForm("DataPasien", "ADM", FormMethod.Get))
+        {
+            @Html.Hidden("pageSts")
+            @Html.TextBox("search", null, new { @placeholder = "Nama Pasien..."})
+            @Html.Hidden("pageSize")
+            <input type="submit" value="Search" />
+        }
+    </div>
+</div>
+
+<style>
+    .dr-kw {
+        padding: 5px 10px;
+        margin: 0;
+        border: 2px solid black;
+        border-radius: 15px;
+        outline: none;
+        width: max-content;
+        cursor: pointer;
     }
 
-        .table-csm tr {
-            border-bottom: 1px solid black;
+        .dr-kw:hover, .dr-kw:focus {
+            border: 2px solid red;
         }
 
-        .table-csm th {
-            background-color: #24252A;
-            padding: 15px 5px;
-            max-width: 50px;
+    .search {
+        font-family: Arial;
+    }
+
+        .search input[type=text], input[type="submit"] {
+            padding: 5px 10px;
+            margin: 0;
+            border: 2px solid black;
+            border-radius: 15px;
+            outline: none;
+        }
+
+        .search input[type="text"]:hover, input[type="text"]:focus {
+            border: 2px solid red;
+        }
+
+        .search input[type="submit"] {
+            background-color: steelblue;
             color: azure;
+            cursor: pointer;
         }
 
-        .table-csm td {
-            padding: 10px 5px;
-            max-width: 250px;
-            min-width: 150px;
+        .search input[type="submit"]:hover {
+            background-color: darkslateblue;
+            cursor: pointer;
         }
 </style>
 
 <table class="table-csm">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.First().NAMA)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.First().TERDAFTAR)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.First().JENIS_KELAMIN)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.First().NO_HP)
-        </th>
-        <th>
-            Action
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
+    @if (Model.Count > 0)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NAMA)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TERDAFTAR)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.JENIS_KELAMIN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NO_HP)
-            </td>
-            <td class="custom-link">
-                @Html.ActionLink("Kartu Pasien", "KartuPasien.aspx", "Report", new { @Id_Pasien = item.ID }, new { @target = "_blank" }) |
-                <button type="button" onclick="ShowModalKw('e-@item.ID')">Edit</button> |
-                <button type="button" onclick="ShowModalKw('d-@item.ID')">Detail</button> |
-                <button type="button" onclick="ShowModalKw('del-@item.ID')">Delete</button>
-            </td>
+            <th>@Html.DisplayNameFor(model => model.First().ID)</th>
+            <th>@Html.DisplayNameFor(model => model.First().NAMA)</th>
+            <th>@Html.DisplayNameFor(model => model.First().TERDAFTAR)</th>
+            <th>Action</th>
+        </tr>
+
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                <td class="table-csm-text-align-left">@Html.DisplayFor(modelItem => item.NAMA)</td>
+                <td>@Html.DisplayFor(modelItem => item.TERDAFTAR)</td>
+                <td class="custom-link">
+                    @*@Html.ActionLink("Kartu Pasien", "KartuPasien.aspx", "Report", new { @Id_Pasien = item.ID }, new { @target = "_blank" })*@
+                    <button class="s-btn s-btn-lime" onclick="location.href = '/Report/KartuPasien.aspx?Id_Pasien=' + @item.ID">Kartu Pasien</button> |
+                    <button class="s-btn s-btn-steelblue" type="button" onclick="ShowModalKw('e-@item.ID', 'grid')">Edit</button> |
+                    <button class="s-btn s-btn-gold" type="button" onclick="ShowModalKw('d-@item.ID', 'grid')">Detail</button> |
+                    <button class="s-btn s-btn-orangered" type="button" onclick="ShowModalKw('del-@item.ID', 'grid')">Delete</button>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="4" class="text-error">Data tidak ada</td>
         </tr>
     }
 </table>
 
+<style>
+    .s-btn {
+        border: 2px solid black;
+        border-radius: 15px;
+        padding: 2px 5px;
+        cursor: pointer;
+    }
+
+    .s-btn-steelblue {
+        background-color: steelblue;
+        color: azure;
+    }
+
+        .s-btn-steelblue:hover {
+            background-color: darkslateblue;
+        }
+
+    .s-btn-gold {
+        background-color: gold;
+        color: black;
+    }
+
+        .s-btn-gold:hover {
+            background-color: yellow;
+        }
+
+    .s-btn-orangered {
+        background-color: orangered;
+        color: azure;
+    }
+
+        .s-btn-orangered:hover {
+            background-color: darkred;
+        }
+
+    .s-btn-lime {
+        background-color: palegreen;
+        color: black;
+    }
+
+        .s-btn-lime:hover {
+            background-color: lime;
+        }
+</style>
+
 @* PAGEGING *@
 <link href="~/Content/PagedList.css" rel="stylesheet" />
-<div style="position: relative; margin-bottom: 1px;">
+<div class="form-item-flex">
     @Html.PagedListPager(Model,
-        page => Url.Action("DataPasien", new { page }),
+        page => Url.Action("DataPasien", new { page, search, pageSize }),
         new PagedListRenderOptions()
         {
             Display = PagedListDisplayMode.IfNeeded,
             DisplayPageCountAndCurrentLocation = true
         })
 </div>
-
-<script type="text/javascript">
-    function ShowModalKw(id) {
-        document.getElementById(id).style.display = 'grid';
-    }
-</script>
 
 <style type="text/css">
     .modal-kw-dialog {
@@ -141,7 +222,7 @@
             <div class="close-modal-kw-dialog" onclick="document.getElementById('e-@item.ID').style.display = 'none'" title="Close">
                 X
             </div>
-            @using (Html.BeginForm($"DataPasien_Edit", "ADM", new { @page = (Convert.ToInt32(Request.QueryString["page"]) < 1) ? 1 : Convert.ToInt32(Request.QueryString["page"]) }, FormMethod.Post))
+            @using (Html.BeginForm($"DataPasien_Edit", "ADM", new { @page = pageSts, search, pageSize }, FormMethod.Post))
             {
                 <div class="form-item">
                     <h3><u>Edit Data Pasien</u></h3>
@@ -231,7 +312,7 @@
                 X
             </div>
             <div class="form-item">
-                <table style="text-align: left;">
+                <table class="table-csm-text-align-left">
                     <tr>
                         <th colspan="2">Anda Yakin Akan Menghapus Data Berikut?</th>
                     </tr>
@@ -252,7 +333,7 @@
                                     <input type="hidden" name="ID" value="@item.ID" />
                                     <input type="submit" value="Yes" />
                                 }
-                                <button type="button" onclick="document.getElementById('del-@item.ID').style.display = 'none'" title="Cancel">Cancel</button>
+                                @*<button type="button" onclick="document.getElementById('del-@item.ID').style.display = 'none'" title="Cancel">Cancel</button>*@
                             </div>
                         </td>
                     </tr>

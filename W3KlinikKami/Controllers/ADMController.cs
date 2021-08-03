@@ -136,13 +136,14 @@ namespace W3KlinikKami.Controllers
             }
         }
 
-        public ActionResult DataPasien(int? page)
+        public ActionResult DataPasien(int? page, string search, int? pageSize)
         {
             if (this.CekSession())
             {
                 ViewData["DT_PASIEN"] = this.db.TB_PASIEN
+                    .Where(d => d.NAMA.Contains(search) || search == null)
                     .OrderByDescending(d => d.TERDAFTAR)
-                    .ToPagedList(page ?? 1, 3);
+                    .ToPagedList(page ?? 1, pageSize ?? 5);
 
                 // ModePenanganan untuk menentukan 'menu'
                 ViewBag.ModePenanganan = PenangananPasien.DataPasien;
@@ -159,7 +160,7 @@ namespace W3KlinikKami.Controllers
         }
 
         [HttpPost]
-        public ActionResult DataPasien_Edit([Bind(Exclude = "TERDAFTAR")] TB_PASIEN dt, int? page)
+        public ActionResult DataPasien_Edit([Bind(Exclude = "TERDAFTAR")] TB_PASIEN dt, int? page, string search, int? pageSize)
         {
             if (!this.CekSession())
             {
@@ -169,14 +170,25 @@ namespace W3KlinikKami.Controllers
 
             if (ModelState.IsValid)
             {
-                var tes = "";
+                TB_PASIEN dtUpdate = this.db.TB_PASIEN.Find(dt.ID);
+                dtUpdate.NAMA = dt.NAMA;
+                dtUpdate.JENIS_KELAMIN = dt.JENIS_KELAMIN;
+                dtUpdate.TANGGAL_LAHIR = dt.TANGGAL_LAHIR;
+                dtUpdate.GOLONGAN_DARAH = dt.GOLONGAN_DARAH;
+                dtUpdate.NO_HP = dt.NO_HP;
+                dtUpdate.ALAMAT = dt.ALAMAT;
+                dtUpdate.TERDAFTAR = this.db.TB_PASIEN.Find(dt.ID).TERDAFTAR;
+
+                this.db.Entry(dtUpdate).State = EntityState.Modified;
+                this.db.SaveChanges();
+                FlashMessage.SetFlashMessage($"Data Pasien Atas Nama: '{dt.NAMA}' Dengan ID: '{dt.ID}' Telah Diubah.", FlashMessage.FlashMessageType.Success);
             }
             else
             {
                 TempData["ShowIdEdit"] = dt.ID;
             }
 
-            return RedirectToAction("DataPasien", new { @page = page });
+            return RedirectToAction("DataPasien", new { @page = page, @search = search, @pageSize = pageSize });
         }
 
         [HttpPost]

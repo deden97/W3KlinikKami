@@ -290,6 +290,15 @@ header a{
     margin: 2px auto;
 }
 
+/* untuk display flex:
+        justify-content: space-between,
+        width: 100%;
+    */
+.flex-sb-w100persen {
+    justify-content: space-between;
+    width: 100%;
+}
+
 input[type="checkbox"] {
     cursor: pointer;
     padding: 0;
@@ -337,3 +346,31 @@ input[type="checkbox"] {
     right: 1px;
     top: 1px;
 }
+
+.table-csm {
+    width: 100%;
+    background-color: azure;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+    .table-csm tr {
+        border-bottom: 1px solid black;
+    }
+
+    .table-csm th {
+        background-color: #24252A;
+        padding: 15px 5px;
+        max-width: 50px;
+        color: azure;
+    }
+
+    .table-csm td {
+        padding: 10px 5px;
+        max-width: 250px;
+        min-width: 50px;
+    }
+
+    .table-csm-text-align-left {
+        text-align: left;
+    }

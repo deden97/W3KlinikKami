@@ -14,3 +14,8 @@ function changeClassName(arrId, activeId, nClass, nActClass) {
 function ckbShowPassword(checked, idTarget) {
     document.getElementById(idTarget).type = checked ? "text" : "password";
 }
+
+// ShowModalKw(id, type) dengan style.display
+function ShowModalKw(id, type) {
+    document.getElementById(id).style.display = type;
+}
