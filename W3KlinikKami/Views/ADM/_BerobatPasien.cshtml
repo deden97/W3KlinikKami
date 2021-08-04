@@ -1,7 +1,145 @@
-﻿@model IEnumerable<TB_PASIEN>
+﻿@model IPagedList<TB_PASIEN>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    TB_PASIEN dt = new TB_PASIEN();
+    if (TempData["ID_PASIEN_TERPILIH"] != null)
+    {
+        dt = (TB_PASIEN)TempData["ID_PASIEN_TERPILIH"];
+    }
 
-<p>
-    berobat
-</p>
+    string search = Request.QueryString["search"] ?? "";
+    int pageSts = (Convert.ToInt32(Request.QueryString["page"]) < 1) ? 1 : Convert.ToInt32(Request.QueryString["page"]);
 
-@Html.Partial("~/Views/Shared/FlashMessage.cshtml")
+    // Flash Message
+    Html.Partial("~/Views/Shared/FlashMessage.cshtml");
+}
+
+<script type="text/javascript">
+    function pilih(val) {
+        document.getElementById('ID').value = val;
+    }
+</script>
+
+<style>
+    .min-max-width-250-px {
+        min-width: 300px;
+        /*width: 300px;*/
+        max-width: 300px;
+    }
+
+    .height-max-content {
+        height: max-content;
+    }
+</style>
+
+<div class="body-content">
+    <div class="submenu-body-content margin-top-10px bg-clr-ws min-max-width-250-px">
+        <div class="form-item-flex flex-sb-w100persen">
+            <div class="search">
+                @using (Html.BeginForm("BerobatPasien", "ADM", FormMethod.Get))
+                {
+                    @Html.TextBox("search", null, new { @placeholder = "ID/Nama Pasien..." })
+                    <input type="submit" value="Search" />
+                }
+            </div>
+        </div>
+        <table class="table-csm">
+            <tr>
+                <th>ID</th>
+                <th>Nama Pasien</th>
+                <th>Action</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(iModel => item.ID)</td>
+                    <td class="table-csm-text-align-left">@Html.DisplayFor(iModel => item.NAMA)</td>
+                    <td>
+                        <button class="s-btn s-btn-orangered" onclick="OpenLink('/ADM/BerobatPasien?pilih_id=@item.ID&page=@pageSts&search=@search')">
+                            Pilih
+                        </button>
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <link href="~/Content/PagedList.css" rel="stylesheet" />
+        <div class="form-item-flex">
+            @Html.PagedListPager(Model,
+               page => Url.Action("BerobatPasien", new { page, search }),
+               new PagedListRenderOptions()
+               {
+                   Display = PagedListDisplayMode.IfNeeded,
+                   DisplayPageCountAndCurrentLocation = true
+               })
+        </div>
+    </div>
+
+    <div class="content-body-content height-max-content margin-top-10px" id="detail-data-pasien">
+        @* ID *@
+        <div class="form-item">
+            <div class="label-form-item">
+                @Html.Label("ID", new { @for = "ID" })
+            </div>
+            @* ID: dibuat seperti dibawah ini untuk menghindari ditampilkannya angka '0'/nol *@
+            @Html.TextBoxFor(d => dt.ID, null, new { @readonly = "true", @placeholder = "ID Pasien" })
+        </div>
+
+        @* Nama *@
+        <div class="form-item">
+            <div class="label-form-item">
+                @Html.Label("Nama Pasien", new { @for = "NAMA" })
+            </div>
+            @Html.TextBoxFor(d => dt.NAMA, null, new { @readonly = "true", @placeholder = "Nama Pasien" })
+        </div>
+
+        @* Jenis Kelamin *@
+        <div class="form-item">
+            <div class="label-form-item">
+                @Html.Label("Jenis Kelamin", new { @for = "JENIS_KELAMIN" })
+            </div>
+            @Html.TextBoxFor(d => dt.JENIS_KELAMIN, null, new { @readonly = "true", @placeholder = "Jenis Kelamin" })
+        </div>
+
+        @* Tanggal Lahir *@
+        <div class="form-item">
+            <div class="label-form-item">
+                @Html.Label("Tanggal Lahir", new { @for = "TANGGAL_LAHIR" })
+            </div>
+            @Html.TextBoxFor(d => dt.TANGGAL_LAHIR, null, new { @readonly = "true", @placeholder = "Tanggal Lahir" })
+        </div>
+
+        @* Golongan Darah *@
+        <div class="form-item">
+            <div class="label-form-item">
+                @Html.Label("Golongan Darah", new { @for = "GOLONGAN_DARAH" })
+            </div>
+            @Html.TextBoxFor(d => dt.GOLONGAN_DARAH, null, new { @readonly = "true", @placeholder = "Golongan Darah" })
+        </div>
+
+        @* Nomor HP *@
+        <div class="form-item">
+            <div class="label-form-item">
+                @Html.Label("Nomor HP", new { @for = "NO_HP" })
+            </div>
+            @Html.TextBoxFor(d => dt.NO_HP, null, new { @readonly = "true", @placeholder = "Nomor HP" })
+        </div>
+
+        @* Alamat *@
+        <div class="form-item">
+            <div class="label-form-item">
+                @Html.Label("Alamat", new { @for = "ALAMAT" })
+            </div>
+            @Html.TextAreaFor(d => dt.ALAMAT, new { @readonly = "true", @placeholder = "Alamat" })
+        </div>
+
+        @* Terdaftar *@
+        <div class="form-item">
+            <div class="label-form-item">
+                @Html.Label("Terdaftar", new { @for = "TERDAFTAR" })
+            </div>
+            @Html.TextBoxFor(d => dt.TERDAFTAR, null, new { @readonly = "true", @placeholder = "Terdaftar" })
+        </div>
+    </div>
+</div>

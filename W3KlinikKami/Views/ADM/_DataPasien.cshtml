@@ -14,14 +14,7 @@
 
 <div class="form-item-flex flex-sb-w100persen">
     <div>
-        <b>order by</b>
-        @Html.DropDownList("order", new List<SelectListItem>()
-        {
-            new SelectListItem{Text="tes1", Value="1"},
-            new SelectListItem{Text="tes2", Value="2"}
-        }, new { @onchange = "alert(this.value)", @class = "dr-kw" })
-
-        <b>row data</b>
+        <b>Row Data</b>
         @Html.DropDownList("pageSize", new List<SelectListItem>()
         {
             new SelectListItem{Text="3", Value="3"},
@@ -44,49 +37,6 @@
     </div>
 </div>
 
-<style>
-    .dr-kw {
-        padding: 5px 10px;
-        margin: 0;
-        border: 2px solid black;
-        border-radius: 15px;
-        outline: none;
-        width: max-content;
-        cursor: pointer;
-    }
-
-        .dr-kw:hover, .dr-kw:focus {
-            border: 2px solid red;
-        }
-
-    .search {
-        font-family: Arial;
-    }
-
-        .search input[type=text], input[type="submit"] {
-            padding: 5px 10px;
-            margin: 0;
-            border: 2px solid black;
-            border-radius: 15px;
-            outline: none;
-        }
-
-        .search input[type="text"]:hover, input[type="text"]:focus {
-            border: 2px solid red;
-        }
-
-        .search input[type="submit"] {
-            background-color: steelblue;
-            color: azure;
-            cursor: pointer;
-        }
-
-        .search input[type="submit"]:hover {
-            background-color: darkslateblue;
-            cursor: pointer;
-        }
-</style>
-
 <table class="table-csm">
     @if (Model.Count > 0)
     {
@@ -104,8 +54,7 @@
                 <td class="table-csm-text-align-left">@Html.DisplayFor(modelItem => item.NAMA)</td>
                 <td>@Html.DisplayFor(modelItem => item.TERDAFTAR)</td>
                 <td class="custom-link">
-                    @*@Html.ActionLink("Kartu Pasien", "KartuPasien.aspx", "Report", new { @Id_Pasien = item.ID }, new { @target = "_blank" })*@
-                    <button class="s-btn s-btn-lime" onclick="location.href = '/Report/KartuPasien.aspx?Id_Pasien=' + @item.ID">Kartu Pasien</button> |
+                    <button class="s-btn s-btn-lime" onclick="OpenLinkNewTab('/Report/KartuPasien.aspx?Id_Pasien=' + @item.ID);">Kartu Pasien</button> |
                     <button class="s-btn s-btn-steelblue" type="button" onclick="ShowModalKw('e-@item.ID', 'grid')">Edit</button> |
                     <button class="s-btn s-btn-gold" type="button" onclick="ShowModalKw('d-@item.ID', 'grid')">Detail</button> |
                     <button class="s-btn s-btn-orangered" type="button" onclick="ShowModalKw('del-@item.ID', 'grid')">Delete</button>
@@ -121,51 +70,6 @@
     }
 </table>
 
-<style>
-    .s-btn {
-        border: 2px solid black;
-        border-radius: 15px;
-        padding: 2px 5px;
-        cursor: pointer;
-    }
-
-    .s-btn-steelblue {
-        background-color: steelblue;
-        color: azure;
-    }
-
-        .s-btn-steelblue:hover {
-            background-color: darkslateblue;
-        }
-
-    .s-btn-gold {
-        background-color: gold;
-        color: black;
-    }
-
-        .s-btn-gold:hover {
-            background-color: yellow;
-        }
-
-    .s-btn-orangered {
-        background-color: orangered;
-        color: azure;
-    }
-
-        .s-btn-orangered:hover {
-            background-color: darkred;
-        }
-
-    .s-btn-lime {
-        background-color: palegreen;
-        color: black;
-    }
-
-        .s-btn-lime:hover {
-            background-color: lime;
-        }
-</style>
-
 @* PAGEGING *@
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 <div class="form-item-flex">
@@ -177,42 +81,6 @@
             DisplayPageCountAndCurrentLocation = true
         })
 </div>
-
-<style type="text/css">
-    .modal-kw-dialog {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        margin: 0;
-        background: rgba(0, 136, 169, 0.59);
-        z-index: 9999;
-    }
-
-    .modal-kw-content {
-        position: relative;
-        background-color: whitesmoke;
-        border: 2px solid black;
-        border-radius: 15px;
-        margin: auto;
-        padding: 20px;
-    }
-
-    .close-modal-kw-dialog {
-        position: absolute;
-        margin: 0px 5px;
-        top: 5px;
-        right: 5px;
-        cursor: pointer;
-        color: dimgray;
-        font-size: 15pt;
-    }
-
-        .close-modal-kw-dialog:hover {
-            color: black;
-        }
-</style>
 
 @foreach (var item in Model)
 {
@@ -232,15 +100,6 @@
             }
         </div>
     </div>
-    if (TempData["ShowIdEdit"] != null)
-    {
-        if (item.ID == (int)TempData["ShowIdEdit"])
-        {
-            <script type="text/javascript">
-                document.getElementById('e-@item.ID').style.display = 'grid';
-            </script>
-        }
-    }
     @* Begin: Edit Data Pasien *@
 
     @* Begin: Detail Data Pasien *@
@@ -311,47 +170,35 @@
             <div class="close-modal-kw-dialog" onclick="document.getElementById('del-@item.ID').style.display = 'none'" title="Close">
                 X
             </div>
-            <div class="form-item">
-                <table class="table-csm-text-align-left">
-                    <tr>
-                        <th colspan="2">Anda Yakin Akan Menghapus Data Berikut?</th>
-                    </tr>
-                    <tr>
-                        <td>ID</td>
-                        <td>&nbsp;:&nbsp;@item.ID</td>
-                    </tr>
-                    <tr>
-                        <td>Nama</td>
-                        <td>&nbsp;:&nbsp;@item.NAMA</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <div class="form-item-flex">
-                                @using (Html.BeginForm("DataPasien_Delete", "ADM", FormMethod.Post))
-                                {
-                                    <input type="hidden" name="ID" value="@item.ID" />
-                                    <input type="submit" value="Yes" />
-                                }
-                                @*<button type="button" onclick="document.getElementById('del-@item.ID').style.display = 'none'" title="Cancel">Cancel</button>*@
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            
+            <table class="table-csm-text-align-left">
+                <tr>
+                    <th colspan="2"><b>Anda Yakin Akan Menghapus Data Berikut?</b></th>
+                </tr>
+                <tr>
+                    <td>ID</td>
+                    <td>&nbsp;:&nbsp;@item.ID</td>
+                </tr>
+                <tr>
+                    <td>Nama</td>
+                    <td>&nbsp;:&nbsp;@item.NAMA</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><hr /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        @using (Html.BeginForm("DataPasien_Delete", "ADM", FormMethod.Post, new { @id = "del-pasien" }))
+                        {
+                            <input type="hidden" name="ID" value="@item.ID" />
+                            <button class="s-btn s-btn-lime" type="button" onclick="SubmitForm('del-pasien')">&nbsp;Yes&nbsp;</button>
+                            <button class="s-btn s-btn-orangered" type="button" onclick="document.getElementById('del-@item.ID').style.display = 'none'" title="Cancel">Cancel</button>
+                        }
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
     @* Hapus: Detail Data Pasien *@
 }
-
-<style type="text/css">
-    .custom-link a {
-        text-decoration: none;
-        color: dodgerblue;
-        font-weight: bold;
-    }
-
-        .custom-link a:hover {
-            color: darkslateblue;
-        }
-</style>

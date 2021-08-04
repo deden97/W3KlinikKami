@@ -336,10 +336,10 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Fields!NOMOR_HP.Value</Value>
+                    <Value>=Fields!TANGGAL_LAHIR.Value</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
-                      <Format>0.</Format>
+                      <Format>dd/MM/yyyy</Format>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -371,7 +371,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>No. HP</Value>
+                    <Value>Tanggal Lahir</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
                     </Style>

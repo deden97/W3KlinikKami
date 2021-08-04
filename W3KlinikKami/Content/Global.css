@@ -326,6 +326,10 @@ input[type="checkbox"] {
     margin: 2px 2px;
 }
 
+.margin-top-10px {
+    margin-top: 10px;
+}
+
 .margin-bottom-10px {
     margin-bottom: 10px;
 }
@@ -347,6 +351,7 @@ input[type="checkbox"] {
     top: 1px;
 }
 
+/* custom table */
 .table-csm {
     width: 100%;
     background-color: azure;
@@ -373,4 +378,126 @@ input[type="checkbox"] {
 
     .table-csm-text-align-left {
         text-align: left;
+    }
+
+/* custom button */
+.s-btn {
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 2px 5px;
+    cursor: pointer;
+}
+
+.s-btn-steelblue {
+    background-color: steelblue;
+    color: azure;
+}
+
+    .s-btn-steelblue:hover {
+        background-color: darkslateblue;
+    }
+
+.s-btn-gold {
+    background-color: gold;
+    color: black;
+}
+
+    .s-btn-gold:hover {
+        background-color: yellow;
+    }
+
+.s-btn-orangered {
+    background-color: orangered;
+    color: azure;
+}
+
+    .s-btn-orangered:hover {
+        background-color: darkred;
+    }
+
+.s-btn-lime {
+    background-color: palegreen;
+    color: black;
+}
+
+    .s-btn-lime:hover {
+        background-color: lime;
+    }
+
+/* custom drop down*/
+.dr-kw {
+    padding: 5px 10px;
+    margin: 0;
+    border: 2px solid black;
+    border-radius: 15px;
+    outline: none;
+    width: max-content;
+    cursor: pointer;
+}
+
+    .dr-kw:hover, .dr-kw:focus {
+        border: 2px solid red;
+    }
+
+/*custom search(textbox, submit btn)*/
+.search {
+    font-family: Arial;
+}
+
+    .search input[type=text], input[type="submit"] {
+        padding: 5px 10px;
+        margin: 0;
+        border: 2px solid black;
+        border-radius: 15px;
+        outline: none;
+    }
+
+    .search input[type="text"]:hover, input[type="text"]:focus {
+        border: 2px solid red;
+    }
+
+    .search input[type="submit"] {
+        background-color: steelblue;
+        color: azure;
+        cursor: pointer;
+    }
+
+        .search input[type="submit"]:hover {
+            background-color: darkslateblue;
+            cursor: pointer;
+        }
+
+/* Custom modal seperti di bootstrap */
+.modal-kw-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    background: rgba(0, 136, 169, 0.59);
+    z-index: 9999;
+}
+
+.modal-kw-content {
+    position: relative;
+    background-color: whitesmoke;
+    border: 2px solid black;
+    border-radius: 15px;
+    margin: auto;
+    padding: 20px;
+}
+
+.close-modal-kw-dialog {
+    position: absolute;
+    margin: 0px 5px;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    color: dimgray;
+    font-size: 15pt;
+}
+
+    .close-modal-kw-dialog:hover {
+        color: black;
     }

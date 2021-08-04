@@ -45,6 +45,148 @@ namespace W3KlinikKami.Controllers
             }
         }
 
+        /* Begin: DataPasien -------------------------------------------------------------------- */
+        public ActionResult DataPasien(int? page, string search, int? pageSize)
+        {
+            if (this.CekSession())
+            {
+                ViewData["DT_PASIEN"] = this.db.TB_PASIEN
+                    .Where(d => d.NAMA.Contains(search) || search == null)
+                    .OrderByDescending(d => d.TERDAFTAR)
+                    .ToPagedList(page ?? 1, pageSize ?? 5);
+
+                // ModePenanganan untuk menentukan 'menu'
+                ViewBag.ModePenanganan = PenangananPasien.DataPasien;
+
+                // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
+                ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
+                return View("Index");
+            }
+            else
+            {
+                FlashMessage.TemFlashMessageLogin();
+                return RedirectToAction("Index", "Index");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DataPasien_Edit([Bind(Exclude = "TERDAFTAR")] TB_PASIEN dt, int? page, string search, int? pageSize)
+        {
+            if (!this.CekSession())
+            {
+                FlashMessage.TemFlashMessageLogin();
+                return RedirectToAction("Index", "Index");
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    TB_PASIEN dtUpdate = this.db.TB_PASIEN.Find(dt.ID);
+                    dtUpdate.NAMA = dt.NAMA;
+                    dtUpdate.JENIS_KELAMIN = dt.JENIS_KELAMIN;
+                    dtUpdate.TANGGAL_LAHIR = dt.TANGGAL_LAHIR;
+                    dtUpdate.GOLONGAN_DARAH = dt.GOLONGAN_DARAH;
+                    dtUpdate.NO_HP = dt.NO_HP;
+                    dtUpdate.ALAMAT = dt.ALAMAT;
+                    dtUpdate.TERDAFTAR = this.db.TB_PASIEN.Find(dt.ID).TERDAFTAR;
+
+                    this.db.Entry(dtUpdate).State = EntityState.Modified;
+                    this.db.SaveChanges();
+                    FlashMessage.SetFlashMessage(
+                        $"Data Pasien Atas Nama: '{dt.NAMA}' Dengan ID: '{dt.ID}' Telah Diubah.",
+                        FlashMessage.FlashMessageType.Success);
+                }
+                catch(Exception e)
+                {
+                    e.ToString();
+                }
+            }
+
+            return RedirectToAction("DataPasien", new { @page = page, @search = search, @pageSize = pageSize });
+        }
+
+        [HttpPost]
+        public ActionResult DataPasien_Delete([Bind(Include = "ID")] TB_PASIEN dt)
+        {
+            if (!this.CekSession())
+            {
+                FlashMessage.TemFlashMessageLogin();
+                return RedirectToAction("Index", "Index");
+            }
+
+            try
+            {
+                this.db.Entry(dt).State = EntityState.Deleted;
+                this.db.SaveChanges();
+                FlashMessage.SetFlashMessage("Data Telah Dihapus.", FlashMessage.FlashMessageType.Success);
+            }
+            catch(Exception e)
+            {
+                e.ToString();
+            }
+
+            return RedirectToAction("DataPasien");
+        }
+        /* End: DataPasien -------------------------------------------------------------------- */
+
+        /* Begin: BerobatPasien -------------------------------------------------------------------- */
+        [HttpGet]
+        public ActionResult BerobatPasien(int? page, string search)
+        {
+            if (this.CekSession())
+            {
+                // jika Id pasien di pilih untuk daftar berobat
+                if(int.TryParse(Request.QueryString["pilih_id"], out int id))
+                {
+                    TempData["ID_PASIEN_TERPILIH"] = this.db.TB_PASIEN.Find(id);
+                }
+
+                // get semua data pasien
+                int.TryParse(search, out int searchId);
+                ViewData["DT_PASIEN"] = this.db.TB_PASIEN
+                    .Where(d => d.ID == searchId || d.NAMA.Contains(search) || search == null)
+                    .OrderBy(d => d.NAMA)
+                    .ToPagedList(page ?? 1, 8);
+
+                // ModePenanganan untuk menentukan 'menu'
+                ViewBag.ModePenanganan = PenangananPasien.BerobatPasien;
+
+                // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
+                ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
+                return View("Index");
+            }
+            else
+            {
+                FlashMessage.TemFlashMessageLogin();
+                return RedirectToAction("Index", "Index");
+            }
+        }
+        /* End: BerobatPasien -------------------------------------------------------------------- */
+
+        /* Begin: PengambilanObat -------------------------------------------------------------------- */
+        public ActionResult PengambilanObat()
+        {
+            if (this.CekSession())
+            {
+                ViewData["DT_PASIEN"] = this.db.TB_PASIEN.ToList();
+
+                // ModePenanganan untuk menentukan 'menu'
+                ViewBag.ModePenanganan = PenangananPasien.PengambilanObat;
+
+                // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
+                ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
+                return View("Index");
+            }
+            else
+            {
+                FlashMessage.TemFlashMessageLogin();
+                return RedirectToAction("Index", "Index");
+            }
+        }
+        /* End: PengambilanObat -------------------------------------------------------------------- */
+
+        /* Begin: DaftarPasienBaru -------------------------------------------------------------------- */
         public ActionResult DaftarPasienBaru()
         {
             if (this.CekSession())
@@ -82,7 +224,7 @@ namespace W3KlinikKami.Controllers
 
                     FlashMessage.SetFlashMessage("Data Pasien Berhasil Disimpan.", FlashMessage.FlashMessageType.Success);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     e.ToString();
                 }
@@ -95,109 +237,6 @@ namespace W3KlinikKami.Controllers
             ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
             return View("Index");
         }
-
-        public ActionResult BerobatPasien()
-        {
-            if (this.CekSession())
-            {
-                ViewData["DT_PASIEN"] = this.db.TB_PASIEN.ToList();
-
-                // ModePenanganan untuk menentukan 'menu'
-                ViewBag.ModePenanganan = PenangananPasien.BerobatPasien;
-
-                // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
-                ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
-                return View("Index");
-            }
-            else
-            {
-                FlashMessage.TemFlashMessageLogin();
-                return RedirectToAction("Index", "Index");
-            }
-        }
-
-        public ActionResult PengambilanObat()
-        {
-            if (this.CekSession())
-            {
-                ViewData["DT_PASIEN"] = this.db.TB_PASIEN.ToList();
-
-                // ModePenanganan untuk menentukan 'menu'
-                ViewBag.ModePenanganan = PenangananPasien.PengambilanObat;
-
-                // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
-                ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
-                return View("Index");
-            }
-            else
-            {
-                FlashMessage.TemFlashMessageLogin();
-                return RedirectToAction("Index", "Index");
-            }
-        }
-
-        public ActionResult DataPasien(int? page, string search, int? pageSize)
-        {
-            if (this.CekSession())
-            {
-                ViewData["DT_PASIEN"] = this.db.TB_PASIEN
-                    .Where(d => d.NAMA.Contains(search) || search == null)
-                    .OrderByDescending(d => d.TERDAFTAR)
-                    .ToPagedList(page ?? 1, pageSize ?? 5);
-
-                // ModePenanganan untuk menentukan 'menu'
-                ViewBag.ModePenanganan = PenangananPasien.DataPasien;
-
-                // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
-                ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
-                return View("Index");
-            }
-            else
-            {
-                FlashMessage.TemFlashMessageLogin();
-                return RedirectToAction("Index", "Index");
-            }
-        }
-
-        [HttpPost]
-        public ActionResult DataPasien_Edit([Bind(Exclude = "TERDAFTAR")] TB_PASIEN dt, int? page, string search, int? pageSize)
-        {
-            if (!this.CekSession())
-            {
-                FlashMessage.TemFlashMessageLogin();
-                return RedirectToAction("Index", "Index");
-            }
-
-            if (ModelState.IsValid)
-            {
-                TB_PASIEN dtUpdate = this.db.TB_PASIEN.Find(dt.ID);
-                dtUpdate.NAMA = dt.NAMA;
-                dtUpdate.JENIS_KELAMIN = dt.JENIS_KELAMIN;
-                dtUpdate.TANGGAL_LAHIR = dt.TANGGAL_LAHIR;
-                dtUpdate.GOLONGAN_DARAH = dt.GOLONGAN_DARAH;
-                dtUpdate.NO_HP = dt.NO_HP;
-                dtUpdate.ALAMAT = dt.ALAMAT;
-                dtUpdate.TERDAFTAR = this.db.TB_PASIEN.Find(dt.ID).TERDAFTAR;
-
-                this.db.Entry(dtUpdate).State = EntityState.Modified;
-                this.db.SaveChanges();
-                FlashMessage.SetFlashMessage($"Data Pasien Atas Nama: '{dt.NAMA}' Dengan ID: '{dt.ID}' Telah Diubah.", FlashMessage.FlashMessageType.Success);
-            }
-            else
-            {
-                TempData["ShowIdEdit"] = dt.ID;
-            }
-
-            return RedirectToAction("DataPasien", new { @page = page, @search = search, @pageSize = pageSize });
-        }
-
-        [HttpPost]
-        public ActionResult DataPasien_Delete([Bind(Include = "ID")] TB_PASIEN dt)
-        {
-            this.db.Entry(dt).State = EntityState.Deleted;
-            this.db.SaveChanges();
-            FlashMessage.SetFlashMessage("Data Telah Dihapus.", FlashMessage.FlashMessageType.Success);
-            return RedirectToAction("DataPasien");
-        }
+        /* End: DaftarPasienBaru -------------------------------------------------------------------- */
     }
 }

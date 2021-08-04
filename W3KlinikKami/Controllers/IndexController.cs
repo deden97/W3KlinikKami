@@ -25,6 +25,7 @@ namespace W3KlinikKami.Controllers
 
         public ActionResult Index() => RedirectToAction("Login");
 
+        /* Begin: Login -------------------------------------------------------------------- */
         // Login Get
         public ActionResult Login()
         {
@@ -69,7 +70,9 @@ namespace W3KlinikKami.Controllers
             }
             return View();
         }
+        /* End: Login -------------------------------------------------------------------- */
 
+        /* Begin: DaftarAkunBaru -------------------------------------------------------------------- */
         // DaftarAkunBaru Get
         public ActionResult DaftarAkunBaru()
         {
@@ -115,7 +118,9 @@ namespace W3KlinikKami.Controllers
             ViewData["JABATAN"] = new SelectList(this.db.TB_JABATAN, "KODE_JABATAN", "JABATAN");
             return View();
         }
+        /* End: DaftarAkunBaru -------------------------------------------------------------------- */
 
+        /* Begin: EditData -------------------------------------------------------------------- */
         // EditData get
         public ActionResult EditData()
         {
@@ -184,7 +189,9 @@ namespace W3KlinikKami.Controllers
             ViewBag.EditMode = "Edit Data";
             return View(this.db.TB_USER.Find(Session["ID"]));
         }
+        /* End: EditData -------------------------------------------------------------------- */
 
+        /* Begin: EditUsername -------------------------------------------------------------------- */
         // EditUsername get
         public ActionResult EditUsername()
         {
@@ -237,7 +244,9 @@ namespace W3KlinikKami.Controllers
             ViewBag.EditMode = "Edit Username";
             return View("EditData");
         }
+        /* End: EditUsername -------------------------------------------------------------------- */
 
+        /* Begin: EditPassword -------------------------------------------------------------------- */
         // EditPassword get
         public ActionResult EditPassword()
         {
@@ -295,12 +304,14 @@ namespace W3KlinikKami.Controllers
 
             return View("EditData");
         }
+        /* End: EditPassword -------------------------------------------------------------------- */
 
-        // Logout
+        /* Begin: Logout -------------------------------------------------------------------- */
         public ActionResult Logout()
         {
             Session.RemoveAll();
             return RedirectToAction("Login");
         }
+        /* End: Logout -------------------------------------------------------------------- */
     }
 }
