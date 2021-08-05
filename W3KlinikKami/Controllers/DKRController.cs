@@ -11,6 +11,7 @@ namespace W3KlinikKami.Controllers
         // GET: DKR
         public ActionResult Index()
         {
+            ViewBag.DT_USER = new Models.DbEntities().TB_USER.Single(d => d.JABATAN == "DKR");
             return View();
         }
     }

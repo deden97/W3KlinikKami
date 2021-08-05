@@ -10,7 +10,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 10%;
+    padding: 10px 10%;
     color: white;
     font-family: Arial;
     z-index: 999;
@@ -134,6 +134,7 @@ header a{
     border: 2px solid #40424a;
     border-radius: 10px;
     padding: 25px 10px;
+
 }
 
 .btn-submenu-active {
@@ -321,8 +322,7 @@ input[type="checkbox"] {
 .foto-profil {
     width: 60px;
     height: 60px;
-    border: 2px solid black;
-    border-radius: 50px;
+    border-radius: 20px;
     margin: 2px 2px;
 }
 

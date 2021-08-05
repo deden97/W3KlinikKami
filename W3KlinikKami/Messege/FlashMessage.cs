@@ -10,19 +10,6 @@ namespace W3KlinikKami.Messege
     {
         public static string Message { get; set; }
 
-        //public enum Page
-        //{
-        //    Off,
-        //    Login,
-        //    EditData,
-        //    EditUsername,
-        //    EditPassword,
-        //    DaftarPasienBaru,
-        //    PengambilanObat
-        //}
-
-        //public static Page PageDestination { get; set; }
-
         public enum FlashMessageType { Off, Success, Error, Warning }
 
         public static FlashMessageType SelectedType { get; set; }
@@ -33,7 +20,6 @@ namespace W3KlinikKami.Messege
             {
                 Message = message;
                 SelectedType = selectType;
-                //PageDestination = pageDestination;
             }
         }
 
@@ -41,7 +27,6 @@ namespace W3KlinikKami.Messege
         {
             Message = "Anda Harus Login Terlebih Dahulu.";
             SelectedType = FlashMessageType.Warning;
-            //PageDestination = Page.Login;
         }
     }
 }

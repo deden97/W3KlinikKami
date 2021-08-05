@@ -5,7 +5,7 @@
     Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
     int pageSts = (Convert.ToInt32(Request.QueryString["page"]) < 1) ? 1 : Convert.ToInt32(Request.QueryString["page"]);
     string search = Request.QueryString["search"] ?? "";
-    int pageSize = (Convert.ToInt32(Request.QueryString["pageSize"]) < 1) ? 5 : Convert.ToInt32(Request.QueryString["pageSize"]);
+    int pageSize = (Convert.ToInt32(Request.QueryString["pageSize"]) < 1) ? 8 : Convert.ToInt32(Request.QueryString["pageSize"]);
 }
 
 <div class="form-item">
@@ -30,7 +30,7 @@
         @using (Html.BeginForm("DataPasien", "ADM", FormMethod.Get))
         {
             @Html.Hidden("pageSts")
-            @Html.TextBox("search", null, new { @placeholder = "Nama Pasien..."})
+            @Html.TextBox("search", null, new { @placeholder = "ID / Nama Pasien..."})
             @Html.Hidden("pageSize")
             <input type="submit" value="Search" />
         }

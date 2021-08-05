@@ -22,27 +22,35 @@ namespace W3KlinikKami.Controllers
         {
             this.id = Convert.ToInt32(Session["ID"]);
             this.jabatan = Convert.ToString(Session["JABATAN"]);
+            // jika sudah login
             if (this.db.TB_USER.Any(j => j.ID == this.id && j.JABATAN == this.jabatan))
             {
-                return nameof(ADMController)
-                    .Remove(nameof(ADMController)
-                    .IndexOf("Controller")) == this.jabatan;
+                // jika kode jabatan pada akun SESUAI dengan nama controller
+                if (nameof(ADMController).Remove(nameof(ADMController).IndexOf("Controller")) == this.jabatan)
+                {
+                    // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
+                    ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
+                    return true;
+                }
+                else // jika kode jabatan pada akun TIDAK SESUAI dengan nama controller
+                {
+                    FlashMessage.SetFlashMessage("Hanya Dapat Diakses Oleh 'Admin Pelayanan'", FlashMessage.FlashMessageType.Warning);
+                    return false;
+                }
             }
-
-            return false;
+            else // jika belum login
+            {
+                FlashMessage.TemFlashMessageLogin();
+                return false;
+            }
         }
 
         public ActionResult Index()
         {
             if (this.CekSession())
-            {
                 return RedirectToAction("DataPasien");
-            }
             else
-            {
-                FlashMessage.TemFlashMessageLogin();
                 return RedirectToAction("Index", "Index");
-            }
         }
 
         /* Begin: DataPasien -------------------------------------------------------------------- */
@@ -50,21 +58,19 @@ namespace W3KlinikKami.Controllers
         {
             if (this.CekSession())
             {
+                int.TryParse(search, out int idPasien);
                 ViewData["DT_PASIEN"] = this.db.TB_PASIEN
-                    .Where(d => d.NAMA.Contains(search) || search == null)
+                    .Where(d => d.ID == idPasien || d.NAMA.Contains(search) || search == null)
                     .OrderByDescending(d => d.TERDAFTAR)
-                    .ToPagedList(page ?? 1, pageSize ?? 5);
+                    .ToPagedList(page ?? 1, pageSize ?? 8);
 
                 // ModePenanganan untuk menentukan 'menu'
                 ViewBag.ModePenanganan = PenangananPasien.DataPasien;
 
-                // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
-                ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
                 return View("Index");
             }
             else
             {
-                FlashMessage.TemFlashMessageLogin();
                 return RedirectToAction("Index", "Index");
             }
         }
@@ -73,10 +79,7 @@ namespace W3KlinikKami.Controllers
         public ActionResult DataPasien_Edit([Bind(Exclude = "TERDAFTAR")] TB_PASIEN dt, int? page, string search, int? pageSize)
         {
             if (!this.CekSession())
-            {
-                FlashMessage.TemFlashMessageLogin();
                 return RedirectToAction("Index", "Index");
-            }
 
             if (ModelState.IsValid)
             {
@@ -103,17 +106,20 @@ namespace W3KlinikKami.Controllers
                 }
             }
 
-            return RedirectToAction("DataPasien", new { @page = page, @search = search, @pageSize = pageSize });
+            // ModelState.IsValid -> true / false tetap return ke -> "DataPasien"
+            return RedirectToAction("DataPasien", new
+            {
+                @page = page,
+                @search = search,
+                @pageSize = pageSize
+            });
         }
 
         [HttpPost]
         public ActionResult DataPasien_Delete([Bind(Include = "ID")] TB_PASIEN dt)
         {
             if (!this.CekSession())
-            {
-                FlashMessage.TemFlashMessageLogin();
                 return RedirectToAction("Index", "Index");
-            }
 
             try
             {
@@ -138,55 +144,60 @@ namespace W3KlinikKami.Controllers
             {
                 // jika Id pasien di pilih untuk daftar berobat
                 if(int.TryParse(Request.QueryString["pilih_id"], out int id))
-                {
                     TempData["ID_PASIEN_TERPILIH"] = this.db.TB_PASIEN.Find(id);
-                }
 
                 // get semua data pasien
                 int.TryParse(search, out int searchId);
                 ViewData["DT_PASIEN"] = this.db.TB_PASIEN
                     .Where(d => d.ID == searchId || d.NAMA.Contains(search) || search == null)
                     .OrderBy(d => d.NAMA)
-                    .ToPagedList(page ?? 1, 8);
+                    .ToPagedList(page ?? 1, 9);
 
                 // ModePenanganan untuk menentukan 'menu'
                 ViewBag.ModePenanganan = PenangananPasien.BerobatPasien;
 
-                // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
-                ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
                 return View("Index");
             }
             else
             {
-                FlashMessage.TemFlashMessageLogin();
                 return RedirectToAction("Index", "Index");
             }
+        }
+
+        [HttpPost]
+        public ActionResult BerobatPasien([Bind(Include = "ID, NAMA")] TB_PASIEN dt, int? page, string search)
+        {
+            if (!this.CekSession())
+                return RedirectToAction("Index", "Index");
+
+            FlashMessage.SetFlashMessage($"{dt.ID} {dt.NAMA}", FlashMessage.FlashMessageType.Success);
+            return RedirectToAction("BerobatPasien", new { page, search });
         }
         /* End: BerobatPasien -------------------------------------------------------------------- */
 
         /* Begin: PengambilanObat -------------------------------------------------------------------- */
+        [HttpGet]
         public ActionResult PengambilanObat()
         {
             if (this.CekSession())
             {
+                // Ambil semua data pasien
                 ViewData["DT_PASIEN"] = this.db.TB_PASIEN.ToList();
 
                 // ModePenanganan untuk menentukan 'menu'
                 ViewBag.ModePenanganan = PenangananPasien.PengambilanObat;
 
-                // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
-                ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
                 return View("Index");
             }
             else
             {
-                FlashMessage.TemFlashMessageLogin();
                 return RedirectToAction("Index", "Index");
             }
         }
         /* End: PengambilanObat -------------------------------------------------------------------- */
 
         /* Begin: DaftarPasienBaru -------------------------------------------------------------------- */
+        [HttpGet]
         public ActionResult DaftarPasienBaru()
         {
             if (this.CekSession())
@@ -194,13 +205,10 @@ namespace W3KlinikKami.Controllers
                 // ModePenanganan untuk menentukan 'menu'
                 ViewBag.ModePenanganan = PenangananPasien.DaftarPasienBaru;
 
-                // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
-                ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
                 return View("Index");
             }
             else
             {
-                FlashMessage.TemFlashMessageLogin();
                 return RedirectToAction("Index", "Index");
             }
         }
@@ -209,10 +217,7 @@ namespace W3KlinikKami.Controllers
         public ActionResult DaftarPasienBaru([Bind(Exclude = "ID, TERDAFTAR")] TB_PASIEN dt)
         {
             if (!this.CekSession())
-            {
-                FlashMessage.TemFlashMessageLogin();
                 return RedirectToAction("Index", "Index");
-            }
 
             if (ModelState.IsValid)
             {
@@ -221,7 +226,6 @@ namespace W3KlinikKami.Controllers
                     dt.TERDAFTAR = DateTime.Now;
                     this.db.Entry(dt).State = EntityState.Added;
                     this.db.SaveChanges();
-
                     FlashMessage.SetFlashMessage("Data Pasien Berhasil Disimpan.", FlashMessage.FlashMessageType.Success);
                 }
                 catch (Exception e)
@@ -233,8 +237,7 @@ namespace W3KlinikKami.Controllers
             // ModePenanganan untuk menentukan 'menu'
             ViewBag.ModePenanganan = PenangananPasien.DaftarPasienBaru.ToString();
 
-            // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
-            ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
+            // ModelState.IsValid -> true / false tetap return ke -> "Index"
             return View("Index");
         }
         /* End: DaftarPasienBaru -------------------------------------------------------------------- */

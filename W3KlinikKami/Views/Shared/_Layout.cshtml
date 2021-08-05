@@ -8,50 +8,31 @@
     <script src="~/Scripts/Global.js"></script>
 </head>
 <body>
+    @{
+        TB_USER dtUser = new TB_USER();
+        if (ViewBag.DT_USER != null)
+        {
+            dtUser = (W3KlinikKami.Models.TB_USER)ViewBag.DT_USER;
+        }
+    }
     <header id="head">
+        @* Foto profil, nama, jabatan *@
+        <nav>
+            <div class="form-item-flex margin-bottom-10px width-200px">
+                <img src="@Url.Content(dtUser.FOTO)" alt="Foto - @dtUser.NAMA" title="@dtUser.NAMA" class="foto-profil" />
+                <div class="form-item">
+                    @Html.Label(dtUser.NAMA)
+                    @Html.Label(dtUser.TB_JABATAN.JABATAN)
+                </div>
+            </div>
+        </nav>
+
+        @* Home "W3.Klinik.Kami" *@
         <h2>
             @Html.ActionLink("W3.Klinik.Kami", "Index", "Index")
         </h2>
-        <nav id="Dokter">
-            <ul class="nav-menu">
-                <li>@Html.ActionLink("menu", "#", null, new { @class = "btn-nav-menu" })</li>
-                <li>@Html.ActionLink("menu", "#", null, new { @class = "btn-nav-menu" })</li>
-                <li>@Html.ActionLink("menu", "#", null, new { @class = "btn-nav-menu" })</li>
-            </ul>
-        </nav>
-        @*@{
-            if (Convert.ToString(Session["JABATAN"]) == "DKR")
-            {
-                <nav id="Dokter">
-                    <ul class="nav-menu">
-                        <li>@Html.ActionLink("menu dokter", "#", null, new { @class = "btn-nav-menu" })</li>
-                        <li>@Html.ActionLink("menu dokter", "#", null, new { @class = "btn-nav-menu" })</li>
-                        <li>@Html.ActionLink("menu dokter", "#", null, new { @class = "btn-nav-menu" })</li>
-                    </ul>
-                </nav>
-            }
-            else if (Convert.ToString(Session["JABATAN"]) == "APR")
-            {
-                <nav id="Apoteker">
-                    <ul class="nav-menu">
-                        <li>@Html.ActionLink("menu apoteker", "#", null, new { @class = "btn-nav-menu" })</li>
-                        <li>@Html.ActionLink("menu apoteker", "#", null, new { @class = "btn-nav-menu" })</li>
-                        <li>@Html.ActionLink("menu apoteker", "#", null, new { @class = "btn-nav-menu" })</li>
-                    </ul>
-                </nav>
-            }
-            else
-            {
-                <nav id="Admin">
-                    <ul class="nav-menu">
-                        <li>@Html.ActionLink("menu admin", "#", null, new { @class = "btn-nav-menu" })</li>
-                        <li>@Html.ActionLink("menu admin", "#", null, new { @class = "btn-nav-menu" })</li>
-                        <li>@Html.ActionLink("menu admin", "#", null, new { @class = "btn-nav-menu" })</li>
-                    </ul>
-                </nav>
-            }
-        }*@
 
+        @* Edit, Logout *@
         <nav>
             <ul class="nav-menu">
                 <li>@Html.ActionLink("Edit", "EditData", "Index", null, new { @class = "btn-edit" })</li>
@@ -60,14 +41,12 @@
         </nav>
     </header>
 
-    <div class="head2">
-        <b>Nama</b>
-    </div>
-
+    @* Render content *@
     <div class="content">
         @RenderBody()
     </div>
 
+    @* tombol menuju halaman paling atas *@
     <div class="back-top" onclick="clickLinkByDiv('top')">
         <a href="#head" id="top"><b>Top</b></a>
     </div>

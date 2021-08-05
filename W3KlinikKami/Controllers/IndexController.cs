@@ -20,7 +20,16 @@ namespace W3KlinikKami.Controllers
         {
             int id = Convert.ToInt32(Session["ID"]);
             string jabatan = Convert.ToString(Session["JABATAN"]);
-            return this.db.TB_USER.Any(j => j.ID == id && j.JABATAN == jabatan);
+            if(this.db.TB_USER.Any(j => j.ID == id && j.JABATAN == jabatan))
+            {
+                // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
+                ViewBag.DT_USER = this.db.TB_USER.Single(d => d.ID == id);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public ActionResult Index() => RedirectToAction("Login");

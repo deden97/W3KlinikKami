@@ -1,20 +1,9 @@
 ﻿@{
     ViewBag.Title = "Index";
-    TB_USER tB_USER = ViewBag.DT_USER;
 }
-
-<h2 style="text-align: center">Admin Pelayanan</h2>
 
 <div class="body-content">
     <div class="submenu-body-content">
-        <div class="form-item-flex bg-clr-ws margin-bottom-10px width-200px">
-            <img src="@Url.Content(tB_USER.FOTO)" alt="Foto - @tB_USER.NAMA" title="@tB_USER.NAMA" class="foto-profil" />
-            <div class="form-item">
-                @Html.Label(tB_USER.NAMA)
-                @Html.Label(tB_USER.TB_JABATAN.JABATAN)
-            </div>
-        </div>
-
         <div id="DataPasien" class="btn-submenu width-200px" onclick="clickLinkByDiv('dt-pasien')">
             @Html.ActionLink("Data Pasien", "DataPasien", "ADM", null, new { id = "dt-pasien" })
         </div>
