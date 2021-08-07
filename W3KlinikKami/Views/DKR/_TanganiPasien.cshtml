@@ -1,0 +1,51 @@
+﻿@model IEnumerable<TB_KUNJUNGAN_PASIEN>
+
+<style>
+    .bg-trans {
+        background-color: transparent;
+        border: 0;
+    }
+</style>
+
+<div class="body-content">
+    <table>
+        <tr>
+            <td colspan="2">
+                <div class="form-item">
+                    <h3><u>Daftar Berobat</u></h3>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="ver-alg-0">
+            <td>
+                <table class="table-csm">
+                    <tr>
+                        <th>ID Pasien</th>
+                        <th>Nama Pasien</th>
+                    </tr>
+
+                    @if (Model.Count() > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ID_PASIEN</td>
+                                <td class="table-csm-text-align-left min-max-width-400-px">@item.TB_PASIEN.NAMA</td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </td>
+
+            <td>
+                <div class="form-item">
+                    <div class="label-form-item">
+                        @Html.Label("Nama Pasien", new { @for = "NAMA" })
+                    </div>
+                    <input type="text" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

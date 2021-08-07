@@ -69,6 +69,11 @@
       <End Role="TB_USER" EntitySet="TB_USER" />
     </AssociationSet>
     <EntitySet Name="TB_PASIEN" EntityType="Models.TB_PASIEN" />
+    <EntitySet Name="TB_KUNJUNGAN_PASIEN" EntityType="Models.TB_KUNJUNGAN_PASIEN" />
+    <AssociationSet Name="FK__TB_KUNJUN__ID_PA__49C3F6B7" Association="Models.FK__TB_KUNJUN__ID_PA__49C3F6B7">
+      <End Role="TB_PASIEN" EntitySet="TB_PASIEN" />
+      <End Role="TB_KUNJUNGAN_PASIEN" EntitySet="TB_KUNJUNGAN_PASIEN" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="TB_PASIEN">
     <Key>
@@ -82,5 +87,28 @@
     <Property Name="NO_HP" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="ALAMAT" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="TERDAFTAR" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="TB_KUNJUNGAN_PASIEN" Relationship="Models.FK__TB_KUNJUN__ID_PA__49C3F6B7" FromRole="TB_PASIEN" ToRole="TB_KUNJUNGAN_PASIEN" />
   </EntityType>
+  <EntityType Name="TB_KUNJUNGAN_PASIEN">
+    <Key>
+      <PropertyRef Name="TANGGAL_KUNJUNGAN" />
+    </Key>
+    <Property Name="TANGGAL_KUNJUNGAN" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ID_PASIEN" Type="Int32" Nullable="false" />
+    <Property Name="STATUS_PENANGANAN" Type="Boolean" />
+    <Property Name="KETERANGAN" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TB_PASIEN" Relationship="Models.FK__TB_KUNJUN__ID_PA__49C3F6B7" FromRole="TB_KUNJUNGAN_PASIEN" ToRole="TB_PASIEN" />
+  </EntityType>
+  <Association Name="FK__TB_KUNJUN__ID_PA__49C3F6B7">
+    <End Type="Models.TB_PASIEN" Role="TB_PASIEN" Multiplicity="1" />
+    <End Type="Models.TB_KUNJUNGAN_PASIEN" Role="TB_KUNJUNGAN_PASIEN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_PASIEN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TB_KUNJUNGAN_PASIEN">
+        <PropertyRef Name="ID_PASIEN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

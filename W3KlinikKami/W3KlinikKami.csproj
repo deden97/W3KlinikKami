@@ -300,6 +300,9 @@
     <Compile Include="Models\TB_JABATAN.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_KUNJUNGAN_PASIEN.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_PASIEN.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -346,6 +349,7 @@
     <Content Include="Views\ADM\_DataPasien.cshtml" />
     <Content Include="Views\DKR\Index.cshtml" />
     <Content Include="Views\ADM\Form\DataPasien.cshtml" />
+    <Content Include="Views\DKR\_TanganiPasien.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -4,10 +4,6 @@
 
 <div class="body-content">
     <div class="submenu-body-content">
-        <div id="DataPasien" class="btn-submenu width-200px" onclick="clickLinkByDiv('dt-pasien')">
-            @Html.ActionLink("Data Pasien", "DataPasien", "ADM", null, new { id = "dt-pasien" })
-        </div>
-
         <div id="BerobatPasien" class="btn-submenu width-200px" onclick="clickLinkByDiv('berobat')">
             @Html.ActionLink("Berobat Pasien", "BerobatPasien", "ADM", null, new { id = "berobat" })
         </div>
@@ -15,6 +11,10 @@
         <div id="PengambilanObat" class="btn-submenu width-200px" onclick="clickLinkByDiv('obat')">
             <div class="notif-btn-submenu" id="notif">10</div>
             @Html.ActionLink("Pengambilan Obat", "PengambilanObat", "ADM", null, new { id = "obat" })
+        </div>
+
+        <div id="DataPasien" class="btn-submenu width-200px" onclick="clickLinkByDiv('dt-pasien')">
+            @Html.ActionLink("Data Pasien", "DataPasien", "ADM", null, new { id = "dt-pasien" })
         </div>
 
         <div id="DaftarPasienBaru" class="btn-submenu width-200px" onclick="clickLinkByDiv('daftar')">

@@ -16,23 +16,9 @@
     Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
 }
 
-<style>
-    .min-max-width-400-px {
-        min-width: 400px;
-        max-width: 400px;
-    }
-
-    .height-max-content {
-        height: max-content;
-    }
-
-    .ver-alg-0 {
-        vertical-align: 0;
-    }
-</style>
-
 <div class="body-content">
     <table>
+        @* Judul Menu *@
         <tr>
             <td colspan="2">
                 <div class="form-item">
@@ -169,12 +155,14 @@
                         @Html.TextBoxFor(d => dt.TERDAFTAR, null, new { @readonly = "true", @placeholder = "Terdaftar" })
                     </div>
 
-                    @using (Html.BeginForm("BerobatPasien", "ADM", new { @page = pageSts, @search = search }, FormMethod.Post, new { @id = "submit-id-pasien" }))
-                    {
-                        @Html.Hidden("ID", dt.ID)
-                        @Html.Hidden("NAMA", dt.NAMA)
-                        <button class="btn-edit" id="submit" onclick="SubmitForm('submit-id-pasien')" disabled>Submit</button>
-                    }
+                    <div class="form-item">
+                        @using (Html.BeginForm("BerobatPasien", "ADM", new { @page = pageSts, @search = search }, FormMethod.Post, new { @id = "submit-id-pasien" }))
+                        {
+                            @Html.Hidden("ID", dt.ID)
+                            @Html.Hidden("NAMA", dt.NAMA)
+                            <input type="submit" id="submit" value="Submit" disabled />
+                        }
+                    </div>
 
                     @if (dt.ID > 0)
                     {

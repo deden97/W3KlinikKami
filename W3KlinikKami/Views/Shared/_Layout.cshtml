@@ -12,7 +12,7 @@
         TB_USER dtUser = new TB_USER();
         if (ViewBag.DT_USER != null)
         {
-            dtUser = (W3KlinikKami.Models.TB_USER)ViewBag.DT_USER;
+            dtUser = (TB_USER)ViewBag.DT_USER;
         }
     }
     <header id="head">
@@ -21,7 +21,7 @@
             <div class="form-item-flex margin-bottom-10px width-200px">
                 <img src="@Url.Content(dtUser.FOTO)" alt="Foto - @dtUser.NAMA" title="@dtUser.NAMA" class="foto-profil" />
                 <div class="form-item">
-                    @Html.Label(dtUser.NAMA)
+                    @dtUser.NAMA
                     @Html.Label(dtUser.TB_JABATAN.JABATAN)
                 </div>
             </div>
@@ -36,13 +36,37 @@
         <nav>
             <ul class="nav-menu">
                 <li>@Html.ActionLink("Edit", "EditData", "Index", null, new { @class = "btn-edit" })</li>
-                <li>@Html.ActionLink("Logout", "Logout", "Index", null, new { @class = "btn-logout" })</li>
+                <li><button type="button" class="btn-logout" onclick="ShowModalKw('logout', 'grid')">Logout</button></li>
             </ul>
         </nav>
     </header>
 
-    @* Render content *@
     <div class="content">
+        @* Dialog Logout *@
+        <div class="modal-kw-dialog" id="logout" style="display: none;">
+            <div class="modal-kw-content">
+                <div class="close-modal-kw-dialog" onclick="ShowModalKw('logout', 'none')" title="Close">X</div>
+                <table class="table-csm-text-align-left">
+                    <tr>
+                        <th colspan="2">Anda Yakin Akan Logout?</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><hr /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <div class="form-item-flex">
+                                @Html.ActionLink("Yes", "Logout", "Index", null, new { @class = "a-decoration-none s-btn s-btn-lime" })&nbsp;
+                                <button class="s-btn s-btn-orangered" type="button" onclick="ShowModalKw('logout', 'none')">No</button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        @* Render content *@
         @RenderBody()
     </div>
 

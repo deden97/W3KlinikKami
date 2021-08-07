@@ -46,5 +46,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TB_KUNJUNGAN_PASIEN">
+      <EntityTypeMapping TypeName="Models.TB_KUNJUNGAN_PASIEN">
+        <MappingFragment StoreEntitySet="TB_KUNJUNGAN_PASIEN">
+          <ScalarProperty Name="KETERANGAN" ColumnName="KETERANGAN" />
+          <ScalarProperty Name="STATUS_PENANGANAN" ColumnName="STATUS_PENANGANAN" />
+          <ScalarProperty Name="ID_PASIEN" ColumnName="ID_PASIEN" />
+          <ScalarProperty Name="TANGGAL_KUNJUNGAN" ColumnName="TANGGAL_KUNJUNGAN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

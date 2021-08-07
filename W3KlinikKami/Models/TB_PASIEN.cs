@@ -14,6 +14,12 @@ namespace W3KlinikKami.Models
     
     public partial class TB_PASIEN
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TB_PASIEN()
+        {
+            this.TB_KUNJUNGAN_PASIEN = new HashSet<TB_KUNJUNGAN_PASIEN>();
+        }
+    
         public int ID { get; set; }
         public string NAMA { get; set; }
         public string JENIS_KELAMIN { get; set; }
@@ -22,5 +28,8 @@ namespace W3KlinikKami.Models
         public decimal NO_HP { get; set; }
         public string ALAMAT { get; set; }
         public System.DateTime TERDAFTAR { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_KUNJUNGAN_PASIEN> TB_KUNJUNGAN_PASIEN { get; set; }
     }
 }

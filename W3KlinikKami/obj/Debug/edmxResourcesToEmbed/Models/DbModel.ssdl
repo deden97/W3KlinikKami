@@ -15,6 +15,15 @@
     <Property Name="KODE_JABATAN" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="JABATAN" Type="varchar" MaxLength="30" Nullable="false" />
   </EntityType>
+  <EntityType Name="TB_KUNJUNGAN_PASIEN">
+    <Key>
+      <PropertyRef Name="TANGGAL_KUNJUNGAN" />
+    </Key>
+    <Property Name="TANGGAL_KUNJUNGAN" Type="datetime" Nullable="false" />
+    <Property Name="ID_PASIEN" Type="int" Nullable="false" />
+    <Property Name="STATUS_PENANGANAN" Type="bit" />
+    <Property Name="KETERANGAN" Type="text" />
+  </EntityType>
   <EntityType Name="TB_PASIEN">
     <Key>
       <PropertyRef Name="ID" />
@@ -53,6 +62,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__TB_KUNJUN__ID_PA__49C3F6B7">
+    <End Role="TB_PASIEN" Type="Self.TB_PASIEN" Multiplicity="1" />
+    <End Role="TB_KUNJUNGAN_PASIEN" Type="Self.TB_KUNJUNGAN_PASIEN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_PASIEN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TB_KUNJUNGAN_PASIEN">
+        <PropertyRef Name="ID_PASIEN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__TB_USER__JABATAN__276EDEB3">
     <End Role="TB_JABATAN" Type="Self.TB_JABATAN" Multiplicity="0..1" />
     <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="*" />
@@ -68,11 +89,16 @@
   <EntityContainer Name="ModelsStoreContainer">
     <EntitySet Name="TB_AKUN" EntityType="Self.TB_AKUN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_JABATAN" EntityType="Self.TB_JABATAN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_KUNJUNGAN_PASIEN" EntityType="Self.TB_KUNJUNGAN_PASIEN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_PASIEN" EntityType="Self.TB_PASIEN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_USER" EntityType="Self.TB_USER" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__TB_AKUN__ID__2A4B4B5E" Association="Self.FK__TB_AKUN__ID__2A4B4B5E">
       <End Role="TB_USER" EntitySet="TB_USER" />
       <End Role="TB_AKUN" EntitySet="TB_AKUN" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TB_KUNJUN__ID_PA__49C3F6B7" Association="Self.FK__TB_KUNJUN__ID_PA__49C3F6B7">
+      <End Role="TB_PASIEN" EntitySet="TB_PASIEN" />
+      <End Role="TB_KUNJUNGAN_PASIEN" EntitySet="TB_KUNJUNGAN_PASIEN" />
     </AssociationSet>
     <AssociationSet Name="FK__TB_USER__JABATAN__276EDEB3" Association="Self.FK__TB_USER__JABATAN__276EDEB3">
       <End Role="TB_JABATAN" EntitySet="TB_JABATAN" />

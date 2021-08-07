@@ -1,10 +1,38 @@
 ﻿
 @{
     ViewBag.Title = "Index";
-}
-
-@{ 
     Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
 }
-<h2>Index</h2>
 
+<div class="body-content">
+    <div class="submenu-body-content">
+        <div id="TanganiPasien" class="btn-submenu width-200px" onclick="clickLinkByDiv('tPasien')">
+            <div class="notif-btn-submenu" id="notif">10</div>
+            @Html.ActionLink("Tangani Pasien", "TanganiPasien", "DKR", null, new { id = "tPasien" })
+        </div>
+
+        <div id="RiwayatPasien" class="btn-submenu width-200px" onclick="clickLinkByDiv('rPasien')">
+            @Html.ActionLink("Riwayat Pasien", "RiwayatPasien", "DKR", null, new { id = "rPasien" })
+        </div>
+    </div>
+
+    <div class="content-body-content">
+        <div class="form-content">
+            <input type="hidden" id="menu" value="@ViewBag.Menu" />
+            <script type="text/javascript">
+                changeClassName(
+                    ['TanganiPasien', 'RiwayatPasien'],
+                    document.getElementById('menu').value,
+                    "btn-submenu width-200px margin-bottom-15px",
+                    "btn-submenu-active width-200px margin-bottom-15px"
+                );
+            </script>
+
+            @*
+                Menampilkan page yg berada pada Views :
+                1. sesuai dengan 'ViewBag.Menu' yg sudah ditentukan pada controller 'DKRController/TanganiPasien()',
+            *@
+            @Html.Partial($"~/Views/DKR/_{ViewBag.Menu}.cshtml", ViewData["Data"])
+        </div>
+    </div>
+</div>
