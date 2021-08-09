@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using W3KlinikKami.Models;
-using W3KlinikKami.Messege;
+using W3KlinikKami.Core;
 
 namespace W3KlinikKami.Controllers
 {

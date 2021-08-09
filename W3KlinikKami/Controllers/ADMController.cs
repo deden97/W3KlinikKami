@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using W3KlinikKami.Models;
 using System.Data.Entity;
-using W3KlinikKami.Messege;
 using PagedList;
 using PagedList.Mvc;
+using W3KlinikKami.Core;
 
 namespace W3KlinikKami.Controllers
 {
@@ -16,17 +16,23 @@ namespace W3KlinikKami.Controllers
         private readonly DbEntities db = new DbEntities();
         private int id { get; set; }
         private string jabatan { get; set; }
-        private enum PenangananPasien { DaftarPasienBaru, BerobatPasien, PengambilanObat, DataPasien }
+        public enum PenangananPasien 
+        {
+            DaftarPasienBaru,
+            BerobatPasien,
+            PengambilanObat,
+            DataPasien
+        }
 
         private bool CekSession()
         {
-            this.id = Convert.ToInt32(Session["ID"]);
-            this.jabatan = Convert.ToString(Session["JABATAN"]);
+            this.id = csmSession.GetIdSession();
+            this.jabatan = csmSession.GetJabatanSession();
             // jika sudah login
             if (this.db.TB_USER.Any(j => j.ID == this.id && j.JABATAN == this.jabatan))
             {
                 // jika kode jabatan pada akun SESUAI dengan nama controller
-                if (nameof(ADMController).Remove(nameof(ADMController).IndexOf("Controller")) == this.jabatan)
+                if (nameof(ADMController) == this.jabatan + "Controller")
                 {
                     // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
                     ViewBag.DT_USER = this.db.TB_USER.Find(this.id);
@@ -34,7 +40,9 @@ namespace W3KlinikKami.Controllers
                 }
                 else // jika kode jabatan pada akun TIDAK SESUAI dengan nama controller
                 {
-                    FlashMessage.SetFlashMessage("Hanya Dapat Diakses Oleh 'Admin Pelayanan'", FlashMessage.FlashMessageType.Warning);
+                    FlashMessage.SetFlashMessage(
+                        "Link Yang Anda Tuju Hanya Dapat Diakses Oleh 'Admin Pelayanan'",
+                        FlashMessage.FlashMessageType.Warning);
                     return false;
                 }
             }

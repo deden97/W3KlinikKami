@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using W3KlinikKami.Models;
 using System.Text;
 using System.Data.Entity;
-using W3KlinikKami.Messege;
+using W3KlinikKami.Core;
 
 namespace W3KlinikKami.Controllers
 {
@@ -136,8 +136,8 @@ namespace W3KlinikKami.Controllers
             if (this.CekSession())
             {
                 ViewBag.EditMode = "Edit Data";
-                ViewBag.JABATAN = new SelectList(this.db.TB_JABATAN, "KODE_JABATAN", "JABATAN", Session["JABATAN"]);
-                return View("EditData", this.db.TB_USER.Find(Session["ID"]));
+                ViewBag.JABATAN = new SelectList(this.db.TB_JABATAN, "KODE_JABATAN", "JABATAN", csmSession.GetJabatanSession());
+                return View("EditData", this.db.TB_USER.Find(csmSession.GetIdSession()));
             }
             else
             {
@@ -160,7 +160,7 @@ namespace W3KlinikKami.Controllers
             try
             {
                 TB_USER updateDt = new TB_USER();
-                updateDt = this.db.TB_USER.Find(Session["ID"]);
+                updateDt = this.db.TB_USER.Find(csmSession.GetIdSession());
                 updateDt.NAMA = dt.NAMA;
                 updateDt.NO_HP = dt.NO_HP;
                 updateDt.ALAMAT = dt.ALAMAT;
@@ -196,7 +196,7 @@ namespace W3KlinikKami.Controllers
             }
 
             ViewBag.EditMode = "Edit Data";
-            return View(this.db.TB_USER.Find(Session["ID"]));
+            return View(this.db.TB_USER.Find(csmSession.GetIdSession()));
         }
         /* End: EditData -------------------------------------------------------------------- */
 
@@ -231,7 +231,7 @@ namespace W3KlinikKami.Controllers
             {
                 try
                 {
-                    dt.ID = Convert.ToInt32(Session["ID"]);
+                    dt.ID = csmSession.GetIdSession();
                     if(this.db.TB_AKUN.Any(i => i.ID == dt.ID && i.PASSWORD_AKUN == dt.PASSWORD_AKUN))
                     {
                         this.db.Entry(dt).State = EntityState.Modified;
@@ -286,7 +286,7 @@ namespace W3KlinikKami.Controllers
             {
                 if (!String.IsNullOrEmpty(dt.PASSWORD_BARU))
                 {
-                    dt.ID = Convert.ToInt32(Session["ID"]);
+                    dt.ID = csmSession.GetIdSession();
                     if (this.db.TB_AKUN.Any(d => d.ID == dt.ID && d.PASSWORD_AKUN == dt.PASSWORD_AKUN))
                     {
                         TB_AKUN updateDt = this.db.TB_AKUN.Find(dt.ID);

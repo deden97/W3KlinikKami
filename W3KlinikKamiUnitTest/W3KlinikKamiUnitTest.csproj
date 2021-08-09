@@ -80,7 +80,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\IndexControllerTest.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Controllers\TesSetup.cs" />
+    <Compile Include="Controllers\ADMControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

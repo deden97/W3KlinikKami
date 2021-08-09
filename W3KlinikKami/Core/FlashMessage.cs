@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace W3KlinikKami.Messege
+namespace W3KlinikKami.Core
 {
     public static class FlashMessage
     {

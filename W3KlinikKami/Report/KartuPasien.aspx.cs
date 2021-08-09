@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using W3KlinikKami.Models;
-using W3KlinikKami.Messege;
+using W3KlinikKami.Core;
 
 namespace W3KlinikKami.Report
 {
