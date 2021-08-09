@@ -273,6 +273,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ADMController.cs" />
     <Compile Include="Controllers\DKRController.cs" />
+    <Compile Include="Controllers\csmSession.cs" />
     <Compile Include="Messege\FlashMessage.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Global.asax.cs">

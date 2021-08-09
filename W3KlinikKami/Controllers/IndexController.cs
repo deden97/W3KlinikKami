@@ -18,9 +18,9 @@ namespace W3KlinikKami.Controllers
         // cek session -> (ID, JABATAN(kode jabatan))
         private bool CekSession()
         {
-            int id = Convert.ToInt32(Session["ID"]);
-            string jabatan = Convert.ToString(Session["JABATAN"]);
-            if(this.db.TB_USER.Any(j => j.ID == id && j.JABATAN == jabatan))
+            int id = csmSession.GetIdSession();
+            string jabatan = csmSession.GetJabatanSession();
+            if (this.db.TB_USER.Any(j => j.ID == id && j.JABATAN == jabatan))
             {
                 // data user yg digunakan -> 'Nama', 'Jabatan', 'Foto'
                 ViewBag.DT_USER = this.db.TB_USER.Single(d => d.ID == id);
@@ -39,7 +39,7 @@ namespace W3KlinikKami.Controllers
         public ActionResult Login()
         {
             if (this.CekSession())
-                return RedirectToAction("Index", Convert.ToString(Session["JABATAN"]));
+                return RedirectToAction("Index", csmSession.GetJabatanSession());
             else
                 return View();
         }
@@ -58,9 +58,9 @@ namespace W3KlinikKami.Controllers
                         // jika password sesuai dengan username
                         if (this.db.TB_AKUN.Any(l => l.USERNAME == login.USERNAME && l.PASSWORD_AKUN == login.PASSWORD_AKUN))
                         {
-                            Session["ID"] = this.db.TB_AKUN.Single(l => l.USERNAME == login.USERNAME && l.PASSWORD_AKUN == login.PASSWORD_AKUN).ID;
-                            Session["JABATAN"] = this.db.TB_USER.Find(Session["ID"]).JABATAN;
-                            return RedirectToAction("Index", Convert.ToString(Session["JABATAN"]));
+                            var dt = this.db.TB_AKUN.Single(l => l.USERNAME == login.USERNAME && l.PASSWORD_AKUN == login.PASSWORD_AKUN);
+                            csmSession.Set(dt.ID, dt.TB_USER.JABATAN);
+                            return RedirectToAction("Index", csmSession.GetJabatanSession());
                         }
                         else // jika password tidak sesuai dengan username
                         {
@@ -77,7 +77,7 @@ namespace W3KlinikKami.Controllers
                     e.ToString();
                 }
             }
-            return View();
+            return View("Login");
         }
         /* End: Login -------------------------------------------------------------------- */
 
