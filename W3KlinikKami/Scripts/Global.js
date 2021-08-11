@@ -32,7 +32,7 @@ function OpenLinkNewTab(url) {
 
 // submit data form
 function SubmitForm(idForm) {
-    document.querySelector(idForm);
+    document.getElementById(idForm).submit();
 }
 
 // Enable / Disable HTML

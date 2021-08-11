@@ -12,13 +12,14 @@
         <tr>
             <td colspan="2">
                 <div class="form-item">
-                    <h3><u>Daftar Berobat</u></h3>
+                    <h3><u>Penanganan Pasien</u></h3>
                 </div>
             </td>
         </tr>
 
         <tr class="ver-alg-0">
-            <td>
+            <td class="min-max-width-400-px">
+                <h4><u>Antrian Pasien</u></h4>
                 <table class="table-csm">
                     <tr>
                         <th>ID Pasien</th>
@@ -29,23 +30,99 @@
                     {
                         foreach (var item in Model)
                         {
-                            <tr>
+                            <tr id="@item.ID_PASIEN">
                                 <td>@item.ID_PASIEN</td>
                                 <td class="table-csm-text-align-left min-max-width-400-px">@item.TB_PASIEN.NAMA</td>
                             </tr>
                         }
                     }
+                    else
+                    {
+                        <tr>
+                            <td colspan="2">
+                                <b class="text-error">Tidak Ada Pasien</b>
+                            </td>
+                        </tr>
+                    }
                 </table>
             </td>
 
             <td>
-                <div class="form-item">
-                    <div class="label-form-item">
-                        @Html.Label("Nama Pasien", new { @for = "NAMA" })
+                <div class="content-body-content height-max-content">
+                    @{
+                        TB_PASIEN dt = new TB_PASIEN();
+                        int idKunjungan = 0;
+                        if (ViewBag.idTerpilih > 0)
+                        {
+                            int id = ViewBag.idTerpilih;
+                            dt = Model.Single(d => d.ID_PASIEN == id).TB_PASIEN;
+                            idKunjungan = Model.Single(d => d.ID_PASIEN == id && d.TANGGAL_KUNJUNGAN.Date == DateTime.Today).ID;
+                            <script type="text/javascript">
+                                document.getElementById(@dt.ID).style.backgroundColor = 'greenyellow';
+                            </script>
+                        }
+                    }
+                    @Html.Partial("~/Views/Shared/_Form_DataPasien_ReadOnly.cshtml", dt)
+
+                    <div class="form-item">
+                        <div class="form-item-flex">
+                            @{
+                                if (Model.Count() > 0)
+                                {
+                                    int idp = Model.ToList().First().ID_PASIEN;
+                                    <button type="button" onclick="OpenLink('/DKR/TanganiPasien?idPasien=@idp')">
+                                        Antrian Selanjutnya -> @idp
+                                    </button>
+                                }
+                            }
+                            &nbsp;
+                            <button type="button" onclick="ShowModalKw('modal-kw-data-pemeriksaan', 'grid')">
+                                Buat Data Pemeriksaan
+                            </button>
+                        </div>
                     </div>
-                    <input type="text" />
                 </div>
             </td>
         </tr>
     </table>
+</div>
+
+<div class="modal-kw-dialog" id="modal-kw-data-pemeriksaan" style="display: none;">
+    <div class="modal-kw-content">
+        <div class="close-modal-kw-dialog" onclick="ShowModalKw('modal-kw-data-pemeriksaan', 'none')">x</div>
+        <button>riwayat sebelumnya in new tab</button>
+
+        @using (Html.BeginForm("TanganiPasien", "DKR", FormMethod.Post))
+        {
+            <input type="hidden" value="@idKunjungan" name="ID_KUNJUNGAN_PASIEN" />
+            <div class="form-item">
+                <div class="label-form-item">@Html.Label("Keluhan")</div>
+                @Html.TextArea("KELUHAN", new { @placeholder = "Keluhan" })
+            </div>
+
+            <div class="form-item">
+                <div class="label-form-item">@Html.Label("Pemeriksaan")</div>
+                @Html.TextArea("PEMERIKSAAN", new { @placeholder = "Pemeriksaan" })
+            </div>
+
+            <div class="form-item">
+                <div class="label-form-item">@Html.Label("Diagnosa")</div>
+                @Html.TextArea("DIAGNOSA", new { @placeholder = "Diagnosa" })
+            </div>
+
+            <div class="form-item">
+                <div class="label-form-item">@Html.Label("Resep Obat")</div>
+                @Html.TextArea("RESEP_OBAT", new { @placeholder = "Resep Obat" })
+            </div>
+
+            <div class="form-item">
+                <div class="label-form-item">@Html.Label("Keterangan")</div>
+                @Html.TextArea("KETERANGAN", new { @placeholder = "Keterangan" })
+            </div>
+
+            <div class="form-item">
+                <input type="submit" value="Submit" />
+            </div>
+        }
+    </div>
 </div>

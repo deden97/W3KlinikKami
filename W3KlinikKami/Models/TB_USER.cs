@@ -14,6 +14,12 @@ namespace W3KlinikKami.Models
     
     public partial class TB_USER
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TB_USER()
+        {
+            this.TB_DATA_PENANGANAN_PASIEN = new HashSet<TB_DATA_PENANGANAN_PASIEN>();
+        }
+    
         public int ID { get; set; }
         public string NAMA { get; set; }
         public string JENIS_KELAMIN { get; set; }
@@ -25,5 +31,7 @@ namespace W3KlinikKami.Models
     
         public virtual TB_AKUN TB_AKUN { get; set; }
         public virtual TB_JABATAN TB_JABATAN { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_DATA_PENANGANAN_PASIEN> TB_DATA_PENANGANAN_PASIEN { get; set; }
     }
 }

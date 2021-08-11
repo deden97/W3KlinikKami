@@ -97,14 +97,40 @@ namespace W3KlinikKami.Controllers
 
             if(dt.ID > 0)
             {
-                TB_KUNJUNGAN_PASIEN tB_KUNJUNGAN_PASIEN = new TB_KUNJUNGAN_PASIEN()
+                /* syarat pasien:
+                 * - jika pasien belum mendaftar berobat pada hari ini,
+                 * - jika pasien sudah mendaftar hari ini, dan ingin mendaftar lagi maka syaratnya:
+                 *      @ pasien sudah ditangani oleh dokter,
+                 *      @ dan pasien sudah mengambil obat.
+                 * - jika 'cekAntrianPasien' = FALSE maka pasien BOLEH dicatat di antrian.
+                 */
+                bool cekAntrianPasien = this.db
+                    .TB_KUNJUNGAN_PASIEN
+                    .AsEnumerable()
+                    .Any(d => d.ID_PASIEN == dt.ID &&
+                        d.TANGGAL_KUNJUNGAN.Date == DateTime.Today &&
+                        (d.PENANGANAN_DOKTER == null ||
+                         d.PENGAMBILAN_OBAT == null ||
+                         d.PENGAMBILAN_OBAT == false));
+                if (!cekAntrianPasien)
                 {
-                    TANGGAL_KUNJUNGAN = DateTime.Now,
-                    ID_PASIEN = dt.ID
-                };
-                this.db.Entry(tB_KUNJUNGAN_PASIEN).State = EntityState.Added;
-                this.db.SaveChanges();
-                FlashMessage.SetFlashMessage($"{dt.ID} {dt.NAMA}", FlashMessage.FlashMessageType.Success);
+                    TB_KUNJUNGAN_PASIEN tB_KUNJUNGAN_PASIEN = new TB_KUNJUNGAN_PASIEN()
+                    {
+                        TANGGAL_KUNJUNGAN = DateTime.Now,
+                        ID_PASIEN = dt.ID
+                    };
+                    this.db.Entry(tB_KUNJUNGAN_PASIEN).State = EntityState.Added;
+                    this.db.SaveChanges();
+                    FlashMessage.SetFlashMessage(
+                        $"Pasien Atas Nama '{dt.NAMA}' Dengan ID '{dt.ID}' Berhasil Dicatat Di Antrian",
+                        FlashMessage.FlashMessageType.Success);
+                }
+                else // jika pasien terpilih SUDAH TERDAFTAR di antrian
+                {
+                    FlashMessage.SetFlashMessage(
+                        $"Pasien Atas Nama '{dt.NAMA}' Dengan ID '{dt.ID}' Sudah Terdaftar DiAntrian",
+                        FlashMessage.FlashMessageType.Warning);
+                }
             }
             else
             {

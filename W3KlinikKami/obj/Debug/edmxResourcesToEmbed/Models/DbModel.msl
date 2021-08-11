@@ -46,13 +46,29 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TB_DATA_PENANGANAN_PASIEN">
+      <EntityTypeMapping TypeName="Models.TB_DATA_PENANGANAN_PASIEN">
+        <MappingFragment StoreEntitySet="TB_DATA_PENANGANAN_PASIEN">
+          <ScalarProperty Name="ID_DOKTER" ColumnName="ID_DOKTER" />
+          <ScalarProperty Name="KETERANGAN" ColumnName="KETERANGAN" />
+          <ScalarProperty Name="RESEP_OBAT" ColumnName="RESEP_OBAT" />
+          <ScalarProperty Name="DIAGNOSA" ColumnName="DIAGNOSA" />
+          <ScalarProperty Name="PEMERIKSAAN" ColumnName="PEMERIKSAAN" />
+          <ScalarProperty Name="KELUHAN" ColumnName="KELUHAN" />
+          <ScalarProperty Name="ID_KUNJUNGAN_PASIEN" ColumnName="ID_KUNJUNGAN_PASIEN" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="TB_KUNJUNGAN_PASIEN">
       <EntityTypeMapping TypeName="Models.TB_KUNJUNGAN_PASIEN">
         <MappingFragment StoreEntitySet="TB_KUNJUNGAN_PASIEN">
+          <ScalarProperty Name="PENGAMBILAN_OBAT" ColumnName="PENGAMBILAN_OBAT" />
           <ScalarProperty Name="KETERANGAN" ColumnName="KETERANGAN" />
-          <ScalarProperty Name="STATUS_PENANGANAN" ColumnName="STATUS_PENANGANAN" />
+          <ScalarProperty Name="PENANGANAN_DOKTER" ColumnName="PENANGANAN_DOKTER" />
           <ScalarProperty Name="ID_PASIEN" ColumnName="ID_PASIEN" />
           <ScalarProperty Name="TANGGAL_KUNJUNGAN" ColumnName="TANGGAL_KUNJUNGAN" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -192,7 +192,7 @@
                         @using (Html.BeginForm("DataPasien_Delete", "ADM", FormMethod.Post, new { @id = "del-pasien" }))
                         {
                             <input type="hidden" name="ID" value="@item.ID" />
-                            <button class="s-btn s-btn-lime" type="button" onclick="SubmitForm('del-pasien')">&nbsp;Yes&nbsp;</button>
+                            <input type="submit" class="s-btn s-btn-lime" value="Yes" />
                             <button class="s-btn s-btn-orangered" type="button" onclick="document.getElementById('del-@item.ID').style.display = 'none'">No</button>
                         }
                     </td>

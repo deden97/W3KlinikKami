@@ -1,0 +1,65 @@
+﻿@model TB_PASIEN
+
+@* ID *@
+<div class="form-item">
+    <div class="label-form-item">
+        @Html.Label("ID", new { @for = "ID" })
+    </div>
+    @Html.TextBoxFor(d => d.ID, null, new { @readonly = "true", @placeholder = "ID Pasien" })
+</div>
+
+@* Nama *@
+<div class="form-item">
+    <div class="label-form-item">
+        @Html.Label("Nama Pasien", new { @for = "NAMA" })
+    </div>
+    @Html.TextBoxFor(d => d.NAMA, null, new { @readonly = "true", @placeholder = "Nama Pasien" })
+</div>
+
+@* Jenis Kelamin *@
+<div class="form-item">
+    <div class="label-form-item">
+        @Html.Label("Jenis Kelamin", new { @for = "JENIS_KELAMIN" })
+    </div>
+    @Html.TextBoxFor(d => d.JENIS_KELAMIN, null, new { @readonly = "true", @placeholder = "Jenis Kelamin" })
+</div>
+
+@* Tanggal Lahir *@
+<div class="form-item">
+    <div class="label-form-item">
+        @Html.Label("Tanggal Lahir", new { @for = "TANGGAL_LAHIR" })
+    </div>
+    @Html.TextBoxFor(d => d.TANGGAL_LAHIR, null, new { @readonly = "true", @placeholder = "Tanggal Lahir" })
+</div>
+
+@* Golongan Darah *@
+<div class="form-item">
+    <div class="label-form-item">
+        @Html.Label("Golongan Darah", new { @for = "GOLONGAN_DARAH" })
+    </div>
+    @Html.TextBoxFor(d => d.GOLONGAN_DARAH, null, new { @readonly = "true", @placeholder = "Golongan Darah" })
+</div>
+
+@* Nomor HP *@
+<div class="form-item">
+    <div class="label-form-item">
+        @Html.Label("Nomor HP", new { @for = "NO_HP" })
+    </div>
+    @Html.TextBoxFor(d => d.NO_HP, null, new { @readonly = "true", @placeholder = "Nomor HP" })
+</div>
+
+@* Alamat *@
+<div class="form-item">
+    <div class="label-form-item">
+        @Html.Label("Alamat", new { @for = "ALAMAT" })
+    </div>
+    @Html.TextAreaFor(d => d.ALAMAT, new { @readonly = "true", @placeholder = "Alamat" })
+</div>
+
+@* Terdaftar *@
+<div class="form-item">
+    <div class="label-form-item">
+        @Html.Label("Terdaftar", new { @for = "TERDAFTAR" })
+    </div>
+    @Html.TextBoxFor(d => d.TERDAFTAR, null, new { @readonly = "true", @placeholder = "Terdaftar" })
+</div>

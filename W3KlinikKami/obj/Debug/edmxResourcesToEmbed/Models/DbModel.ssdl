@@ -8,6 +8,19 @@
     <Property Name="USERNAME" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="PASSWORD_AKUN" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
+  <EntityType Name="TB_DATA_PENANGANAN_PASIEN">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_KUNJUNGAN_PASIEN" Type="int" />
+    <Property Name="KELUHAN" Type="text" />
+    <Property Name="PEMERIKSAAN" Type="text" />
+    <Property Name="DIAGNOSA" Type="text" />
+    <Property Name="RESEP_OBAT" Type="text" />
+    <Property Name="KETERANGAN" Type="text" />
+    <Property Name="ID_DOKTER" Type="int" />
+  </EntityType>
   <EntityType Name="TB_JABATAN">
     <Key>
       <PropertyRef Name="KODE_JABATAN" />
@@ -17,12 +30,14 @@
   </EntityType>
   <EntityType Name="TB_KUNJUNGAN_PASIEN">
     <Key>
-      <PropertyRef Name="TANGGAL_KUNJUNGAN" />
+      <PropertyRef Name="ID" />
     </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TANGGAL_KUNJUNGAN" Type="datetime" Nullable="false" />
     <Property Name="ID_PASIEN" Type="int" Nullable="false" />
-    <Property Name="STATUS_PENANGANAN" Type="bit" />
+    <Property Name="PENANGANAN_DOKTER" Type="bit" />
     <Property Name="KETERANGAN" Type="text" />
+    <Property Name="PENGAMBILAN_OBAT" Type="bit" />
   </EntityType>
   <EntityType Name="TB_PASIEN">
     <Key>
@@ -62,7 +77,31 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TB_KUNJUN__ID_PA__49C3F6B7">
+  <Association Name="FK__TB_DATA_P__ID_DO__5BE2A6F2">
+    <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="0..1" />
+    <End Role="TB_DATA_PENANGANAN_PASIEN" Type="Self.TB_DATA_PENANGANAN_PASIEN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_USER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TB_DATA_PENANGANAN_PASIEN">
+        <PropertyRef Name="ID_DOKTER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TB_DATA_P__ID_KU__5AEE82B9">
+    <End Role="TB_KUNJUNGAN_PASIEN" Type="Self.TB_KUNJUNGAN_PASIEN" Multiplicity="0..1" />
+    <End Role="TB_DATA_PENANGANAN_PASIEN" Type="Self.TB_DATA_PENANGANAN_PASIEN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_KUNJUNGAN_PASIEN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TB_DATA_PENANGANAN_PASIEN">
+        <PropertyRef Name="ID_KUNJUNGAN_PASIEN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TB_KUNJUN__ID_PA__52593CB8">
     <End Role="TB_PASIEN" Type="Self.TB_PASIEN" Multiplicity="1" />
     <End Role="TB_KUNJUNGAN_PASIEN" Type="Self.TB_KUNJUNGAN_PASIEN" Multiplicity="*" />
     <ReferentialConstraint>
@@ -88,6 +127,7 @@
   </Association>
   <EntityContainer Name="ModelsStoreContainer">
     <EntitySet Name="TB_AKUN" EntityType="Self.TB_AKUN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_DATA_PENANGANAN_PASIEN" EntityType="Self.TB_DATA_PENANGANAN_PASIEN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_JABATAN" EntityType="Self.TB_JABATAN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_KUNJUNGAN_PASIEN" EntityType="Self.TB_KUNJUNGAN_PASIEN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_PASIEN" EntityType="Self.TB_PASIEN" Schema="dbo" store:Type="Tables" />
@@ -96,7 +136,15 @@
       <End Role="TB_USER" EntitySet="TB_USER" />
       <End Role="TB_AKUN" EntitySet="TB_AKUN" />
     </AssociationSet>
-    <AssociationSet Name="FK__TB_KUNJUN__ID_PA__49C3F6B7" Association="Self.FK__TB_KUNJUN__ID_PA__49C3F6B7">
+    <AssociationSet Name="FK__TB_DATA_P__ID_DO__5BE2A6F2" Association="Self.FK__TB_DATA_P__ID_DO__5BE2A6F2">
+      <End Role="TB_USER" EntitySet="TB_USER" />
+      <End Role="TB_DATA_PENANGANAN_PASIEN" EntitySet="TB_DATA_PENANGANAN_PASIEN" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TB_DATA_P__ID_KU__5AEE82B9" Association="Self.FK__TB_DATA_P__ID_KU__5AEE82B9">
+      <End Role="TB_KUNJUNGAN_PASIEN" EntitySet="TB_KUNJUNGAN_PASIEN" />
+      <End Role="TB_DATA_PENANGANAN_PASIEN" EntitySet="TB_DATA_PENANGANAN_PASIEN" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TB_KUNJUN__ID_PA__52593CB8" Association="Self.FK__TB_KUNJUN__ID_PA__52593CB8">
       <End Role="TB_PASIEN" EntitySet="TB_PASIEN" />
       <End Role="TB_KUNJUNGAN_PASIEN" EntitySet="TB_KUNJUNGAN_PASIEN" />
     </AssociationSet>

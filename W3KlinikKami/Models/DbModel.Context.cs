@@ -29,6 +29,7 @@ namespace W3KlinikKami.Models
         public virtual DbSet<TB_JABATAN> TB_JABATAN { get; set; }
         public virtual DbSet<TB_USER> TB_USER { get; set; }
         public virtual DbSet<TB_PASIEN> TB_PASIEN { get; set; }
+        public virtual DbSet<TB_DATA_PENANGANAN_PASIEN> TB_DATA_PENANGANAN_PASIEN { get; set; }
         public virtual DbSet<TB_KUNJUNGAN_PASIEN> TB_KUNJUNGAN_PASIEN { get; set; }
     }
 }

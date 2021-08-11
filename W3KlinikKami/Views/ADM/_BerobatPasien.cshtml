@@ -90,70 +90,7 @@
             <td>
                 @* Data Pasien terpilih *@
                 <div class="content-body-content height-max-content margin-top-10px" id="detail-data-pasien">
-                    @* ID *@
-                    <div class="form-item">
-                        <div class="label-form-item">
-                            @Html.Label("ID", new { @for = "ID" })
-                        </div>
-                        @* ID: dibuat seperti dibawah ini untuk menghindari ditampilkannya angka '0'/nol *@
-                        @Html.TextBoxFor(d => dt.ID, null, new { @readonly = "true", @placeholder = "ID Pasien" })
-                    </div>
-
-                    @* Nama *@
-                    <div class="form-item">
-                        <div class="label-form-item">
-                            @Html.Label("Nama Pasien", new { @for = "NAMA" })
-                        </div>
-                        @Html.TextBoxFor(d => dt.NAMA, null, new { @readonly = "true", @placeholder = "Nama Pasien" })
-                    </div>
-
-                    @* Jenis Kelamin *@
-                    <div class="form-item">
-                        <div class="label-form-item">
-                            @Html.Label("Jenis Kelamin", new { @for = "JENIS_KELAMIN" })
-                        </div>
-                        @Html.TextBoxFor(d => dt.JENIS_KELAMIN, null, new { @readonly = "true", @placeholder = "Jenis Kelamin" })
-                    </div>
-
-                    @* Tanggal Lahir *@
-                    <div class="form-item">
-                        <div class="label-form-item">
-                            @Html.Label("Tanggal Lahir", new { @for = "TANGGAL_LAHIR" })
-                        </div>
-                        @Html.TextBoxFor(d => dt.TANGGAL_LAHIR, null, new { @readonly = "true", @placeholder = "Tanggal Lahir" })
-                    </div>
-
-                    @* Golongan Darah *@
-                    <div class="form-item">
-                        <div class="label-form-item">
-                            @Html.Label("Golongan Darah", new { @for = "GOLONGAN_DARAH" })
-                        </div>
-                        @Html.TextBoxFor(d => dt.GOLONGAN_DARAH, null, new { @readonly = "true", @placeholder = "Golongan Darah" })
-                    </div>
-
-                    @* Nomor HP *@
-                    <div class="form-item">
-                        <div class="label-form-item">
-                            @Html.Label("Nomor HP", new { @for = "NO_HP" })
-                        </div>
-                        @Html.TextBoxFor(d => dt.NO_HP, null, new { @readonly = "true", @placeholder = "Nomor HP" })
-                    </div>
-
-                    @* Alamat *@
-                    <div class="form-item">
-                        <div class="label-form-item">
-                            @Html.Label("Alamat", new { @for = "ALAMAT" })
-                        </div>
-                        @Html.TextAreaFor(d => dt.ALAMAT, new { @readonly = "true", @placeholder = "Alamat" })
-                    </div>
-
-                    @* Terdaftar *@
-                    <div class="form-item">
-                        <div class="label-form-item">
-                            @Html.Label("Terdaftar", new { @for = "TERDAFTAR" })
-                        </div>
-                        @Html.TextBoxFor(d => dt.TERDAFTAR, null, new { @readonly = "true", @placeholder = "Terdaftar" })
-                    </div>
+                    @Html.Partial("~/Views/Shared/_Form_DataPasien_ReadOnly.cshtml", dt)
 
                     <div class="form-item">
                         @using (Html.BeginForm("BerobatPasien", "ADM", new { @page = pageSts, @search = search }, FormMethod.Post, new { @id = "submit-id-pasien" }))

@@ -31,6 +31,7 @@
     <NavigationProperty Name="TB_AKUN" Relationship="Self.FK__TB_AKUN__ID__2A4B4B5E" FromRole="TB_USER" ToRole="TB_AKUN" />
     <NavigationProperty Name="TB_JABATAN" Relationship="Self.FK__TB_USER__JABATAN__276EDEB3" FromRole="TB_USER" ToRole="TB_JABATAN" />
     <Property Name="TERDAFTAR" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="TB_DATA_PENANGANAN_PASIEN" Relationship="Models.FK__TB_DATA_P__ID_DO__5BE2A6F2" FromRole="TB_USER" ToRole="TB_DATA_PENANGANAN_PASIEN" />
   </EntityType>
   <Association Name="FK__TB_AKUN__ID__2A4B4B5E">
     <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="1" />
@@ -69,10 +70,19 @@
       <End Role="TB_USER" EntitySet="TB_USER" />
     </AssociationSet>
     <EntitySet Name="TB_PASIEN" EntityType="Models.TB_PASIEN" />
+    <EntitySet Name="TB_DATA_PENANGANAN_PASIEN" EntityType="Models.TB_DATA_PENANGANAN_PASIEN" />
     <EntitySet Name="TB_KUNJUNGAN_PASIEN" EntityType="Models.TB_KUNJUNGAN_PASIEN" />
-    <AssociationSet Name="FK__TB_KUNJUN__ID_PA__49C3F6B7" Association="Models.FK__TB_KUNJUN__ID_PA__49C3F6B7">
+    <AssociationSet Name="FK__TB_DATA_P__ID_KU__5AEE82B9" Association="Models.FK__TB_DATA_P__ID_KU__5AEE82B9">
+      <End Role="TB_KUNJUNGAN_PASIEN" EntitySet="TB_KUNJUNGAN_PASIEN" />
+      <End Role="TB_DATA_PENANGANAN_PASIEN" EntitySet="TB_DATA_PENANGANAN_PASIEN" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TB_KUNJUN__ID_PA__52593CB8" Association="Models.FK__TB_KUNJUN__ID_PA__52593CB8">
       <End Role="TB_PASIEN" EntitySet="TB_PASIEN" />
       <End Role="TB_KUNJUNGAN_PASIEN" EntitySet="TB_KUNJUNGAN_PASIEN" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TB_DATA_P__ID_DO__5BE2A6F2" Association="Models.FK__TB_DATA_P__ID_DO__5BE2A6F2">
+      <End Role="TB_USER" EntitySet="TB_USER" />
+      <End Role="TB_DATA_PENANGANAN_PASIEN" EntitySet="TB_DATA_PENANGANAN_PASIEN" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="TB_PASIEN">
@@ -87,19 +97,49 @@
     <Property Name="NO_HP" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="ALAMAT" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="TERDAFTAR" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="TB_KUNJUNGAN_PASIEN" Relationship="Models.FK__TB_KUNJUN__ID_PA__49C3F6B7" FromRole="TB_PASIEN" ToRole="TB_KUNJUNGAN_PASIEN" />
+    <NavigationProperty Name="TB_KUNJUNGAN_PASIEN" Relationship="Models.FK__TB_KUNJUN__ID_PA__52593CB8" FromRole="TB_PASIEN" ToRole="TB_KUNJUNGAN_PASIEN" />
+  </EntityType>
+  <EntityType Name="TB_DATA_PENANGANAN_PASIEN">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_KUNJUNGAN_PASIEN" Type="Int32" />
+    <Property Name="KELUHAN" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PEMERIKSAAN" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DIAGNOSA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="RESEP_OBAT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="KETERANGAN" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TB_KUNJUNGAN_PASIEN" Relationship="Models.FK__TB_DATA_P__ID_KU__5AEE82B9" FromRole="TB_DATA_PENANGANAN_PASIEN" ToRole="TB_KUNJUNGAN_PASIEN" />
+    <Property Name="ID_DOKTER" Type="Int32" />
+    <NavigationProperty Name="TB_USER" Relationship="Models.FK__TB_DATA_P__ID_DO__5BE2A6F2" FromRole="TB_DATA_PENANGANAN_PASIEN" ToRole="TB_USER" />
   </EntityType>
   <EntityType Name="TB_KUNJUNGAN_PASIEN">
     <Key>
-      <PropertyRef Name="TANGGAL_KUNJUNGAN" />
+      <PropertyRef Name="ID" />
     </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="TANGGAL_KUNJUNGAN" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ID_PASIEN" Type="Int32" Nullable="false" />
-    <Property Name="STATUS_PENANGANAN" Type="Boolean" />
+    <Property Name="PENANGANAN_DOKTER" Type="Boolean" />
     <Property Name="KETERANGAN" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="TB_PASIEN" Relationship="Models.FK__TB_KUNJUN__ID_PA__49C3F6B7" FromRole="TB_KUNJUNGAN_PASIEN" ToRole="TB_PASIEN" />
+    <Property Name="PENGAMBILAN_OBAT" Type="Boolean" />
+    <NavigationProperty Name="TB_DATA_PENANGANAN_PASIEN" Relationship="Models.FK__TB_DATA_P__ID_KU__5AEE82B9" FromRole="TB_KUNJUNGAN_PASIEN" ToRole="TB_DATA_PENANGANAN_PASIEN" />
+    <NavigationProperty Name="TB_PASIEN" Relationship="Models.FK__TB_KUNJUN__ID_PA__52593CB8" FromRole="TB_KUNJUNGAN_PASIEN" ToRole="TB_PASIEN" />
   </EntityType>
-  <Association Name="FK__TB_KUNJUN__ID_PA__49C3F6B7">
+  <Association Name="FK__TB_DATA_P__ID_KU__5AEE82B9">
+    <End Type="Models.TB_KUNJUNGAN_PASIEN" Role="TB_KUNJUNGAN_PASIEN" Multiplicity="0..1" />
+    <End Type="Models.TB_DATA_PENANGANAN_PASIEN" Role="TB_DATA_PENANGANAN_PASIEN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_KUNJUNGAN_PASIEN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TB_DATA_PENANGANAN_PASIEN">
+        <PropertyRef Name="ID_KUNJUNGAN_PASIEN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TB_KUNJUN__ID_PA__52593CB8">
     <End Type="Models.TB_PASIEN" Role="TB_PASIEN" Multiplicity="1" />
     <End Type="Models.TB_KUNJUNGAN_PASIEN" Role="TB_KUNJUNGAN_PASIEN" Multiplicity="*" />
     <ReferentialConstraint>
@@ -108,6 +148,18 @@
       </Principal>
       <Dependent Role="TB_KUNJUNGAN_PASIEN">
         <PropertyRef Name="ID_PASIEN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TB_DATA_P__ID_DO__5BE2A6F2">
+    <End Type="Models.TB_USER" Role="TB_USER" Multiplicity="0..1" />
+    <End Type="Models.TB_DATA_PENANGANAN_PASIEN" Role="TB_DATA_PENANGANAN_PASIEN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_USER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TB_DATA_PENANGANAN_PASIEN">
+        <PropertyRef Name="ID_DOKTER" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
