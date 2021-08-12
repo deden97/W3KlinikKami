@@ -2,7 +2,6 @@
 @using PagedList;
 @using PagedList.Mvc;
 @{
-    Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
     int pageSts = (Convert.ToInt32(Request.QueryString["page"]) < 1) ? 1 : Convert.ToInt32(Request.QueryString["page"]);
     string search = Request.QueryString["search"] ?? "";
     int pageSize = (Convert.ToInt32(Request.QueryString["pageSize"]) < 1) ? 8 : Convert.ToInt32(Request.QueryString["pageSize"]);

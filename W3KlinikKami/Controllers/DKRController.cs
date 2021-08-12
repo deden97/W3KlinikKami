@@ -14,7 +14,7 @@ namespace W3KlinikKami.Controllers
         private readonly DbEntities db = new DbEntities();
         private int ID { get; set; }
         private string JABATAN { get; set; }
-        public enum menu { TanganiPasien }
+        public enum menu { TanganiPasien, RiwayatPasien }
         private bool CekSession()
         {
             this.ID = csmSession.GetIdSession();
@@ -48,6 +48,23 @@ namespace W3KlinikKami.Controllers
                 return RedirectToAction("TanganiPasien");
         }
 
+        [HttpGet]
+        public ActionResult UpdateAntrianPasien()
+        {
+            var dtAntrian = this.db
+                .TB_KUNJUNGAN_PASIEN
+                .AsEnumerable()
+                .Where(d => d.TANGGAL_KUNJUNGAN.Date == DateTime.Today && d.PENANGANAN_DOKTER == null)
+                .OrderBy(d => d.TANGGAL_KUNJUNGAN);
+
+            return Json(dtAntrian.Select(d => new
+            {
+                d.ID_PASIEN,
+                d.TB_PASIEN.NAMA
+            }),
+            JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult TanganiPasien(int? idPasien)
         {
             if (this.CekSession())
@@ -60,6 +77,7 @@ namespace W3KlinikKami.Controllers
                         d.PENANGANAN_DOKTER == null &&
                         (d.PENGAMBILAN_OBAT == null || d.PENGAMBILAN_OBAT == false))
                     .OrderBy(d => d.TANGGAL_KUNJUNGAN);
+                
                 if (idPasien > 0)
                 {
                     ViewBag.idTerpilih = idPasien;
@@ -88,6 +106,14 @@ namespace W3KlinikKami.Controllers
             this.db.SaveChanges();
 
             return RedirectToAction("TanganiPasien");
+        }
+
+        [HttpGet]
+        public ActionResult RiwayatPasien()
+        {
+            this.CekSession();
+            ViewBag.Menu = menu.RiwayatPasien.ToString();
+            return View("Index");
         }
     }
 }

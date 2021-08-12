@@ -79,5 +79,15 @@ namespace W3KlinikKamiUnitTest.Controllers
 
         }
         /* End: TanganiPasien Test------------------------------------------------------------------------------------------ */
+
+        [TestMethod]
+        public void UpdateAntrianPasien_Return_Json()
+        {
+            DKRController dKRController = new DKRController();
+
+            var result = (JsonResult)dKRController.UpdateAntrianPasien();
+
+            Assert.IsNotNull(result);
+        }
     }
 }

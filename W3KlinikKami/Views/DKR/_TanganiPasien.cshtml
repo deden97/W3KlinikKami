@@ -1,13 +1,7 @@
 ﻿@model IEnumerable<TB_KUNJUNGAN_PASIEN>
 
-<style>
-    .bg-trans {
-        background-color: transparent;
-        border: 0;
-    }
-</style>
-
 <div class="body-content">
+    @* Begin: table untuk menampilkan isi konten ------------------------------------------------------------------------------------------------- *@
     <table>
         <tr>
             <td colspan="2">
@@ -19,13 +13,16 @@
 
         <tr class="ver-alg-0">
             <td class="min-max-width-400-px">
+
+                @* judul & table untuk menampilkan data antrian *@
                 <h4><u>Antrian Pasien</u></h4>
-                <table class="table-csm">
+                <table class="table-csm" id="tb-antrian-pasien">
                     <tr>
                         <th>ID Pasien</th>
                         <th>Nama Pasien</th>
                     </tr>
 
+                    @* jika jumlah data pada 'Model' lebih dari 0 *@
                     @if (Model.Count() > 0)
                     {
                         foreach (var item in Model)
@@ -36,11 +33,12 @@
                             </tr>
                         }
                     }
+                    @* jika data pada 'Model' kosong *@
                     else
                     {
                         <tr>
                             <td colspan="2">
-                                <b class="text-error">Tidak Ada Pasien</b>
+                                <b class="text-error">Antrian Kosong.</b>
                             </td>
                         </tr>
                     }
@@ -54,14 +52,21 @@
                         int idKunjungan = 0;
                         if (ViewBag.idTerpilih > 0)
                         {
+                            @* mengambil detail data pasien dari 'Model' untuk di render html.partial() *@
                             int id = ViewBag.idTerpilih;
                             dt = Model.Single(d => d.ID_PASIEN == id).TB_PASIEN;
+
+                            @* mengambil 'id_kunjungan' dari 'Model' yg akan digunakan di form 'data penanganan pasien' *@
                             idKunjungan = Model.Single(d => d.ID_PASIEN == id && d.TANGGAL_KUNJUNGAN.Date == DateTime.Today).ID;
+
+                            @* mengubah warna baris data yg sedang ditangani pada table antrian *@
                             <script type="text/javascript">
-                                document.getElementById(@dt.ID).style.backgroundColor = 'greenyellow';
+                                document.getElementById(@dt.ID).style.backgroundColor = "greenyellow";
                             </script>
                         }
                     }
+
+                    @* form untuk menampilkan detail data pasien yg akan/sedang ditangani oleh dokter *@
                     @Html.Partial("~/Views/Shared/_Form_DataPasien_ReadOnly.cshtml", dt)
 
                     <div class="form-item">
@@ -69,60 +74,138 @@
                             @{
                                 if (Model.Count() > 0)
                                 {
-                                    int idp = Model.ToList().First().ID_PASIEN;
-                                    <button type="button" onclick="OpenLink('/DKR/TanganiPasien?idPasien=@idp')">
-                                        Antrian Selanjutnya -> @idp
+                                    <script>idPasienNext = @Model.ToList().First().ID_PASIEN</script>
+                                }
+
+                                @* tombol untuk memanggil antrian berikutnya. *@
+                                <button type="button" onclick="getIdPasien()">Antrian Berikutnya</button>
+                            }
+                            &nbsp;
+                            @{
+                                if (ViewBag.idTerpilih > 0)
+                                {
+                                    @* tombol untuk membuat data pemeriksaan pasien *@
+                                    <button type="button" onclick="ShowModalKw('modal-kw-data-pemeriksaan', 'grid')">
+                                        Buat Data Pemeriksaan
                                     </button>
                                 }
                             }
-                            &nbsp;
-                            <button type="button" onclick="ShowModalKw('modal-kw-data-pemeriksaan', 'grid')">
-                                Buat Data Pemeriksaan
-                            </button>
                         </div>
                     </div>
                 </div>
             </td>
         </tr>
     </table>
+    @* End: table untuk menampilkan isi konten ------------------------------------------------------------------------------------------------- *@
 </div>
 
-<div class="modal-kw-dialog" id="modal-kw-data-pemeriksaan" style="display: none;">
-    <div class="modal-kw-content">
-        <div class="close-modal-kw-dialog" onclick="ShowModalKw('modal-kw-data-pemeriksaan', 'none')">x</div>
-        <button>riwayat sebelumnya in new tab</button>
+@* Begin: form 'data penanganan pasien' ------------------------------------------------------------------------------------------------- *@
+@if (ViewBag.idTerpilih > 0)
+{
+    <div class="modal-kw-dialog" id="modal-kw-data-pemeriksaan" style="display: none;">
+        <div class="modal-kw-content">
+            <div class="close-modal-kw-dialog" onclick="ShowModalKw('modal-kw-data-pemeriksaan', 'none')">x</div>
+            <button onclick="OpenLinkNewTab('https://www.google.com')">lihat riwayat sebelumnya</button>
 
-        @using (Html.BeginForm("TanganiPasien", "DKR", FormMethod.Post))
-        {
-            <input type="hidden" value="@idKunjungan" name="ID_KUNJUNGAN_PASIEN" />
-            <div class="form-item">
-                <div class="label-form-item">@Html.Label("Keluhan")</div>
-                @Html.TextArea("KELUHAN", new { @placeholder = "Keluhan" })
-            </div>
+            @using (Html.BeginForm("TanganiPasien", "DKR", FormMethod.Post))
+            {
+                @* Id Kunjungan *@
+                <input type="hidden" value="@idKunjungan" name="ID_KUNJUNGAN_PASIEN" />
 
-            <div class="form-item">
-                <div class="label-form-item">@Html.Label("Pemeriksaan")</div>
-                @Html.TextArea("PEMERIKSAAN", new { @placeholder = "Pemeriksaan" })
-            </div>
+                <div class="form-item">
+                    <div class="label-form-item">@Html.Label("Keluhan")</div>
+                    @Html.TextArea("KELUHAN", new { @placeholder = "Keluhan" })
+                </div>
 
-            <div class="form-item">
-                <div class="label-form-item">@Html.Label("Diagnosa")</div>
-                @Html.TextArea("DIAGNOSA", new { @placeholder = "Diagnosa" })
-            </div>
+                <div class="form-item">
+                    <div class="label-form-item">@Html.Label("Pemeriksaan")</div>
+                    @Html.TextArea("PEMERIKSAAN", new { @placeholder = "Pemeriksaan" })
+                </div>
 
-            <div class="form-item">
-                <div class="label-form-item">@Html.Label("Resep Obat")</div>
-                @Html.TextArea("RESEP_OBAT", new { @placeholder = "Resep Obat" })
-            </div>
+                <div class="form-item">
+                    <div class="label-form-item">@Html.Label("Diagnosa")</div>
+                    @Html.TextArea("DIAGNOSA", new { @placeholder = "Diagnosa" })
+                </div>
 
-            <div class="form-item">
-                <div class="label-form-item">@Html.Label("Keterangan")</div>
-                @Html.TextArea("KETERANGAN", new { @placeholder = "Keterangan" })
-            </div>
+                <div class="form-item">
+                    <div class="label-form-item">@Html.Label("Resep Obat")</div>
+                    @Html.TextArea("RESEP_OBAT", new { @placeholder = "Resep Obat" })
+                </div>
 
-            <div class="form-item">
-                <input type="submit" value="Submit" />
-            </div>
-        }
+                <div class="form-item">
+                    <div class="label-form-item">@Html.Label("Keterangan")</div>
+                    @Html.TextArea("KETERANGAN", new { @placeholder = "Keterangan" })
+                </div>
+
+                <div class="form-item">
+                    <input type="submit" value="Submit" />
+                </div>
+            }
+        </div>
     </div>
-</div>
+}
+@* End: form 'data penanganan pasien' ------------------------------------------------------------------------------------------------- *@
+
+@* Audio yg digunakan jika ada antrian baru *@
+<audio id="antrian-baru">
+    <source src="~/Mp3/EQLDS52-start-button.mp3" type="audio/mpeg" />
+</audio>
+
+@* Javascript *@
+<script src="~/Scripts/jquery-3.6.0.js"></script>
+<script type="text/javascript">
+    // Id Pasien yg akan digunakan untuk mwmanggil antrian berikutnya
+    var idPasienNext;
+
+    // function untuk cek 'idPasienNext' jika id pasien tidak kosong maka panggil antrian
+    function getIdPasien() {
+        if (idPasienNext > 0) {
+            OpenLink('/DKR/TanganiPasien?idPasien=' + idPasienNext);
+        } else {
+            alert('data null');
+        }
+    }
+
+    // jumlah data antrian pertama diambil dari 'Model'
+    var jmlDataSaatIni = @Model.Count();
+
+    // cek data antrian dengan interval 1 detik
+    setInterval(function () {
+        $.ajax({
+            type: 'get',
+            url: '/DKR/UpdateAntrianPasien',
+            data: null,
+            success: function (data) {
+                // jika jumlah data lebih banyak dari 'jmlDataSaatIni'
+                if (data.length > jmlDataSaatIni) {
+                    // nilai/isi dari variabel ini akan di masukan ke table antrian yg memiliki id="tb-antrian-pasien"
+                    var trData = "";
+
+                    for (let i = jmlDataSaatIni; i < data.length; i++) {
+                        trData += '<tr id="' + data[i].ID_PASIEN + '" style="background-color: yellow;">' +
+                            '<td>' + data[i].ID_PASIEN + '</td>' +
+                            '<td class="table-csm-text-align-left min-max-width-400-px">' + data[i].NAMA + '</td>' +
+                            '</tr>';
+                    }
+
+                    // jika jumlah data sebelummnya kosong
+                    if (jmlDataSaatIni == 0) {
+                        idPasienNext = data[0].ID_PASIEN;
+
+                        // element pada table antrian ditimpa dengan '<tr><th>ID Pasien</th><th>Nama Pasien</th></tr>'
+                        $('#tb-antrian-pasien').html('<tr><th>ID Pasien</th><th>Nama Pasien</th></tr>');
+                    }
+
+                    // menambahkan elemen ke table antrian (id="tb-antrian-pasien"), yg berisi data antrian.
+                    $('#tb-antrian-pasien').append(trData);
+
+                    // memutar suara
+                    document.getElementById('antrian-baru').play();
+
+                    // update jumlah data
+                    jmlDataSaatIni = data.length;
+                }
+            }
+        });
+    }, 1000);
+</script>

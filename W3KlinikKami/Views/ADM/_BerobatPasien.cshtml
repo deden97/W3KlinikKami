@@ -11,9 +11,6 @@
 
     string search = Request.QueryString["search"] ?? "";
     int pageSts = (Convert.ToInt32(Request.QueryString["page"]) < 1) ? 1 : Convert.ToInt32(Request.QueryString["page"]);
-
-    // Flash Message
-    Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
 }
 
 <div class="body-content">

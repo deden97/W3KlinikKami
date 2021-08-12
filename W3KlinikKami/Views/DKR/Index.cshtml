@@ -7,7 +7,7 @@
 <div class="body-content">
     <div class="submenu-body-content">
         <div id="TanganiPasien" class="btn-submenu width-200px" onclick="clickLinkByDiv('tPasien')">
-            <div class="notif-btn-submenu" id="notif">10</div>
+            <div class="notif-btn-submenu" id="notif" style="visibility: hidden;"></div>
             @Html.ActionLink("Tangani Pasien", "TanganiPasien", "DKR", null, new { id = "tPasien" })
         </div>
 
@@ -36,3 +36,35 @@
         </div>
     </div>
 </div>
+
+@{
+    if (ViewBag.Menu != "TanganiPasien")
+    {
+        <script type="text/javascript">
+            // jumlah data saat ini
+            var jmlDataSaatIni = 0;
+
+            // update jumlah data
+            setInterval(function () {
+                $.ajax({
+                    type: 'get',
+                    url: '/DKR/UpdateAntrianPasien',
+                    data: null,
+                    success: function (data) {
+                        var notif = document.getElementById('notif');
+                        if (data.length > jmlDataSaatIni) {
+                            jmlDataSaatIni = data.length;
+                            notif.style.visibility = 'visible';
+                            notif.innerHTML = jmlDataSaatIni;
+                            notif.title = "Ada " + jmlDataSaatIni + " Antrian.";
+                        } else if (data.length < 1) {
+                            if (notif.style.visibility == 'visible') {
+                                notif.style.visibility = 'hidden';
+                            }
+                        }
+                    }
+                });
+            }, 1000);
+        </script>
+    }
+}
