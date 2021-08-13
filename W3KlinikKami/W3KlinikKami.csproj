@@ -123,6 +123,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Audio\panggil-antrian-berobat.mp3" />
+    <Content Include="Content\Antrian\Antrian.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -194,7 +196,7 @@
     <Content Include="Models\DbModel.edmx.diagram">
       <DependentUpon>DbModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Mp3\EQLDS52-start-button.mp3" />
+    <Content Include="Audio\EQLDS52-start-button.mp3" />
     <Content Include="Report\KartuPasien.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -273,6 +275,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ADMController.cs" />
+    <Compile Include="Controllers\AntrianController.cs" />
     <Compile Include="Controllers\DKRController.cs" />
     <Compile Include="Core\csmSession.cs" />
     <Compile Include="Core\FlashMessage.cs" />
@@ -299,6 +302,9 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_AKUN_META_DATA.cs" />
+    <Compile Include="Models\TB_ANTRIAN_BEROBAT.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_DATA_PENANGANAN_PASIEN.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -357,6 +363,8 @@
     <Content Include="Views\DKR\_TanganiPasien.cshtml" />
     <Content Include="Views\Shared\_Form_DataPasien_ReadOnly.cshtml" />
     <Content Include="Views\DKR\_RiwayatPasien.cshtml" />
+    <Content Include="Views\Antrian\Index.cshtml" />
+    <Content Include="Views\Antrian\AntrianBerobat.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

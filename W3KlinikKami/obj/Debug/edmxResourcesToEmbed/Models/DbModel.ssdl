@@ -8,6 +8,14 @@
     <Property Name="USERNAME" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="PASSWORD_AKUN" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
+  <EntityType Name="TB_ANTRIAN_BEROBAT">
+    <Key>
+      <PropertyRef Name="ID_KUNJUNGAN_PASIEN" />
+    </Key>
+    <Property Name="ID_KUNJUNGAN_PASIEN" Type="int" Nullable="false" />
+    <Property Name="NO_ANTRIAN" Type="int" Nullable="false" />
+    <Property Name="STATUS_PANGGILAN" Type="bit" />
+  </EntityType>
   <EntityType Name="TB_DATA_PENANGANAN_PASIEN">
     <Key>
       <PropertyRef Name="ID" />
@@ -77,6 +85,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__TB_ANTRIA__ID_KU__5DCAEF64">
+    <End Role="TB_KUNJUNGAN_PASIEN" Type="Self.TB_KUNJUNGAN_PASIEN" Multiplicity="1" />
+    <End Role="TB_ANTRIAN_BEROBAT" Type="Self.TB_ANTRIAN_BEROBAT" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TB_KUNJUNGAN_PASIEN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TB_ANTRIAN_BEROBAT">
+        <PropertyRef Name="ID_KUNJUNGAN_PASIEN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__TB_DATA_P__ID_DO__5BE2A6F2">
     <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="0..1" />
     <End Role="TB_DATA_PENANGANAN_PASIEN" Type="Self.TB_DATA_PENANGANAN_PASIEN" Multiplicity="*" />
@@ -127,6 +147,7 @@
   </Association>
   <EntityContainer Name="ModelsStoreContainer">
     <EntitySet Name="TB_AKUN" EntityType="Self.TB_AKUN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_ANTRIAN_BEROBAT" EntityType="Self.TB_ANTRIAN_BEROBAT" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_DATA_PENANGANAN_PASIEN" EntityType="Self.TB_DATA_PENANGANAN_PASIEN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_JABATAN" EntityType="Self.TB_JABATAN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_KUNJUNGAN_PASIEN" EntityType="Self.TB_KUNJUNGAN_PASIEN" Schema="dbo" store:Type="Tables" />
@@ -135,6 +156,10 @@
     <AssociationSet Name="FK__TB_AKUN__ID__2A4B4B5E" Association="Self.FK__TB_AKUN__ID__2A4B4B5E">
       <End Role="TB_USER" EntitySet="TB_USER" />
       <End Role="TB_AKUN" EntitySet="TB_AKUN" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TB_ANTRIA__ID_KU__5DCAEF64" Association="Self.FK__TB_ANTRIA__ID_KU__5DCAEF64">
+      <End Role="TB_KUNJUNGAN_PASIEN" EntitySet="TB_KUNJUNGAN_PASIEN" />
+      <End Role="TB_ANTRIAN_BEROBAT" EntitySet="TB_ANTRIAN_BEROBAT" />
     </AssociationSet>
     <AssociationSet Name="FK__TB_DATA_P__ID_DO__5BE2A6F2" Association="Self.FK__TB_DATA_P__ID_DO__5BE2A6F2">
       <End Role="TB_USER" EntitySet="TB_USER" />

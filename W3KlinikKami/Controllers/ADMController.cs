@@ -55,6 +55,29 @@ namespace W3KlinikKami.Controllers
 
         public ActionResult Index()
         {
+            //List<TB_KUNJUNGAN_PASIEN> pasienHariIni = this.db.TB_KUNJUNGAN_PASIEN
+            //    .AsEnumerable()
+            //    .Where(d => d.TANGGAL_KUNJUNGAN.Date == DateTime.Today)
+            //    .OrderByDescending(d => d.TANGGAL_KUNJUNGAN)
+            //    .ToList();
+
+            //if (pasienHariIni.Count() > 0)
+            //{
+            //    var idKunjungan = pasienHariIni.First().ID;
+            //    var noAntrian = pasienHariIni.Count();
+            //    if(!this.db.TB_ANTRIAN_BEROBAT.Any(d => d.ID_KUNJUNGAN_PASIEN == idKunjungan))
+            //    {
+            //        TB_ANTRIAN_BEROBAT antrian = new TB_ANTRIAN_BEROBAT
+            //        {
+            //            ID_KUNJUNGAN_PASIEN = idKunjungan,
+            //            NO_ANTRIAN = noAntrian
+            //        };
+
+            //        this.db.TB_ANTRIAN_BEROBAT.Add(antrian);
+            //        this.db.SaveChanges();
+            //    }
+            //}
+            
             if (this.CekSession())
                 return RedirectToAction("BerobatPasien");
             else
@@ -95,46 +118,81 @@ namespace W3KlinikKami.Controllers
             if (!this.CekSession())
                 return RedirectToAction("Index", "Index");
 
-            if(dt.ID > 0)
+            try
             {
-                /* syarat pasien:
-                 * - jika pasien belum mendaftar berobat pada hari ini,
-                 * - jika pasien sudah mendaftar hari ini, dan ingin mendaftar lagi maka syaratnya:
-                 *      @ pasien sudah ditangani oleh dokter,
-                 *      @ dan pasien sudah mengambil obat.
-                 * - jika 'cekAntrianPasien' = FALSE maka pasien BOLEH dicatat di antrian.
-                 */
-                bool cekAntrianPasien = this.db
-                    .TB_KUNJUNGAN_PASIEN
-                    .AsEnumerable()
-                    .Any(d => d.ID_PASIEN == dt.ID &&
-                        d.TANGGAL_KUNJUNGAN.Date == DateTime.Today &&
-                        (d.PENANGANAN_DOKTER == null ||
-                         d.PENGAMBILAN_OBAT == null ||
-                         d.PENGAMBILAN_OBAT == false));
-                if (!cekAntrianPasien)
+                if (dt.ID > 0)
                 {
-                    TB_KUNJUNGAN_PASIEN tB_KUNJUNGAN_PASIEN = new TB_KUNJUNGAN_PASIEN()
+                    /* syarat pasien:
+                     * - jika pasien belum mendaftar berobat pada hari ini,
+                     * - jika pasien sudah mendaftar hari ini, dan ingin mendaftar lagi maka syaratnya:
+                     *      @ pasien sudah ditangani oleh dokter,
+                     *      @ dan pasien sudah mengambil obat.
+                     * - jika 'cekAntrianPasien' = FALSE maka pasien BOLEH dicatat di antrian.
+                     */
+                    bool cekAntrianPasien = this.db
+                        .TB_KUNJUNGAN_PASIEN
+                        .AsEnumerable()
+                        .Any(d => d.ID_PASIEN == dt.ID &&
+                            d.TANGGAL_KUNJUNGAN.Date == DateTime.Today &&
+                            (d.PENANGANAN_DOKTER == null ||
+                             d.PENGAMBILAN_OBAT == null ||
+                             d.PENGAMBILAN_OBAT == false));
+
+                    if (!cekAntrianPasien)
                     {
-                        TANGGAL_KUNJUNGAN = DateTime.Now,
-                        ID_PASIEN = dt.ID
-                    };
-                    this.db.Entry(tB_KUNJUNGAN_PASIEN).State = EntityState.Added;
-                    this.db.SaveChanges();
-                    FlashMessage.SetFlashMessage(
-                        $"Pasien Atas Nama '{dt.NAMA}' Dengan ID '{dt.ID}' Berhasil Dicatat Di Antrian",
-                        FlashMessage.FlashMessageType.Success);
+                        // simpan ke db -> TB_KUNJUNGAN_PASIEN
+                        TB_KUNJUNGAN_PASIEN tB_KUNJUNGAN_PASIEN = new TB_KUNJUNGAN_PASIEN()
+                        {
+                            TANGGAL_KUNJUNGAN = DateTime.Now,
+                            ID_PASIEN = dt.ID
+                        };
+                        this.db.Entry(tB_KUNJUNGAN_PASIEN).State = EntityState.Added;
+                        this.db.SaveChanges();
+
+                        // simpan ke db -> TB_ANTRIAN_BEROBAT
+                        List<TB_KUNJUNGAN_PASIEN> pasienHariIni = this.db.TB_KUNJUNGAN_PASIEN
+                            .AsEnumerable()
+                            .Where(d => d.TANGGAL_KUNJUNGAN.Date == DateTime.Today)
+                            .OrderByDescending(d => d.TANGGAL_KUNJUNGAN)
+                            .ToList();
+
+                        if (pasienHariIni.Count() > 0)
+                        {
+                            int idKunjungan = pasienHariIni.First().ID;
+                            if (!this.db.TB_ANTRIAN_BEROBAT.Any(d => d.ID_KUNJUNGAN_PASIEN == idKunjungan))
+                            {
+                                TB_ANTRIAN_BEROBAT antrian = new TB_ANTRIAN_BEROBAT
+                                {
+                                    ID_KUNJUNGAN_PASIEN = idKunjungan,
+                                    NO_ANTRIAN = pasienHariIni.Count()
+                                };
+
+                                this.db.TB_ANTRIAN_BEROBAT.Add(antrian);
+                                this.db.SaveChanges();
+                            }
+                        }
+
+                        FlashMessage.SetFlashMessage(
+                            $"Pasien Atas Nama '{dt.NAMA}' Dengan ID '{dt.ID}' Berhasil Dicatat Di Antrian",
+                            FlashMessage.FlashMessageType.Success);
+                    }
+                    else // jika pasien terpilih SUDAH TERDAFTAR di antrian
+                    {
+                        FlashMessage.SetFlashMessage(
+                            $"Pasien Atas Nama '{dt.NAMA}' Dengan ID '{dt.ID}' Sudah Terdaftar DiAntrian",
+                            FlashMessage.FlashMessageType.Warning);
+                    }
                 }
-                else // jika pasien terpilih SUDAH TERDAFTAR di antrian
+                else
                 {
                     FlashMessage.SetFlashMessage(
-                        $"Pasien Atas Nama '{dt.NAMA}' Dengan ID '{dt.ID}' Sudah Terdaftar DiAntrian",
+                        "Pilih Pasien Terlebih Dahulu.",
                         FlashMessage.FlashMessageType.Warning);
                 }
             }
-            else
+            catch(Exception e)
             {
-                FlashMessage.SetFlashMessage("Pilih Pasien Terlebih Dahulu.", FlashMessage.FlashMessageType.Warning);
+                e.ToString();
             }
 
             return RedirectToAction("BerobatPasien", new { page, search });

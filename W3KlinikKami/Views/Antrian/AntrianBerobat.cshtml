@@ -1,0 +1,86 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AntrianBerobat</title>
+    <link href="~/Content/Antrian/Antrian.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+</head>
+<body>
+    <div style="color: azure;">
+        <h4>antrian</h4>
+        <table id="tabel-antrian">
+            <tr>
+                <th>No. Antrian</th>
+                <th>Nama Pasien</th>
+                <th>ID Pasien</th>
+            </tr>
+        </table>
+    </div>
+
+    <div class="btn-jumbo" style="color: azure;">
+        <b id="no-antrian"></b>
+        <b id="nama-pasien"></b>
+        <b id="id-pasien"></b>
+    </div>
+
+    <audio id="tes-aud">
+        <source src="~/Audio/panggil-antrian-berobat.mp3" type="audio/mpeg" />
+    </audio>
+   
+    <script type="text/javascript">
+        var jmlDataSaatIni = 0;
+        var noAntrianSaatIni = 0;
+
+        function updateDataAntrian(data, minVal, maxVal) {
+            let trData;
+            for (let i = minVal; i < maxVal; i++) {
+                trData += '<tr id="' + data[i].NO_ANTRIAN +'">' +
+                    '<td>' + data[i].NO_ANTRIAN + '</td>' +
+                    '<td>' + data[i].NAMA + '</td>' +
+                    '<td>' + data[i].ID_PASIEN + '</td>' +
+                    '</tr>';
+            }
+            return trData;
+        }
+
+        setInterval(function () {
+            // update data antrian
+            $.ajax({
+                type: 'get',
+                url: '/Antrian/UpdateDataAntrianBerobat',
+                data: null,
+                success: function (data) {
+                    if (data.length > jmlDataSaatIni) {
+                        $('#tabel-antrian').append(updateDataAntrian(data, jmlDataSaatIni, data.length));
+                        jmlDataSaatIni = data.length;
+                    }
+                }
+            });
+
+            // cek pasien yg telah di panggil
+            $.ajax({
+                type: 'get',
+                url: '/Antrian/UpdateDataAntrianBerobat?statusPanggilan=false',
+                data: null,
+                success: function (data) {
+                    if (data.length === 1) {
+                        if (noAntrianSaatIni != data[0].NO_ANTRIAN) {
+                            noAntrianSaatIni = data[0].NO_ANTRIAN;
+                            $('#no-antrian').html(noAntrianSaatIni);
+                            $('#nama-pasien').html(data[0].NAMA);
+                            $('#id-pasien').html(data[0].ID_PASIEN);
+                            document.getElementById('tes-aud').play();
+                        }
+                    }
+                }
+            });
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -84,6 +84,11 @@
       <End Role="TB_USER" EntitySet="TB_USER" />
       <End Role="TB_DATA_PENANGANAN_PASIEN" EntitySet="TB_DATA_PENANGANAN_PASIEN" />
     </AssociationSet>
+    <EntitySet Name="TB_ANTRIAN_BEROBAT" EntityType="Models.TB_ANTRIAN_BEROBAT" />
+    <AssociationSet Name="FK__TB_ANTRIA__ID_KU__5DCAEF64" Association="Models.FK__TB_ANTRIA__ID_KU__5DCAEF64">
+      <End Role="TB_KUNJUNGAN_PASIEN" EntitySet="TB_KUNJUNGAN_PASIEN" />
+      <End Role="TB_ANTRIAN_BEROBAT" EntitySet="TB_ANTRIAN_BEROBAT" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="TB_PASIEN">
     <Key>
@@ -126,6 +131,7 @@
     <Property Name="PENGAMBILAN_OBAT" Type="Boolean" />
     <NavigationProperty Name="TB_DATA_PENANGANAN_PASIEN" Relationship="Models.FK__TB_DATA_P__ID_KU__5AEE82B9" FromRole="TB_KUNJUNGAN_PASIEN" ToRole="TB_DATA_PENANGANAN_PASIEN" />
     <NavigationProperty Name="TB_PASIEN" Relationship="Models.FK__TB_KUNJUN__ID_PA__52593CB8" FromRole="TB_KUNJUNGAN_PASIEN" ToRole="TB_PASIEN" />
+    <NavigationProperty Name="TB_ANTRIAN_BEROBAT" Relationship="Models.FK__TB_ANTRIA__ID_KU__5DCAEF64" FromRole="TB_KUNJUNGAN_PASIEN" ToRole="TB_ANTRIAN_BEROBAT" />
   </EntityType>
   <Association Name="FK__TB_DATA_P__ID_KU__5AEE82B9">
     <End Type="Models.TB_KUNJUNGAN_PASIEN" Role="TB_KUNJUNGAN_PASIEN" Multiplicity="0..1" />
@@ -160,6 +166,27 @@
       </Principal>
       <Dependent Role="TB_DATA_PENANGANAN_PASIEN">
         <PropertyRef Name="ID_DOKTER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="TB_ANTRIAN_BEROBAT">
+    <Key>
+      <PropertyRef Name="ID_KUNJUNGAN_PASIEN" />
+    </Key>
+    <Property Name="ID_KUNJUNGAN_PASIEN" Type="Int32" Nullable="false" />
+    <Property Name="NO_ANTRIAN" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TB_KUNJUNGAN_PASIEN" Relationship="Models.FK__TB_ANTRIA__ID_KU__5DCAEF64" FromRole="TB_ANTRIAN_BEROBAT" ToRole="TB_KUNJUNGAN_PASIEN" />
+    <Property Name="STATUS_PANGGILAN" Type="Boolean" />
+  </EntityType>
+  <Association Name="FK__TB_ANTRIA__ID_KU__5DCAEF64">
+    <End Type="Models.TB_KUNJUNGAN_PASIEN" Role="TB_KUNJUNGAN_PASIEN" Multiplicity="1" />
+    <End Type="Models.TB_ANTRIAN_BEROBAT" Role="TB_ANTRIAN_BEROBAT" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TB_KUNJUNGAN_PASIEN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TB_ANTRIAN_BEROBAT">
+        <PropertyRef Name="ID_KUNJUNGAN_PASIEN" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -30,5 +30,6 @@ namespace W3KlinikKami.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_DATA_PENANGANAN_PASIEN> TB_DATA_PENANGANAN_PASIEN { get; set; }
         public virtual TB_PASIEN TB_PASIEN { get; set; }
+        public virtual TB_ANTRIAN_BEROBAT TB_ANTRIAN_BEROBAT { get; set; }
     }
 }

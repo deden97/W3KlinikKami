@@ -20,6 +20,7 @@
                     <tr>
                         <th>ID Pasien</th>
                         <th>Nama Pasien</th>
+                        <th>No Antrian</th>
                     </tr>
 
                     @* jika jumlah data pada 'Model' lebih dari 0 *@
@@ -30,6 +31,7 @@
                             <tr id="@item.ID_PASIEN">
                                 <td>@item.ID_PASIEN</td>
                                 <td class="table-csm-text-align-left min-max-width-400-px">@item.TB_PASIEN.NAMA</td>
+                                <td>@item.TB_ANTRIAN_BEROBAT.NO_ANTRIAN</td>
                             </tr>
                         }
                     }
@@ -50,7 +52,7 @@
                     @{
                         TB_PASIEN dt = new TB_PASIEN();
                         int idKunjungan = 0;
-                        if (ViewBag.idTerpilih > 0)
+                        if (ViewBag.idTerpilih > 0 && Model.Count() > 0)
                         {
                             @* mengambil detail data pasien dari 'Model' untuk di render html.partial() *@
                             int id = ViewBag.idTerpilih;
@@ -61,7 +63,7 @@
 
                             @* mengubah warna baris data yg sedang ditangani pada table antrian *@
                             <script type="text/javascript">
-                                document.getElementById(@dt.ID).style.backgroundColor = "greenyellow";
+                                    document.getElementById(@dt.ID).style.backgroundColor = "greenyellow";
                             </script>
                         }
                     }
@@ -100,7 +102,7 @@
 </div>
 
 @* Begin: form 'data penanganan pasien' ------------------------------------------------------------------------------------------------- *@
-@if (ViewBag.idTerpilih > 0)
+@if (ViewBag.idTerpilih > 0 && Model.Count() > 0)
 {
     <div class="modal-kw-dialog" id="modal-kw-data-pemeriksaan" style="display: none;">
         <div class="modal-kw-content">
@@ -148,7 +150,7 @@
 
 @* Audio yg digunakan jika ada antrian baru *@
 <audio id="antrian-baru">
-    <source src="~/Mp3/EQLDS52-start-button.mp3" type="audio/mpeg" />
+    <source src="~/Audio/EQLDS52-start-button.mp3" type="audio/mpeg" />
 </audio>
 
 @* Javascript *@
@@ -185,6 +187,7 @@
                         trData += '<tr id="' + data[i].ID_PASIEN + '" style="background-color: yellow;">' +
                             '<td>' + data[i].ID_PASIEN + '</td>' +
                             '<td class="table-csm-text-align-left min-max-width-400-px">' + data[i].NAMA + '</td>' +
+                            '<td>' + data[i].NO_ANTRIAN + '</td>'
                             '</tr>';
                     }
 

@@ -15,7 +15,9 @@
         <EntityTypeShape EntityType="Models.TB_KUNJUNGAN_PASIEN" Width="1.5" PointX="3" PointY="4.875" />
         <AssociationConnector Association="Models.FK__TB_DATA_P__ID_KU__5AEE82B9" />
         <AssociationConnector Association="Models.FK__TB_KUNJUN__ID_PA__52593CB8" />
-        <AssociationConnector Association="Models.FK__TB_DATA_P__ID_DO__5BE2A6F2" />
+        <AssociationConnector Association="Models.FK__TB_DATA_P__ID_DO__5BE2A6F2" ></AssociationConnector>
+        <EntityTypeShape EntityType="Models.TB_ANTRIAN_BEROBAT" Width="1.5" PointX="5.25" PointY="9.5" />
+        <AssociationConnector Association="Models.FK__TB_ANTRIA__ID_KU__5DCAEF64" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

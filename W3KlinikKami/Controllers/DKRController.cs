@@ -28,13 +28,17 @@ namespace W3KlinikKami.Controllers
                 }
                 else
                 {
-                    FlashMessage.SetFlashMessage("Link Yang Anda Tuju Hanya Dapat Diakses Oleh 'Dokter'.", FlashMessage.FlashMessageType.Warning);
+                    FlashMessage.SetFlashMessage(
+                        "Link Yang Anda Tuju Hanya Dapat Diakses Oleh 'Dokter'.",
+                        FlashMessage.FlashMessageType.Warning);
                     return false;
                 }
             }
             else
             {
-                FlashMessage.SetFlashMessage("Anda Harus Login Terlebih Dahulu.", FlashMessage.FlashMessageType.Warning);
+                FlashMessage.SetFlashMessage(
+                    "Anda Harus Login Terlebih Dahulu.",
+                    FlashMessage.FlashMessageType.Warning);
                 return false;
             }
         }
@@ -60,16 +64,24 @@ namespace W3KlinikKami.Controllers
             return Json(dtAntrian.Select(d => new
             {
                 d.ID_PASIEN,
-                d.TB_PASIEN.NAMA
+                d.TB_PASIEN.NAMA,
+                d.TB_ANTRIAN_BEROBAT.NO_ANTRIAN
             }),
             JsonRequestBehavior.AllowGet);
         }
 
+        /* Begin: Tangani Pasien -------------------------------------------------------------------------------------------------*/
+        [HttpGet]
         public ActionResult TanganiPasien(int? idPasien)
         {
-            if (this.CekSession())
+            if (!this.CekSession())
+                return RedirectToAction("Index", "Index");
+
+            try
             {
                 ViewBag.Menu = menu.TanganiPasien.ToString();
+
+                // data untuk views/DKR/Index
                 ViewData["Data"] = this.db
                     .TB_KUNJUNGAN_PASIEN
                     .AsEnumerable()
@@ -77,36 +89,91 @@ namespace W3KlinikKami.Controllers
                         d.PENANGANAN_DOKTER == null &&
                         (d.PENGAMBILAN_OBAT == null || d.PENGAMBILAN_OBAT == false))
                     .OrderBy(d => d.TANGGAL_KUNJUNGAN);
-                
+
                 if (idPasien > 0)
                 {
-                    ViewBag.idTerpilih = idPasien;
+                    bool cekPasienDiAntrian = this.db
+                        .TB_KUNJUNGAN_PASIEN
+                        .AsEnumerable()
+                        .Any(d => d.ID_PASIEN == idPasien &&
+                            d.TANGGAL_KUNJUNGAN.Date == DateTime.Today &&
+                            (d.PENANGANAN_DOKTER == null || d.PENANGANAN_DOKTER == false));
+
+                    if (cekPasienDiAntrian)
+                    {
+                        ViewBag.idTerpilih = idPasien;
+                        var dtKunjunganPasien = (IOrderedEnumerable<TB_KUNJUNGAN_PASIEN>)ViewData["Data"];
+                        var idKunjunganPasien = dtKunjunganPasien
+                            .Where(d => d.ID_PASIEN == idPasien)
+                            .OrderByDescending(d => d.TANGGAL_KUNJUNGAN)
+                            .Select(d => d.ID)
+                            .ToList()
+                            .First();
+
+                        TB_ANTRIAN_BEROBAT panggilAntrian = this.db.TB_ANTRIAN_BEROBAT.Find(idKunjunganPasien);
+                        panggilAntrian.ID_KUNJUNGAN_PASIEN = idKunjunganPasien;
+                        panggilAntrian.STATUS_PANGGILAN = false;
+
+                        this.db.Entry(panggilAntrian).State = EntityState.Modified;
+                        this.db.SaveChanges();
+                    }
+                    else
+                    {
+                        FlashMessage.SetFlashMessage(
+                            "Pasien Tidak Terddaftar Diantrian.",
+                            FlashMessage.FlashMessageType.Warning);
+                    }
                 }
-                return View("Index");
+                else if(idPasien != null)
+                {
+                    FlashMessage.SetFlashMessage(
+                        "Pasien Tidak Terddaftar.",
+                        FlashMessage.FlashMessageType.Error);
+                }
             }
-            else
+            catch (Exception e)
             {
-                return RedirectToAction("Index", "Index");
+                e.ToString();
             }
+
+            return View("Index");
         }
-        // [Bind(Include = "TANGGAL_KUNJUNGAN, KELUHAN, PEMERIKSAAN, DIAGNOSA, RESEP_OBAT, KETERANGAN")]
+
         [HttpPost]
         public ActionResult TanganiPasien()
         {
-            TB_DATA_PENANGANAN_PASIEN dt = new TB_DATA_PENANGANAN_PASIEN();
-            UpdateModel(dt, null, null, new string[] { "ID, TB_KUNJUNGAN_PASIEN" });
-            dt.ID_DOKTER = csmSession.GetIdSession();
-            this.db.Entry(dt).State = EntityState.Added;
-            this.db.SaveChanges();
+            if (!this.CekSession())
+                return RedirectToAction("Index", "Index");
 
-            TB_KUNJUNGAN_PASIEN tB_KUNJUNGAN_PASIEN = this.db.TB_KUNJUNGAN_PASIEN.Find(dt.ID_KUNJUNGAN_PASIEN);
-            tB_KUNJUNGAN_PASIEN.ID = (int)dt.ID_KUNJUNGAN_PASIEN;
-            tB_KUNJUNGAN_PASIEN.PENANGANAN_DOKTER = true;
-            this.db.Entry(tB_KUNJUNGAN_PASIEN).State = EntityState.Modified;
-            this.db.SaveChanges();
+            try
+            {
+                // simpan data pemeriksaan pasien ke 'TB_DATA_PENANGANAN_PASIEN'
+                TB_DATA_PENANGANAN_PASIEN dt = new TB_DATA_PENANGANAN_PASIEN();
+                UpdateModel(dt, null, null, new string[] { "ID, TB_KUNJUNGAN_PASIEN" });
+                dt.ID_DOKTER = csmSession.GetIdSession();
+                this.db.Entry(dt).State = EntityState.Added;
+
+                // TB_ANTRIAN_BEROBAT
+                var tesIDKunj = dt.ID_KUNJUNGAN_PASIEN;
+                TB_ANTRIAN_BEROBAT panggilAntrian = this.db.TB_ANTRIAN_BEROBAT.Find(tesIDKunj);
+                panggilAntrian.ID_KUNJUNGAN_PASIEN = (int)tesIDKunj;
+                panggilAntrian.STATUS_PANGGILAN = true;
+
+                // ubah status pemeriksaan pasien menjadi true/1 pada 'TB_KUNJUNGAN_PASIEN'
+                TB_KUNJUNGAN_PASIEN tB_KUNJUNGAN_PASIEN = this.db.TB_KUNJUNGAN_PASIEN.Find(dt.ID_KUNJUNGAN_PASIEN);
+                tB_KUNJUNGAN_PASIEN.ID = (int)dt.ID_KUNJUNGAN_PASIEN;
+                tB_KUNJUNGAN_PASIEN.PENANGANAN_DOKTER = true;
+                this.db.Entry(tB_KUNJUNGAN_PASIEN).State = EntityState.Modified;
+                this.db.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                e.ToString();
+            }
 
             return RedirectToAction("TanganiPasien");
         }
+        /* End: Tangani Pasien -------------------------------------------------------------------------------------------------*/
 
         [HttpGet]
         public ActionResult RiwayatPasien()
