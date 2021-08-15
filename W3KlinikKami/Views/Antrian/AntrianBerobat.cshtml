@@ -12,38 +12,128 @@
     <script src="~/Scripts/jquery-3.6.0.js"></script>
 </head>
 <body>
-    <div style="color: azure;">
-        <h4>antrian</h4>
-        <table id="tabel-antrian">
-            <tr>
-                <th>No. Antrian</th>
-                <th>Nama Pasien</th>
-                <th>ID Pasien</th>
-            </tr>
-        </table>
+
+    @* Judul -> Antrian Berobat *@
+    <div class="div">
+        <h1 class="judul">
+            <u>Antrian Berobat</u>
+        </h1>
     </div>
 
-    <div class="btn-jumbo" style="color: azure;">
-        <b id="no-antrian"></b>
-        <b id="nama-pasien"></b>
-        <b id="id-pasien"></b>
+    <div class="display-flex">
+        @* Table Antrian *@
+        <div class="div min-max-heigth-915px width-60-persen">
+            <table id="tabel-antrian" class="tabel">
+                <tr>
+                    <th>No.</th>
+                    <th>ID Pasien</th>
+                    <th>Nama Pasien</th>
+                </tr>
+            </table>
+        </div>
+
+        <div class="width-40-persen">
+            @* Tanggal & jam *@
+            <div class="div">
+                <p id="tanggal" class="judul"></p>
+                <p id="jam" class="judul"></p>
+            </div>
+             
+            @* Pasien yg telah dipanggil *@
+            <div class="div div-pasien">
+                <table>
+                    <tr>
+                        <td colspan="2"><b id="persilahkan">Silahkan Ke Ruangan Dokter:</b></td>
+                    </tr>
+                    <tr>
+                        <td>ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</td>
+                        <td><b id="id-pasien"></b></td>
+                    </tr>
+                    <tr>
+                        <td>Nama&nbsp;&nbsp;:&nbsp;</td>
+                        <td><b id="nama-pasien"></b></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 
-    <audio id="tes-aud">
+    @* Audio untuk mempersilahkan pasien ke ruangan dokter *@
+    <audio id="audio">
         <source src="~/Audio/panggil-antrian-berobat.mp3" type="audio/mpeg" />
     </audio>
-   
+
     <script type="text/javascript">
+        // hari yg akan ditampilkan di '<p id="tanggal" class="judul"></p>'
+        const hari = [
+            'Minggu',
+            'Senin',
+            'Selasa',
+            'Rabu',
+            'Kamis',
+            'Jum\'at',
+            'Sabtu'
+        ];
+
+        // bulan yg akan ditampilkan di '<p id="tanggal" class="judul"></p>'
+        const bulan = [
+            'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        ];
+
+        // menggabungkan hari, tanggal, bulan, & tahun. yg akan ditampilkan di '<p id="tanggal" class="judul"></p>'
+        var tgl = new Date();
+        var tanggal = hari[tgl.getDay()] + ', ' + tgl.getDate() + ' ' + bulan[tgl.getMonth()] + ' ' + tgl.getFullYear();
+        $('#tanggal').html(tanggal);
+
+        // jam yg akan ditampilkan di '<p id="jam" class="judul"></p>'
+        setInterval(function () {
+            var waktu = new Date();
+            var jam = waktu.getHours() + ':' + waktu.getMinutes() + ':' + waktu.getSeconds();
+            $('#jam').html(jam);
+        }, 1000);
+
+        // flip - flop tulisan '<td colspan="2"><b id="persilahkan">Silahkan Ke Ruangan Dokter:</b></td>'
+        setInterval(function () {
+            if ($('#nama-pasien').html().length > 0) {
+                var persilahkan = document.getElementById('persilahkan');
+                if (persilahkan.style.visibility == 'visible') {
+                    persilahkan.style.visibility = 'hidden';
+                } else {
+                    persilahkan.style.visibility = 'visible';
+                }
+            }
+        }, 700);
+
+        // jumlah data antrian saat ini
         var jmlDataSaatIni = 0;
+
+        // no antrian saat ini yg telah dipanggil
         var noAntrianSaatIni = 0;
 
+        // innerHTML pada table antrian
         function updateDataAntrian(data, minVal, maxVal) {
             let trData;
             for (let i = minVal; i < maxVal; i++) {
-                trData += '<tr id="' + data[i].NO_ANTRIAN +'">' +
-                    '<td>' + data[i].NO_ANTRIAN + '</td>' +
-                    '<td>' + data[i].NAMA + '</td>' +
-                    '<td>' + data[i].ID_PASIEN + '</td>' +
+                //jika nomor antrian sudah ada di tabel antrian, maka lewati.
+                if ($('#' + data[i].NO_ANTRIAN.toString()).html() != undefined) {
+                    continue;
+                }
+
+                trData += '<tr id="' + data[i].NO_ANTRIAN + '">' +
+                    '<td>' + data[i].NO_ANTRIAN + '.</td>' +
+                    '<td><b>' + data[i].ID_PASIEN + '</b></td>' +
+                    '<td><b>' + data[i].NAMA + '</b></td>' +
                     '</tr>';
             }
             return trData;
@@ -72,10 +162,12 @@
                     if (data.length === 1) {
                         if (noAntrianSaatIni != data[0].NO_ANTRIAN) {
                             noAntrianSaatIni = data[0].NO_ANTRIAN;
-                            $('#no-antrian').html(noAntrianSaatIni);
+
                             $('#nama-pasien').html(data[0].NAMA);
                             $('#id-pasien').html(data[0].ID_PASIEN);
-                            document.getElementById('tes-aud').play();
+                            document.getElementById('audio').play();
+                            $('#' + noAntrianSaatIni.toString()).remove();
+                            --jmlDataSaatIni;
                         }
                     }
                 }

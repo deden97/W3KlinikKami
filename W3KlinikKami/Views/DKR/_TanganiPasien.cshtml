@@ -16,11 +16,12 @@
 
                 @* judul & table untuk menampilkan data antrian *@
                 <h4><u>Antrian Pasien</u></h4>
+                <b>Jumlah Pasien Hari Ini:</b> @Model.Count()
                 <table class="table-csm" id="tb-antrian-pasien">
                     <tr>
+                        <th>No.</th>
                         <th>ID Pasien</th>
                         <th>Nama Pasien</th>
-                        <th>No Antrian</th>
                     </tr>
 
                     @* jika jumlah data pada 'Model' lebih dari 0 *@
@@ -29,9 +30,9 @@
                         foreach (var item in Model)
                         {
                             <tr id="@item.ID_PASIEN">
+                                <td>@item.TB_ANTRIAN_BEROBAT.NO_ANTRIAN</td>
                                 <td>@item.ID_PASIEN</td>
                                 <td class="table-csm-text-align-left min-max-width-400-px">@item.TB_PASIEN.NAMA</td>
-                                <td>@item.TB_ANTRIAN_BEROBAT.NO_ANTRIAN</td>
                             </tr>
                         }
                     }
@@ -185,9 +186,9 @@
 
                     for (let i = jmlDataSaatIni; i < data.length; i++) {
                         trData += '<tr id="' + data[i].ID_PASIEN + '" style="background-color: yellow;">' +
+                            '<td>' + data[i].NO_ANTRIAN + '</td>' +
                             '<td>' + data[i].ID_PASIEN + '</td>' +
                             '<td class="table-csm-text-align-left min-max-width-400-px">' + data[i].NAMA + '</td>' +
-                            '<td>' + data[i].NO_ANTRIAN + '</td>'
                             '</tr>';
                     }
 

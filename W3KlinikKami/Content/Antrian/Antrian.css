@@ -2,6 +2,9 @@
     margin: 0;
     padding: 0;
     background-color: #24252A;
+    height: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 .antrian-container {
@@ -40,3 +43,78 @@
     .btn-jumbo:hover {
         background-color: orangered;
     }
+
+.div {
+    position: relative;
+    margin-top: 25px;
+    margin-left: 25px;
+    margin-right: 25px;
+    background-color: rgba(0, 136, 169, 1);
+    color: #24252A;
+    padding: 10px;
+    border-radius: 15px;
+    font-family: Arial;
+    font-size: 24pt;
+}
+
+.div-pasien {
+    min-height: 200px;
+    max-height: 200px;
+    padding: 100px 0;
+    font-size: 24pt;
+}
+
+.min-max-heigth-915px {
+    min-height: 710px;
+    max-height: 710px;
+}
+
+.display-flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tabel {
+    font-size: 16pt;
+    background-color: transparent;
+    color: #24252A;
+    min-width: 800px;
+    max-width: 800px;
+    margin: auto;
+    margin-top: 15px;
+    border-collapse: collapse;
+    border: 1px solid #24252A;
+}
+
+    .tabel th {
+        background-color: #24252A;
+        color: azure;
+    }
+
+    .tabel tr {
+        border-bottom: 1px solid #24252A;
+    }
+
+    .tabel th, .tabel td {
+        padding: 10px;
+        border-left: 1px solid #24252A;
+    }
+
+.antrian-saat-ini {
+    background-color: orangered;
+    min-width: 550px;
+    max-width: 550px;
+}
+
+.width-60-persen {
+    width: 50%;
+}
+
+.width-40-persen {
+    width: 50%;
+}
+
+.judul {
+    font-size: 40pt;
+    text-align: center;
+}
