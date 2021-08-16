@@ -1,11 +1,11 @@
 ﻿@model W3KlinikKami.Models.TB_USER
 
-@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+@Html.ValidationSummary(true, "", new { @class = "text-error" })
 
 @* Nama Lengkap *@
 <div class="input-daftar-akun-container">
     @Html.EditorFor(model => model.NAMA, new { htmlAttributes = new { @placeholder = "Nama Lengkap", @autocomplete = "off", @autofocus = "true" } })
-    @Html.ValidationMessageFor(model => model.NAMA, "", new { @class = "text-danger" })
+    @Html.ValidationMessageFor(model => model.NAMA, "", new { @class = "text-error" })
 </div>
 
 @* Jenis Kelamin *@
@@ -15,37 +15,37 @@
         new SelectListItem{Text = "Pria", Value = "Pria"},
         new SelectListItem{Text = "Wanita", Value = "Wanita"}
     }, "--Jenis Kelamin--", new { @placeholder = "Jenis Kelamin" })
-    @Html.ValidationMessageFor(model => model.JENIS_KELAMIN, "", new { @class = "text-danger" })
+    @Html.ValidationMessageFor(model => model.JENIS_KELAMIN, "", new { @class = "text-error" })
 </div>
 
 @* Nomor HP *@
 <div class="input-daftar-akun-container">
     @Html.EditorFor(model => model.NO_HP, new { htmlAttributes = new { @type = "number", @placeholder = "Nomor HP", @autocomplete = "off" } })
-    @Html.ValidationMessageFor(model => model.NO_HP, "", new { @class = "text-danger" })
+    @Html.ValidationMessageFor(model => model.NO_HP, "", new { @class = "text-error" })
 </div>
 
 @* Alamat *@
 <div class="input-daftar-akun-container">
     @Html.TextAreaFor(model => model.ALAMAT, new { @placeholder = "Alamat" })
-    @Html.ValidationMessageFor(model => model.ALAMAT, "", new { @class = "text-danger" })
+    @Html.ValidationMessageFor(model => model.ALAMAT, "", new { @class = "text-error" })
 </div>
 
 @* Jabatan *@
 <div class="input-daftar-akun-container">
     @Html.DropDownList("JABATAN", null, "--Jabatan--")
-    @Html.ValidationMessageFor(model => model.JABATAN, "", new { @class = "text-danger" })
+    @Html.ValidationMessageFor(model => model.JABATAN, "", new { @class = "text-error" })
 </div>
 
 @* Username *@
 <div class="input-daftar-akun-container">
     @Html.EditorFor(model => model.TB_AKUN.USERNAME, new { htmlAttributes = new { @placeholder = "Username", @autocomplete = "off" } })
-    @Html.ValidationMessageFor(model => model.TB_AKUN.USERNAME, "", new { @class = "text-danger" })
+    @Html.ValidationMessageFor(model => model.TB_AKUN.USERNAME, "", new { @class = "text-error" })
 </div>
 
 @* Password *@
 <div class="input-daftar-akun-container">
     @Html.PasswordFor(model => model.TB_AKUN.PASSWORD_AKUN, new { @placeholder = "Password", @id = "pss-dft" })
-    @Html.ValidationMessageFor(model => model.TB_AKUN.PASSWORD_AKUN, "", new { @class = "text-danger" })
+    @Html.ValidationMessageFor(model => model.TB_AKUN.PASSWORD_AKUN, "", new { @class = "text-error" })
 </div>
 
 @* Tampilkan Password *@

@@ -381,11 +381,21 @@ input[type="checkbox"] {
     }
 
 /* custom button */
+.m-btn {
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 5px 25px;
+    cursor: pointer;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
 .s-btn {
     border: 2px solid black;
     border-radius: 15px;
-    padding: 2px 5px;
+    padding: 5px 7px;
     cursor: pointer;
+    font-size: 11pt;
 }
 
 .s-btn-steelblue {
@@ -424,16 +434,27 @@ input[type="checkbox"] {
         background-color: lime;
     }
 
-/* custom drop down*/
-.dr-kw {
-    padding: 5px 10px;
-    margin: 0;
-    border: 2px solid black;
-    border-radius: 15px;
-    outline: none;
-    width: max-content;
-    cursor: pointer;
+.s-btn-foresgreen {
+    background-color: forestgreen;
+    color: azure;
 }
+
+    .s-btn-foresgreen:hover {
+
+        background-color: darkgreen;
+        border: 2px solid red;
+    }
+
+    /* custom drop down*/
+    .dr-kw {
+        padding: 5px 10px;
+        margin: 0;
+        border: 2px solid black;
+        border-radius: 15px;
+        outline: none;
+        width: max-content;
+        cursor: pointer;
+    }
 
     .dr-kw:hover, .dr-kw:focus {
         border: 2px solid red;

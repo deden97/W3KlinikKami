@@ -153,11 +153,12 @@ namespace W3KlinikKami.Controllers
                 dt.ID_DOKTER = csmSession.GetIdSession();
                 this.db.Entry(dt).State = EntityState.Added;
 
-                // TB_ANTRIAN_BEROBAT
+                // mengubah 'status panggilan' menjadi true / 1 sebagai tanda bahwa salah satu pasien telah di panggil
                 var tesIDKunj = dt.ID_KUNJUNGAN_PASIEN;
                 TB_ANTRIAN_BEROBAT panggilAntrian = this.db.TB_ANTRIAN_BEROBAT.Find(tesIDKunj);
                 panggilAntrian.ID_KUNJUNGAN_PASIEN = (int)tesIDKunj;
                 panggilAntrian.STATUS_PANGGILAN = true;
+                this.db.Entry(panggilAntrian).State = EntityState.Modified;
 
                 // ubah status pemeriksaan pasien menjadi true/1 pada 'TB_KUNJUNGAN_PASIEN'
                 TB_KUNJUNGAN_PASIEN tB_KUNJUNGAN_PASIEN = this.db.TB_KUNJUNGAN_PASIEN.Find(dt.ID_KUNJUNGAN_PASIEN);
@@ -165,6 +166,12 @@ namespace W3KlinikKami.Controllers
                 tB_KUNJUNGAN_PASIEN.PENANGANAN_DOKTER = true;
                 this.db.Entry(tB_KUNJUNGAN_PASIEN).State = EntityState.Modified;
                 this.db.SaveChanges();
+
+                // get data pasien yg telah ditanganani untuk ditampilkan di flashmessage dibawah
+                TB_PASIEN tB_PASIEN = this.db.TB_PASIEN.Single(d => d.ID == tB_KUNJUNGAN_PASIEN.ID_PASIEN);
+                FlashMessage.SetFlashMessage(
+                    $"Data Pemeriksaan Atas Nama: '{tB_PASIEN.NAMA}' dengan ID: '{tB_PASIEN.ID}' Telah Disimpan.",
+                    FlashMessage.FlashMessageType.Success);
             }
             catch(Exception e)
             {

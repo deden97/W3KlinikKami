@@ -30,7 +30,7 @@
                         foreach (var item in Model)
                         {
                             <tr id="@item.ID_PASIEN">
-                                <td>@item.TB_ANTRIAN_BEROBAT.NO_ANTRIAN</td>
+                                <td>@item.TB_ANTRIAN_BEROBAT.NO_ANTRIAN.</td>
                                 <td>@item.ID_PASIEN</td>
                                 <td class="table-csm-text-align-left min-max-width-400-px">@item.TB_PASIEN.NAMA</td>
                             </tr>
@@ -40,7 +40,7 @@
                     else
                     {
                         <tr>
-                            <td colspan="2">
+                            <td colspan="3">
                                 <b class="text-error">Antrian Kosong.</b>
                             </td>
                         </tr>
@@ -81,14 +81,14 @@
                                 }
 
                                 @* tombol untuk memanggil antrian berikutnya. *@
-                                <button type="button" onclick="getIdPasien()">Antrian Berikutnya</button>
+                                <button type="button" class="m-btn s-btn-foresgreen" onclick="getIdPasien()">Antrian Berikutnya</button>
                             }
                             &nbsp;
                             @{
                                 if (ViewBag.idTerpilih > 0)
                                 {
                                     @* tombol untuk membuat data pemeriksaan pasien *@
-                                    <button type="button" onclick="ShowModalKw('modal-kw-data-pemeriksaan', 'grid')">
+                                    <button type="button" class="m-btn s-btn-orangered" onclick="ShowModalKw('modal-kw-data-pemeriksaan', 'grid')">
                                         Buat Data Pemeriksaan
                                     </button>
                                 }
@@ -107,7 +107,7 @@
 {
     <div class="modal-kw-dialog" id="modal-kw-data-pemeriksaan" style="display: none;">
         <div class="modal-kw-content">
-            <div class="close-modal-kw-dialog" onclick="ShowModalKw('modal-kw-data-pemeriksaan', 'none')">x</div>
+            <div class="close-modal-kw-dialog" onclick="ShowModalKw('modal-kw-data-pemeriksaan', 'none')" title="Close">x</div>
             <button onclick="OpenLinkNewTab('https://www.google.com')">lihat riwayat sebelumnya</button>
 
             @using (Html.BeginForm("TanganiPasien", "DKR", FormMethod.Post))
@@ -186,7 +186,7 @@
 
                     for (let i = jmlDataSaatIni; i < data.length; i++) {
                         trData += '<tr id="' + data[i].ID_PASIEN + '" style="background-color: yellow;">' +
-                            '<td>' + data[i].NO_ANTRIAN + '</td>' +
+                            '<td>' + data[i].NO_ANTRIAN + '.</td>' +
                             '<td>' + data[i].ID_PASIEN + '</td>' +
                             '<td class="table-csm-text-align-left min-max-width-400-px">' + data[i].NAMA + '</td>' +
                             '</tr>';

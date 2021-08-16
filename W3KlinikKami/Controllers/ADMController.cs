@@ -55,29 +55,6 @@ namespace W3KlinikKami.Controllers
 
         public ActionResult Index()
         {
-            //List<TB_KUNJUNGAN_PASIEN> pasienHariIni = this.db.TB_KUNJUNGAN_PASIEN
-            //    .AsEnumerable()
-            //    .Where(d => d.TANGGAL_KUNJUNGAN.Date == DateTime.Today)
-            //    .OrderByDescending(d => d.TANGGAL_KUNJUNGAN)
-            //    .ToList();
-
-            //if (pasienHariIni.Count() > 0)
-            //{
-            //    var idKunjungan = pasienHariIni.First().ID;
-            //    var noAntrian = pasienHariIni.Count();
-            //    if(!this.db.TB_ANTRIAN_BEROBAT.Any(d => d.ID_KUNJUNGAN_PASIEN == idKunjungan))
-            //    {
-            //        TB_ANTRIAN_BEROBAT antrian = new TB_ANTRIAN_BEROBAT
-            //        {
-            //            ID_KUNJUNGAN_PASIEN = idKunjungan,
-            //            NO_ANTRIAN = noAntrian
-            //        };
-
-            //        this.db.TB_ANTRIAN_BEROBAT.Add(antrian);
-            //        this.db.SaveChanges();
-            //    }
-            //}
-            
             if (this.CekSession())
                 return RedirectToAction("BerobatPasien");
             else
@@ -225,6 +202,10 @@ namespace W3KlinikKami.Controllers
         {
             if (this.CekSession())
             {
+                // jumlah total data pasien
+                ViewBag.TotDataPasien = this.db.TB_PASIEN.Count();
+
+                // data yg akan ditampilkan pada table sesuai dengan jumlah row, dan search
                 int.TryParse(search, out int idPasien);
                 ViewData["DT_PASIEN"] = this.db.TB_PASIEN
                     .Where(d => d.ID == idPasien || d.NAMA.Contains(search) || search == null)

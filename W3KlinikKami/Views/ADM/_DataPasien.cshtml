@@ -23,6 +23,9 @@
             new SelectListItem{Text="15", Value="15"},
             new SelectListItem{Text="20", Value="20"}
         }, new { @onchange = $"location.href = '/ADM/DataPasien?page={pageSts}&search={search}&pageSize=' + this.value;", @class = "dr-kw" })
+
+        @* menampilkan total data pasien *@
+        <b>Total Data Pasien: @ViewBag.TotDataPasien</b>
     </div>
 
     <div class="search">

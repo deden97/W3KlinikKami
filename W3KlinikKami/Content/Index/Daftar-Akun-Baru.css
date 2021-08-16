@@ -187,3 +187,9 @@ textarea:hover{
             color: greenyellow;
             background-color: brown;
         }
+
+.text-error {
+    font-size: 15px;
+    font-weight: bold;
+    color: yellow;
+}
