@@ -79,9 +79,10 @@ namespace W3KlinikKami.Controllers
 
             try
             {
+                // menentukan menu yg akan ditampilkan pada views/DKR/Index
                 ViewBag.Menu = menu.TanganiPasien.ToString();
 
-                // data untuk views/DKR/Index
+                // data untuk views/DKR/Index -> html.partial()
                 ViewData["Data"] = this.db
                     .TB_KUNJUNGAN_PASIEN
                     .AsEnumerable()
@@ -90,6 +91,7 @@ namespace W3KlinikKami.Controllers
                         (d.PENGAMBILAN_OBAT == null || d.PENGAMBILAN_OBAT == false))
                     .OrderBy(d => d.TANGGAL_KUNJUNGAN);
 
+                // jika ada pasien yg dipilih (untuk ditangani oleh dokter) bukan nol / lebih dari nol.
                 if (idPasien > 0)
                 {
                     bool cekPasienDiAntrian = this.db
@@ -99,9 +101,12 @@ namespace W3KlinikKami.Controllers
                             d.TANGGAL_KUNJUNGAN.Date == DateTime.Today &&
                             (d.PENANGANAN_DOKTER == null || d.PENANGANAN_DOKTER == false));
 
+                    // cek pasien di antrian, jika sudah terdaftar di antrian.
                     if (cekPasienDiAntrian)
                     {
                         ViewBag.idTerpilih = idPasien;
+
+                        // ambil 'id kunjungan pasien' yg dipilih dokter
                         var dtKunjunganPasien = (IOrderedEnumerable<TB_KUNJUNGAN_PASIEN>)ViewData["Data"];
                         var idKunjunganPasien = dtKunjunganPasien
                             .Where(d => d.ID_PASIEN == idPasien)
@@ -110,10 +115,10 @@ namespace W3KlinikKami.Controllers
                             .ToList()
                             .First();
 
+                        // ubah 'status panggilan' di Db menjadi false
                         TB_ANTRIAN_BEROBAT panggilAntrian = this.db.TB_ANTRIAN_BEROBAT.Find(idKunjunganPasien);
                         panggilAntrian.ID_KUNJUNGAN_PASIEN = idKunjunganPasien;
                         panggilAntrian.STATUS_PANGGILAN = false;
-
                         this.db.Entry(panggilAntrian).State = EntityState.Modified;
                         this.db.SaveChanges();
                     }
@@ -124,6 +129,7 @@ namespace W3KlinikKami.Controllers
                             FlashMessage.FlashMessageType.Warning);
                     }
                 }
+                // jika idPasien yg di pilih selain lebih dari nol. contoh : -1, 0.
                 else if(idPasien != null)
                 {
                     FlashMessage.SetFlashMessage(

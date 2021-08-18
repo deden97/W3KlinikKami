@@ -271,13 +271,21 @@ namespace W3KlinikKami.Controllers
 
             try
             {
-                this.db.Entry(dt).State = EntityState.Deleted;
+                var tB_KUNJUNGAN_PASIEN = this.db.TB_KUNJUNGAN_PASIEN;
+                tB_KUNJUNGAN_PASIEN
+                    .Where(d => d.ID_PASIEN == dt.ID)
+                    .ToList()
+                    .ForEach(d => tB_KUNJUNGAN_PASIEN.Remove(d));
+                //this.db.Entry(tB_KUNJUNGAN_PASIEN).State = EntityState.Deleted;
+                //dt.TB_KUNJUNGAN_PASIEN.Remove(tB_KUNJUNGAN_PASIEN.whe);
+                //this.db.Entry(dt).State = EntityState.Deleted;
                 this.db.SaveChanges();
                 FlashMessage.SetFlashMessage("Data Telah Dihapus.", FlashMessage.FlashMessageType.Success);
             }
             catch (Exception e)
             {
                 e.ToString();
+                FlashMessage.SetFlashMessage(e.ToString(), FlashMessage.FlashMessageType.Success);
             }
 
             return RedirectToAction("DataPasien");

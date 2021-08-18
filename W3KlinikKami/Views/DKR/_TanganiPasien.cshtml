@@ -16,7 +16,7 @@
 
                 @* judul & table untuk menampilkan data antrian *@
                 <h4><u>Antrian Pasien</u></h4>
-                <b>Jumlah Pasien Hari Ini:</b> @Model.Count()
+                <b>Jumlah Antrian Pasien:</b> @Model.Count()
                 <table class="table-csm" id="tb-antrian-pasien">
                     <tr>
                         <th>No.</th>
@@ -108,31 +108,43 @@
     <div class="modal-kw-dialog" id="modal-kw-data-pemeriksaan" style="display: none;">
         <div class="modal-kw-content">
             <div class="close-modal-kw-dialog" onclick="ShowModalKw('modal-kw-data-pemeriksaan', 'none')" title="Close">x</div>
-            <button onclick="OpenLinkNewTab('https://www.google.com')">lihat riwayat sebelumnya</button>
 
-            @using (Html.BeginForm("TanganiPasien", "DKR", FormMethod.Post))
+            @using (Html.BeginForm("TanganiPasien", "DKR", FormMethod.Post, new { @id = "submit-form" }))
             {
+                <div class="form-item-flex">
+                    <h3>
+                        <u>Data Penanganan Pasien.</u>
+                    </h3>
+                </div>
+                
                 @* Id Kunjungan *@
+                <div class="form-item-flex">
+                    ID:&nbsp;<text class="text-error">@dt.ID</text>,&nbsp;Nama:&nbsp; <text class="text-error">@dt.NAMA</text>
+                </div>
                 <input type="hidden" value="@idKunjungan" name="ID_KUNJUNGAN_PASIEN" />
 
                 <div class="form-item">
                     <div class="label-form-item">@Html.Label("Keluhan")</div>
-                    @Html.TextArea("KELUHAN", new { @placeholder = "Keluhan" })
+                    @Html.TextArea("KELUHAN", new { @placeholder = "Keluhan", @onchange = "cek()" })
+                    <span id="keluhan-err" class="text-error"></span>
                 </div>
 
                 <div class="form-item">
                     <div class="label-form-item">@Html.Label("Pemeriksaan")</div>
                     @Html.TextArea("PEMERIKSAAN", new { @placeholder = "Pemeriksaan" })
+                    <span id="pemeriksaan-err" class="text-error"></span>
                 </div>
 
                 <div class="form-item">
                     <div class="label-form-item">@Html.Label("Diagnosa")</div>
                     @Html.TextArea("DIAGNOSA", new { @placeholder = "Diagnosa" })
+                    <span id="diagnosa-err" class="text-error"></span>
                 </div>
 
                 <div class="form-item">
                     <div class="label-form-item">@Html.Label("Resep Obat")</div>
                     @Html.TextArea("RESEP_OBAT", new { @placeholder = "Resep Obat" })
+                    <span id="resep-obat-err" class="text-error"></span>
                 </div>
 
                 <div class="form-item">
@@ -141,7 +153,15 @@
                 </div>
 
                 <div class="form-item">
-                    <input type="submit" value="Submit" />
+                    <div class="form-item-flex">
+                        <button type="button" class="m-btn s-btn-foresgreen" onclick="verifyDataSubmit()">
+                            Submit
+                        </button>
+                        &nbsp;
+                        <button type="button" class="m-btn s-btn-orangered" onclick="OpenLinkNewTab('https://www.google.com')">
+                            lihat riwayat sebelumnya
+                        </button>
+                    </div>
                 </div>
             }
         </div>
@@ -157,6 +177,58 @@
 @* Javascript *@
 <script src="~/Scripts/jquery-3.6.0.js"></script>
 <script type="text/javascript">
+    // verify data/field yg akan di submit.
+    function verifyDataSubmit() {
+        let verSubmit = [];
+
+        // 1. cek field 'KELUHAN'
+        if ($('#KELUHAN').val().length > 0) {
+            $('#keluhan-err').html('');
+            verSubmit.push(true);
+        } else {
+            $('#keluhan-err').html('Keluhan Pasien Harus Diisi.');
+            verSubmit.push(false);
+        }
+
+        // 2. cek field 'PEMERIKSAAN'
+        if ($('#PEMERIKSAAN').val().length > 0) {
+            $('#pemeriksaan-err').html('');
+            verSubmit.push(true);
+        } else {
+            $('#pemeriksaan-err').html('Pemeriksaan Pasien Harus Diisi.');
+            verSubmit.push(false);
+        }
+
+        // 3. cek field 'DIAGNOSA'
+        if ($('#DIAGNOSA').val().length > 0) {
+            $('#diagnosa-err').html('');
+            verSubmit.push(true);
+        } else {
+            $('#diagnosa-err').html('Diagnosa Pasien Harus Diisi.');
+            verSubmit.push(false);
+        }
+
+        // 4. cek field 'RESEP_OBAT'
+        if ($('#RESEP_OBAT').val().length > 0) {
+            $('#resep-obat-err').html('');
+            verSubmit.push(true);
+        } else {
+            $('#resep-obat-err').html('Resep Obat Harus Diisi.');
+            verSubmit.push(false);
+        }
+
+        // cek semua field yg akan di submit
+        let submit = verSubmit.every(
+            function (v) {
+                return v == true;
+            });
+
+        // jika semua field telah diisi (kecuali 'keterangan' bisa di isi/tidak) maka submit form. 
+        if (submit) {
+            SubmitForm('submit-form');
+        }
+    }
+
     // Id Pasien yg akan digunakan untuk mwmanggil antrian berikutnya
     var idPasienNext;
 

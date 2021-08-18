@@ -308,6 +308,7 @@
     <Compile Include="Models\TB_DATA_PENANGANAN_PASIEN.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_DATA_PENANGANAN_PASIEN_META_DATA.cs" />
     <Compile Include="Models\TB_JABATAN.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
