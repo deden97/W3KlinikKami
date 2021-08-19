@@ -319,6 +319,9 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_PASIEN_META_DATA.cs" />
+    <Compile Include="Models\TB_PASIEN_TERHAPUS.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_USER.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>

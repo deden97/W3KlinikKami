@@ -237,7 +237,7 @@
         if (idPasienNext > 0) {
             OpenLink('/DKR/TanganiPasien?idPasien=' + idPasienNext);
         } else {
-            alert('data null');
+            alert('Tidak Ada Antrian.');
         }
     }
 
@@ -269,7 +269,7 @@
                         idPasienNext = data[0].ID_PASIEN;
 
                         // element pada table antrian ditimpa dengan '<tr><th>ID Pasien</th><th>Nama Pasien</th></tr>'
-                        $('#tb-antrian-pasien').html('<tr><th>ID Pasien</th><th>Nama Pasien</th></tr>');
+                        $('#tb-antrian-pasien').html('<tr><th>No.</th><th>ID Pasien</th><th>Nama Pasien</th></tr>');
                     }
 
                     // menambahkan elemen ke table antrian (id="tb-antrian-pasien"), yg berisi data antrian.

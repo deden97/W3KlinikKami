@@ -12,17 +12,10 @@ namespace W3KlinikKami.Controllers
         private readonly DbEntities db = new DbEntities();
 
         [HttpGet]
-        public ActionResult Index()
-        {
-            return View();
-        }
+        public ActionResult Index() => View();
 
         [HttpGet]
-        public ActionResult AntrianBerobat()
-        {
-            
-            return View();
-        }
+        public ActionResult AntrianBerobat() => View();
 
         [HttpGet]
         //parameter jika null maka data yg diambil pasien yg belum dipanggil/diperiksa dokter,

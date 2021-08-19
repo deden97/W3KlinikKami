@@ -60,6 +60,12 @@
     <Property Name="ALAMAT" Type="text" Nullable="false" />
     <Property Name="TERDAFTAR" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="TB_PASIEN_TERHAPUS">
+    <Key>
+      <PropertyRef Name="ID_PASIEN" />
+    </Key>
+    <Property Name="ID_PASIEN" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="TB_USER">
     <Key>
       <PropertyRef Name="ID" />
@@ -133,6 +139,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__TB_PASIEN_TE__ID__6FE99F9F">
+    <End Role="TB_PASIEN" Type="Self.TB_PASIEN" Multiplicity="1" />
+    <End Role="TB_PASIEN_TERHAPUS" Type="Self.TB_PASIEN_TERHAPUS" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TB_PASIEN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TB_PASIEN_TERHAPUS">
+        <PropertyRef Name="ID_PASIEN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__TB_USER__JABATAN__276EDEB3">
     <End Role="TB_JABATAN" Type="Self.TB_JABATAN" Multiplicity="0..1" />
     <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="*" />
@@ -152,6 +170,7 @@
     <EntitySet Name="TB_JABATAN" EntityType="Self.TB_JABATAN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_KUNJUNGAN_PASIEN" EntityType="Self.TB_KUNJUNGAN_PASIEN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_PASIEN" EntityType="Self.TB_PASIEN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_PASIEN_TERHAPUS" EntityType="Self.TB_PASIEN_TERHAPUS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_USER" EntityType="Self.TB_USER" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__TB_AKUN__ID__2A4B4B5E" Association="Self.FK__TB_AKUN__ID__2A4B4B5E">
       <End Role="TB_USER" EntitySet="TB_USER" />
@@ -172,6 +191,10 @@
     <AssociationSet Name="FK__TB_KUNJUN__ID_PA__52593CB8" Association="Self.FK__TB_KUNJUN__ID_PA__52593CB8">
       <End Role="TB_PASIEN" EntitySet="TB_PASIEN" />
       <End Role="TB_KUNJUNGAN_PASIEN" EntitySet="TB_KUNJUNGAN_PASIEN" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TB_PASIEN_TE__ID__6FE99F9F" Association="Self.FK__TB_PASIEN_TE__ID__6FE99F9F">
+      <End Role="TB_PASIEN" EntitySet="TB_PASIEN" />
+      <End Role="TB_PASIEN_TERHAPUS" EntitySet="TB_PASIEN_TERHAPUS" />
     </AssociationSet>
     <AssociationSet Name="FK__TB_USER__JABATAN__276EDEB3" Association="Self.FK__TB_USER__JABATAN__276EDEB3">
       <End Role="TB_JABATAN" EntitySet="TB_JABATAN" />

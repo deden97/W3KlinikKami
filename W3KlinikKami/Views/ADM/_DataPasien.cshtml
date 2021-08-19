@@ -22,7 +22,7 @@
             new SelectListItem{Text="10", Value="10"},
             new SelectListItem{Text="15", Value="15"},
             new SelectListItem{Text="20", Value="20"}
-        }, new { @onchange = $"location.href = '/ADM/DataPasien?page={pageSts}&search={search}&pageSize=' + this.value;", @class = "dr-kw" })
+        }, new { @onchange = $"location.href = '/ADM/DataPasien?search={search}&pageSize=' + this.value;", @class = "dr-kw" })
 
         @* menampilkan total data pasien *@
         <b>Total Data Pasien: @ViewBag.TotDataPasien</b>
@@ -191,11 +191,11 @@
                 <tr>
                     <td></td>
                     <td>
-                        @using (Html.BeginForm("DataPasien_Delete", "ADM", FormMethod.Post, new { @id = "del-pasien" }))
+                        @using (Html.BeginForm("DataPasien_Delete", "ADM", FormMethod.Post, new { @id = $"del-pasien-{item.ID}" }))
                         {
                             <input type="hidden" name="ID" value="@item.ID" />
-                            @*<input type="submit" class="m-btn s-btn-lime" value="Yes" />*@
-                            <button type="button" class="m-btn s-btn-lime" onclick="SubmitForm('del-pasien')">Yes</button>
+                            <input type="hidden" name="NAMA" value="@item.NAMA" />
+                            <button type="button" class="m-btn s-btn-lime" onclick="SubmitForm('del-pasien-@item.ID')">Yes</button>
                             <button class="m-btn s-btn-orangered" type="button" onclick="document.getElementById('del-@item.ID').style.display = 'none'">No</button>
                         }
                     </td>

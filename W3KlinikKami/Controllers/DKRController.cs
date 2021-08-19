@@ -71,7 +71,7 @@ namespace W3KlinikKami.Controllers
         }
 
         /* Begin: Tangani Pasien -------------------------------------------------------------------------------------------------*/
-        [HttpGet]
+        
         public ActionResult TanganiPasien(int? idPasien)
         {
             if (!this.CekSession())
@@ -125,7 +125,7 @@ namespace W3KlinikKami.Controllers
                     else
                     {
                         FlashMessage.SetFlashMessage(
-                            "Pasien Tidak Terddaftar Diantrian.",
+                            "Pasien Tidak Terdaftar Diantrian.",
                             FlashMessage.FlashMessageType.Warning);
                     }
                 }
@@ -133,7 +133,7 @@ namespace W3KlinikKami.Controllers
                 else if(idPasien != null)
                 {
                     FlashMessage.SetFlashMessage(
-                        "Pasien Tidak Terddaftar.",
+                        "Pasien Tidak Terdaftar.",
                         FlashMessage.FlashMessageType.Error);
                 }
             }

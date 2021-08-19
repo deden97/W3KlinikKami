@@ -81,5 +81,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TB_PASIEN_TERHAPUS">
+      <EntityTypeMapping TypeName="Models.TB_PASIEN_TERHAPUS">
+        <MappingFragment StoreEntitySet="TB_PASIEN_TERHAPUS">
+          <ScalarProperty Name="ID_PASIEN" ColumnName="ID_PASIEN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

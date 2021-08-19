@@ -89,6 +89,11 @@
       <End Role="TB_KUNJUNGAN_PASIEN" EntitySet="TB_KUNJUNGAN_PASIEN" />
       <End Role="TB_ANTRIAN_BEROBAT" EntitySet="TB_ANTRIAN_BEROBAT" />
     </AssociationSet>
+    <EntitySet Name="TB_PASIEN_TERHAPUS" EntityType="Models.TB_PASIEN_TERHAPUS" />
+    <AssociationSet Name="FK__TB_PASIEN_TE__ID__6FE99F9F" Association="Models.FK__TB_PASIEN_TE__ID__6FE99F9F">
+      <End Role="TB_PASIEN" EntitySet="TB_PASIEN" />
+      <End Role="TB_PASIEN_TERHAPUS" EntitySet="TB_PASIEN_TERHAPUS" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="TB_PASIEN">
     <Key>
@@ -103,6 +108,7 @@
     <Property Name="ALAMAT" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="TERDAFTAR" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="TB_KUNJUNGAN_PASIEN" Relationship="Models.FK__TB_KUNJUN__ID_PA__52593CB8" FromRole="TB_PASIEN" ToRole="TB_KUNJUNGAN_PASIEN" />
+    <NavigationProperty Name="TB_PASIEN_TERHAPUS" Relationship="Models.FK__TB_PASIEN_TE__ID__6FE99F9F" FromRole="TB_PASIEN" ToRole="TB_PASIEN_TERHAPUS" />
   </EntityType>
   <EntityType Name="TB_DATA_PENANGANAN_PASIEN">
     <Key>
@@ -187,6 +193,25 @@
       </Principal>
       <Dependent Role="TB_ANTRIAN_BEROBAT">
         <PropertyRef Name="ID_KUNJUNGAN_PASIEN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="TB_PASIEN_TERHAPUS">
+    <Key>
+      <PropertyRef Name="ID_PASIEN" />
+    </Key>
+    <Property Name="ID_PASIEN" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TB_PASIEN" Relationship="Models.FK__TB_PASIEN_TE__ID__6FE99F9F" FromRole="TB_PASIEN_TERHAPUS" ToRole="TB_PASIEN" />
+  </EntityType>
+  <Association Name="FK__TB_PASIEN_TE__ID__6FE99F9F">
+    <End Type="Models.TB_PASIEN" Role="TB_PASIEN" Multiplicity="1" />
+    <End Type="Models.TB_PASIEN_TERHAPUS" Role="TB_PASIEN_TERHAPUS" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TB_PASIEN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TB_PASIEN_TERHAPUS">
+        <PropertyRef Name="ID_PASIEN" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
