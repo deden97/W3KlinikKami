@@ -1,2 +1,51 @@
-﻿@model TB_PASIEN
+﻿@model IPagedList<TB_KUNJUNGAN_PASIEN>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Riwayat Pasien";
+    string search = Request.QueryString["search"] ?? "";
+    int pageSize = Convert.ToInt32(Request.QueryString["pageSize"]);
+    if(pageSize < 1)
+    {
+        pageSize = 3;
+    }
+}
 
+<div class="form-item">
+    <h3>
+        <u>Riwayat Pasien</u>
+    </h3>
+</div>
+<div class="form-item-flex flex-sb-w100persen">
+    <div>
+        <b>Row Data:</b>
+        @Html.DropDownList("pageSize", new List<SelectListItem>()
+        {
+            new SelectListItem{Text="3", Value="3"},
+            new SelectListItem{Text="5", Value="5"},
+            new SelectListItem{Text="8", Value="8"},
+            new SelectListItem{Text="10", Value="10"},
+            new SelectListItem{Text="15", Value="15"},
+            new SelectListItem{Text="20", Value="20"}
+        },new { @onchange = $"location.href = '/DKR/RiwayatPasien?search={search}&pagesize=' + this.value", @class = "dr-kw" })
+    </div>
+    
+    <div class="search">
+        @using (Html.BeginForm("RiwayatPasien", "DKR", FormMethod.Get))
+        {
+            @Html.TextBox("search", null, new { @placeholder = "ID / Nama Pasien..." })
+            @Html.Hidden("pageSize")
+            <input type="submit" value="Search" />
+        }
+    </div>
+</div>
+@Html.Partial($"~/Views/Shared/_{ViewBag.Menu}.cshtml", ViewData["Data"])
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+@Html.PagedListPager(Model,
+    page => Url.Action("RiwayatPasien", "DKR", new { search, page, pageSize }),
+    new PagedListRenderOptions
+    {
+        Display = PagedListDisplayMode.IfNeeded,
+        DisplayPageCountAndCurrentLocation = true
+    })

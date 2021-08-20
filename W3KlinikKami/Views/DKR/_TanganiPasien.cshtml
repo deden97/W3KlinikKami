@@ -125,7 +125,7 @@
 
                 <div class="form-item">
                     <div class="label-form-item">@Html.Label("Keluhan")</div>
-                    @Html.TextArea("KELUHAN", new { @placeholder = "Keluhan", @onchange = "cek()" })
+                    @Html.TextArea("KELUHAN", new { @placeholder = "Keluhan" })
                     <span id="keluhan-err" class="text-error"></span>
                 </div>
 
@@ -158,7 +158,7 @@
                             Submit
                         </button>
                         &nbsp;
-                        <button type="button" class="m-btn s-btn-orangered" onclick="OpenLinkNewTab('https://www.google.com')">
+                        <button type="button" class="m-btn s-btn-orangered" onclick="OpenLinkNewTab('/DKR/RiwayatPasien?search=@dt.ID')">
                             lihat riwayat sebelumnya
                         </button>
                     </div>

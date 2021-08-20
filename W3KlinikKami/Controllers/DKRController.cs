@@ -189,9 +189,24 @@ namespace W3KlinikKami.Controllers
         /* End: Tangani Pasien -------------------------------------------------------------------------------------------------*/
 
         [HttpGet]
-        public ActionResult RiwayatPasien()
+        public ActionResult RiwayatPasien(string search, int? page, int? pageSize)
         {
-            this.CekSession();
+            if (!this.CekSession())
+                return RedirectToAction("Index", "Index");
+
+            try
+            {
+                RiwayatPasien r = new RiwayatPasien();
+                if (string.IsNullOrEmpty(search))
+                    ViewData["Data"] = r.getAll(page ?? 1, pageSize ?? 3);
+                else
+                    ViewData["Data"] = r.getByIdPasien(search, page ?? 1, pageSize ?? 3);
+            }
+            catch(Exception e)
+            {
+                e.ToString();
+            }
+
             ViewBag.Menu = menu.RiwayatPasien.ToString();
             return View("Index");
         }

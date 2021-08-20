@@ -1,0 +1,90 @@
+﻿@model IEnumerable<TB_KUNJUNGAN_PASIEN>
+
+<table class="table-csm">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.First().TANGGAL_KUNJUNGAN)</th>
+        <th>@Html.DisplayNameFor(model => model.First().ID_PASIEN)</th>
+        <th>@Html.DisplayNameFor(model => model.First().TB_PASIEN.NAMA)</th>
+        <th>Action</th>
+    </tr>
+    @if (Model.Count() > 0)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TANGGAL_KUNJUNGAN</td>
+                <td>@item.ID_PASIEN</td>
+                <td class="table-csm-text-align-left">@item.TB_PASIEN.NAMA</td>
+                <td><button type="button" class="m-btn s-btn-gold" onclick="showDetail(@item.ID)">Detail Data Penanganan</button></td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="4">
+                <b class="text-error">Data Tidak Ada.</b>
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="modal-kw-dialog" id="data-pemeriksaan" style="display: none">
+    <div class="modal-kw-content">
+        <div class="close-modal-kw-dialog" onclick="ShowModalKw('data-pemeriksaan', 'none')" title="close">X</div>
+
+        <div class="form-item-flex">
+            ID:&nbsp;<text class="text-error" id="id-pasien"></text>,&nbsp;
+            Nama:&nbsp; <text class="text-error" id="nama-pasien"></text>
+        </div>
+
+        <div class="form-item">
+            <div class="label-form-item">@Html.Label("Keluhan")</div>
+            @Html.TextArea("KELUHAN", new { @placeholder = "Keluhan", @id = "keluhan", @readonly = "true" })
+        </div>
+
+        <div class="form-item">
+            <div class="label-form-item">@Html.Label("Pemeriksaan")</div>
+            @Html.TextArea("PEMERIKSAAN", new { @placeholder = "Pemeriksaan", @id = "pemeriksaan", @readonly = "true" })
+        </div>
+
+        <div class="form-item">
+            <div class="label-form-item">@Html.Label("Diagnosa")</div>
+            @Html.TextArea("DIAGNOSA", new { @placeholder = "Diagnosa", @id = "diagnosa", @readonly = "true" })
+        </div>
+
+        <div class="form-item">
+            <div class="label-form-item">@Html.Label("Resep Obat")</div>
+            @Html.TextArea("RESEP_OBAT", new { @placeholder = "Resep Obat", @id = "resep-obat", @readonly = "true" })
+        </div>
+
+        <div class="form-item">
+            <div class="label-form-item">@Html.Label("Keterangan")</div>
+            @Html.TextArea("KETERANGAN", new { @placeholder = "Keterangan", @id = "keterangan", @readonly = "true" })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function showDetail(idKunjungan) {
+        let urlDetail = '/RiwayatPasien/detailpenanganan?idKunjungan=';
+        urlDetail += idKunjungan;
+
+        $.ajax({
+            type: 'get',
+            url: urlDetail,
+            data: null,
+            success: function (data) {
+                $('#id-pasien').html(data[0].ID_PASIEN);
+                $('#nama-pasien').html(data[0].NAMA_PASIEN);
+                $('#keluhan').val(data[0].KELUHAN);
+                $('#pemeriksaan').val(data[0].PEMERIKSAAN);
+                $('#diagnosa').val(data[0].DIAGNOSA);
+                $('#resep-obat').val(data[0].RESEP_OBAT);
+                $('#keterangan').val(data[0].KETERANGAN);
+            }
+        });
+
+        ShowModalKw('data-pemeriksaan', 'grid');
+    }
+</script>

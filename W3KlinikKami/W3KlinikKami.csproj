@@ -277,6 +277,7 @@
     <Compile Include="Controllers\ADMController.cs" />
     <Compile Include="Controllers\AntrianController.cs" />
     <Compile Include="Controllers\DKRController.cs" />
+    <Compile Include="Controllers\RiwayatPasienController.cs" />
     <Compile Include="Core\csmSession.cs" />
     <Compile Include="Core\FlashMessage.cs" />
     <Compile Include="Controllers\IndexController.cs" />
@@ -298,6 +299,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\RiwayatPasien.cs" />
     <Compile Include="Models\TB_AKUN.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -369,6 +371,7 @@
     <Content Include="Views\DKR\_RiwayatPasien.cshtml" />
     <Content Include="Views\Antrian\Index.cshtml" />
     <Content Include="Views\Antrian\AntrianBerobat.cshtml" />
+    <Content Include="Views\Shared\_RiwayatPasien.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -379,7 +382,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Image\" />
-    <Folder Include="Views\FlashMessage\" />
+    <Folder Include="Views\RiwayatPasien\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
