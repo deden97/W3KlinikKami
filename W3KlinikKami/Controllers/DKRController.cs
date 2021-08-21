@@ -19,7 +19,7 @@ namespace W3KlinikKami.Controllers
         {
             this.ID = csmSession.GetIdSession();
             this.JABATAN = csmSession.GetJabatanSession();
-            if(this.db.TB_USER.Any(d => d.ID == this.ID && d.JABATAN == this.JABATAN))
+            if (this.db.TB_USER.Any(d => d.ID == this.ID && d.JABATAN == this.JABATAN))
             {
                 if(nameof(DKRController) == this.JABATAN + "Controller")
                 {
@@ -53,7 +53,7 @@ namespace W3KlinikKami.Controllers
         }
 
         [HttpGet]
-        public ActionResult UpdateAntrianPasien()
+        public JsonResult UpdateAntrianPasien()
         {
             var dtAntrian = this.db
                 .TB_KUNJUNGAN_PASIEN
@@ -79,9 +79,6 @@ namespace W3KlinikKami.Controllers
 
             try
             {
-                // menentukan menu yg akan ditampilkan pada views/DKR/Index
-                ViewBag.Menu = menu.TanganiPasien.ToString();
-
                 // data untuk views/DKR/Index -> html.partial()
                 ViewData["Data"] = this.db
                     .TB_KUNJUNGAN_PASIEN
@@ -142,6 +139,12 @@ namespace W3KlinikKami.Controllers
                 e.ToString();
             }
 
+            // menentukan menu yg akan ditampilkan pada views/DKR/Index
+            ViewBag.Menu = menu.TanganiPasien.ToString();
+
+            // judul halaman
+            ViewBag.TitlePage = "Tangani Pasien";
+
             return View("Index");
         }
 
@@ -196,18 +199,20 @@ namespace W3KlinikKami.Controllers
 
             try
             {
-                RiwayatPasien r = new RiwayatPasien();
-                if (string.IsNullOrEmpty(search))
-                    ViewData["Data"] = r.getAll(page ?? 1, pageSize ?? 3);
-                else
-                    ViewData["Data"] = r.getByIdPasien(search, page ?? 1, pageSize ?? 3);
+                RiwayatPasien riwayatPasien = new RiwayatPasien();
+                ViewData["Data"] = riwayatPasien.GetData(search, page ?? 1, pageSize ?? 8);
             }
             catch(Exception e)
             {
                 e.ToString();
             }
 
+            // menentukan menu yg akan ditampilkan pada views/DKR/Index
             ViewBag.Menu = menu.RiwayatPasien.ToString();
+
+            // judul halaman
+            ViewBag.TitlePage = "Riwayat Pasien";
+
             return View("Index");
         }
     }

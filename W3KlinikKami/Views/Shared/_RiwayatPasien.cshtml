@@ -1,5 +1,49 @@
-﻿@model IEnumerable<TB_KUNJUNGAN_PASIEN>
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<TB_KUNJUNGAN_PASIEN>
 
+@{
+    string search = Request.QueryString["search"] ?? "";
+    int pageSize = Convert.ToInt32(Request.QueryString["pageSize"]);
+    if (pageSize < 1)
+    {
+        pageSize = 8;
+    }
+}
+
+@* ------------------------- Judul Menu -------------------------------------- *@
+<div class="form-item">
+    <h3>
+        <u>Riwayat Pasien</u>
+    </h3>
+</div>
+
+@* -------------------------- Nav Table -------------------------------------- *@
+<div class="form-item-flex flex-sb-w100persen">
+    <div>
+        <b>Row Data:</b>
+        @Html.DropDownList("pageSize", new List<SelectListItem>()
+        {
+            new SelectListItem{Text="3", Value="3"},
+            new SelectListItem{Text="5", Value="5"},
+            new SelectListItem{Text="8", Value="8"},
+            new SelectListItem{Text="10", Value="10"},
+            new SelectListItem{Text="15", Value="15"},
+            new SelectListItem{Text="20", Value="20"}
+        }, new { @onchange = $"location.href = '/{ViewData["controller"]}/RiwayatPasien?search={search}&pagesize=' + this.value", @class = "dr-kw" })
+    </div>
+
+    <div class="search">
+        @using (Html.BeginForm("RiwayatPasien", $"{ViewData["controller"]}", FormMethod.Get))
+        {
+            @Html.TextBox("search", null, new { @placeholder = "ID / Nama Pasien..." })
+            @Html.Hidden("pageSize")
+            <input type="submit" value="Search" />
+        }
+    </div>
+</div>
+
+@* -------------------------- Table Riwayat kunjungan pasien ----------------- *@
 <table class="table-csm">
     <tr>
         <th>@Html.DisplayNameFor(model => model.First().TANGGAL_KUNJUNGAN)</th>
@@ -29,9 +73,28 @@
     }
 </table>
 
+@* -------------------------- Pageging --------------------------------------- *@
+<div class="form-item">
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    @Html.PagedListPager(Model,
+        page => Url.Action("RiwayatPasien", $"{ViewData["controller"]}", new { search, page, pageSize }),
+        new PagedListRenderOptions
+        {
+            Display = PagedListDisplayMode.IfNeeded,
+            DisplayPageCountAndCurrentLocation = true
+        })
+</div>
+
+@* -------------------------- Model Dialog untuk menampilkan data penanganan pasien terpilih ------------------ *@
 <div class="modal-kw-dialog" id="data-pemeriksaan" style="display: none">
     <div class="modal-kw-content">
         <div class="close-modal-kw-dialog" onclick="ShowModalKw('data-pemeriksaan', 'none')" title="close">X</div>
+
+        <div class="form-item-flex">
+            <h3>
+                <u>Data Penanganan Pasien.</u>
+            </h3>
+        </div>
 
         <div class="form-item-flex">
             ID:&nbsp;<text class="text-error" id="id-pasien"></text>,&nbsp;
@@ -62,9 +125,14 @@
             <div class="label-form-item">@Html.Label("Keterangan")</div>
             @Html.TextArea("KETERANGAN", new { @placeholder = "Keterangan", @id = "keterangan", @readonly = "true" })
         </div>
+
+        <div class="form-item">
+            <button type="button" class="m-btn s-btn-foresgreen">Cetak Riwayat</button>
+        </div>
     </div>
 </div>
 
+@* ---------------- untuk mengambil data penanganan pasien terpilih, dan di inputkan ke form yg berada pada model dialog ------------------ *@
 <script type="text/javascript">
     function showDetail(idKunjungan) {
         let urlDetail = '/RiwayatPasien/detailpenanganan?idKunjungan=';
@@ -82,9 +150,14 @@
                 $('#diagnosa').val(data[0].DIAGNOSA);
                 $('#resep-obat').val(data[0].RESEP_OBAT);
                 $('#keterangan').val(data[0].KETERANGAN);
+                ShowModalKw('data-pemeriksaan', 'grid');
+            },
+            error: function () {
+                alert('Error Kemungkinan Server Mati.');
+                ShowModalKw('data-pemeriksaan', 'none');
             }
         });
 
-        ShowModalKw('data-pemeriksaan', 'grid');
+        
     }
 </script>

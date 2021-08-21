@@ -317,6 +317,7 @@
     <Compile Include="Models\TB_KUNJUNGAN_PASIEN.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_KUNJUNGAN_PASIEN_META_DATA.cs" />
     <Compile Include="Models\TB_PASIEN.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -372,6 +373,7 @@
     <Content Include="Views\Antrian\Index.cshtml" />
     <Content Include="Views\Antrian\AntrianBerobat.cshtml" />
     <Content Include="Views\Shared\_RiwayatPasien.cshtml" />
+    <Content Include="Views\ADM\_RiwayatPasien.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -382,7 +384,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Image\" />
-    <Folder Include="Views\RiwayatPasien\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

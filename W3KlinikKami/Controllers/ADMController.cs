@@ -42,7 +42,8 @@ namespace W3KlinikKami.Controllers
             DaftarPasienBaru,
             BerobatPasien,
             PengambilanObat,
-            DataPasien
+            DataPasien,
+            RiwayatPasien
         }
 
         private bool CekSession()
@@ -112,15 +113,17 @@ namespace W3KlinikKami.Controllers
                         .OrderBy(d => d.NAMA)
                         .ToPagedList(page ?? 1, 9);
                 }
-
-                // ModePenanganan untuk menentukan 'menu'
-                ViewBag.ModePenanganan = PenangananPasien.BerobatPasien;
             }
             catch(Exception e)
             {
                 e.ToString();
             }
 
+            // ModePenanganan untuk menentukan 'menu'
+            ViewBag.ModePenanganan = PenangananPasien.BerobatPasien;
+
+            // Judul Halaman
+            ViewBag.TitlePage = "Daftar Berobat";
             return View("Index");
         }
 
@@ -267,6 +270,9 @@ namespace W3KlinikKami.Controllers
 
                 // ModePenanganan untuk menentukan 'menu'
                 ViewBag.ModePenanganan = PenangananPasien.DataPasien;
+
+                // Judul Halaman
+                ViewBag.TitlePage = "Data Pasien";
             }
             catch(Exception e)
             {
@@ -349,7 +355,7 @@ namespace W3KlinikKami.Controllers
             {
                 // ModePenanganan untuk menentukan 'menu'
                 ViewBag.ModePenanganan = PenangananPasien.DaftarPasienBaru;
-
+                ViewBag.TitlePage = "Daftar Pasien Baru";
                 return View("Index");
             }
             else
@@ -364,6 +370,7 @@ namespace W3KlinikKami.Controllers
             if (!this.CekSession())
                 return RedirectToAction("Index", "Index");
 
+            ViewBag.TitlePage = "Daftar Pasien Baru";
             if (ModelState.IsValid)
             {
                 try
@@ -391,5 +398,26 @@ namespace W3KlinikKami.Controllers
             return View("Index");
         }
         /* End: DaftarPasienBaru -------------------------------------------------------------------- */
+
+        [HttpGet]
+        public ActionResult RiwayatPasien(string search, int? page, int? pageSize)
+        {
+            if (!this.CekSession())
+                return RedirectToAction("Index", "Index");
+
+            try
+            {
+                RiwayatPasien riwayatPasien = new RiwayatPasien();
+                ViewData["DT_PASIEN"] = riwayatPasien.GetData(search, page ?? 1, pageSize ?? 8);
+            }
+            catch(Exception e)
+            {
+                e.ToString();
+            }
+
+            ViewBag.ModePenanganan = PenangananPasien.RiwayatPasien;
+            ViewBag.TitlePage = "Riwayat Pasien";
+            return View("Index");
+        }
     }
 }

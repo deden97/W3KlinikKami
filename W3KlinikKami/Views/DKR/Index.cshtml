@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = ViewBag.TitlePage ?? "Index";
     Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
 }
 
@@ -41,13 +41,36 @@
     if (ViewBag.Menu != "TanganiPasien")
     {
         @* Audio yg digunakan jika ada antrian baru *@
-        @*<audio id="antrian-baru">
+        <audio id="antrian-baru">
             <source src="~/Audio/EQLDS52-start-button.mp3" type="audio/mpeg" />
-        </audio>*@
+        </audio>
 
         <script type="text/javascript">
             // jumlah data saat ini
-            var jmlDataSaatIni = 0;
+            var jmlDataSaatIni;
+
+            // menampilkan notif pada tombol 'Tangani Pasien', memberi jumlah antrian pada notif, dan memberi title pada notif 
+            function notifVisible() {
+                notif.style.visibility = 'visible';
+                notif.innerHTML = jmlDataSaatIni;
+                notif.title = "Ada " + jmlDataSaatIni + " Antrian.";
+            }
+
+            // memberi nilai awal pada 'jmlDataSaatIni' dan 'notif' muncul atau tidak
+            $.ajax({
+                type: 'get',
+                url: '/DKR/UpdateAntrianPasien',
+                data: null,
+                success: function (data) {
+                    jmlDataSaatIni = data.length;
+                    let notif = document.getElementById('notif');
+                    if (jmlDataSaatIni > 0) {
+                        notifVisible();
+                    } else {
+                        notif.style.visibility = 'none';
+                    }
+                }
+            });
 
             // update jumlah data
             setInterval(function () {
@@ -56,13 +79,11 @@
                     url: '/DKR/UpdateAntrianPasien',
                     data: null,
                     success: function (data) {
-                        var notif = document.getElementById('notif');
+                        let notif = document.getElementById('notif');
                         if (data.length > jmlDataSaatIni) {
                             jmlDataSaatIni = data.length;
-                            notif.style.visibility = 'visible';
-                            notif.innerHTML = jmlDataSaatIni;
-                            notif.title = "Ada " + jmlDataSaatIni + " Antrian.";
-                            //document.getElementById('antrian-baru').play();
+                            notifVisible();
+                            document.getElementById('antrian-baru').play();
                         } else if (data.length < 1) {
                             if (notif.style.visibility == 'visible') {
                                 notif.style.visibility = 'hidden';
