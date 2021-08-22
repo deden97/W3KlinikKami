@@ -1,9 +1,6 @@
 ﻿@model W3KlinikKami.Models.TB_AKUN
 
 <div class="form-content">
-    @{
-        Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
-    }
     @using (Html.BeginForm("EditUsername", "Index", FormMethod.Post))
     {
         @Html.AntiForgeryToken()

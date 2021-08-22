@@ -74,7 +74,7 @@
 </table>
 
 @* -------------------------- Pageging --------------------------------------- *@
-<div class="form-item">
+<div class="form-item-flex flex-sb-w100persen">
     <link href="~/Content/PagedList.css" rel="stylesheet" />
     @Html.PagedListPager(Model,
         page => Url.Action("RiwayatPasien", $"{ViewData["controller"]}", new { search, page, pageSize }),
@@ -96,44 +96,70 @@
             </h3>
         </div>
 
-        <div class="form-item-flex">
-            ID:&nbsp;<text class="text-error" id="id-pasien"></text>,&nbsp;
-            Nama:&nbsp; <text class="text-error" id="nama-pasien"></text>
+        <div class="form-item-flex flex-sb-w100persen">
+            <table>
+                <tr>
+                    <td><b>Tanggal Kunjungan</b></td>
+                    <td>: <text class="text-error" id="tgl-pemeriksaan"></text></td>
+                </tr>
+                <tr>
+                    <td><b>Nama Pasien</b></td>
+                    <td>: <text class="text-error" id="nama-pasien"></text></td>
+                </tr>
+                <tr>
+                    <td><b>ID Pasien</b></td>
+                    <td>: <text class="text-error" id="id-pasien"></text></td>
+                </tr>
+                <tr>
+                    <td><b>Nama Dokter</b></td>
+                    <td>: <text class="text-error" id="nama-dokter"></text></td>
+                </tr>
+                <tr>
+                    <td><b>ID Dokter</b></td>
+                    <td>: <text class="text-error" id="id-dokter"></text></td>
+                </tr>
+            </table>
         </div>
 
         <div class="form-item">
             <div class="label-form-item">@Html.Label("Keluhan")</div>
-            @Html.TextArea("KELUHAN", new { @placeholder = "Keluhan", @id = "keluhan", @readonly = "true" })
+            @Html.TextArea("KELUHAN", new { @placeholder = "Keluhan", @readonly = "true" })
         </div>
 
         <div class="form-item">
             <div class="label-form-item">@Html.Label("Pemeriksaan")</div>
-            @Html.TextArea("PEMERIKSAAN", new { @placeholder = "Pemeriksaan", @id = "pemeriksaan", @readonly = "true" })
+            @Html.TextArea("PEMERIKSAAN", new { @placeholder = "Pemeriksaan", @readonly = "true" })
         </div>
 
         <div class="form-item">
             <div class="label-form-item">@Html.Label("Diagnosa")</div>
-            @Html.TextArea("DIAGNOSA", new { @placeholder = "Diagnosa", @id = "diagnosa", @readonly = "true" })
+            @Html.TextArea("DIAGNOSA", new { @placeholder = "Diagnosa", @readonly = "true" })
         </div>
 
         <div class="form-item">
             <div class="label-form-item">@Html.Label("Resep Obat")</div>
-            @Html.TextArea("RESEP_OBAT", new { @placeholder = "Resep Obat", @id = "resep-obat", @readonly = "true" })
+            @Html.TextArea("RESEP_OBAT", new { @placeholder = "Resep Obat", @readonly = "true" })
         </div>
 
         <div class="form-item">
             <div class="label-form-item">@Html.Label("Keterangan")</div>
-            @Html.TextArea("KETERANGAN", new { @placeholder = "Keterangan", @id = "keterangan", @readonly = "true" })
+            @Html.TextArea("KETERANGAN", new { @placeholder = "Keterangan", @readonly = "true" })
         </div>
 
         <div class="form-item">
-            <button type="button" class="m-btn s-btn-foresgreen">Cetak Riwayat</button>
+            <button type="button" class="m-btn s-btn-foresgreen" onclick="cetakDataPenanganan()">Cetak Data Penanganan</button>
         </div>
     </div>
 </div>
 
-@* ---------------- untuk mengambil data penanganan pasien terpilih, dan di inputkan ke form yg berada pada model dialog ------------------ *@
+@* --------------------------------------- Javascript ------------------------------------------------------------- *@
 <script type="text/javascript">
+    var urlCetakDataPenanganan;
+    function cetakDataPenanganan() {
+        OpenLinkNewTab(urlCetakDataPenanganan);
+    }
+
+    // function untuk mengambil data penanganan pasien terpilih, dan di inputkan ke form yg berada pada model dialog
     function showDetail(idKunjungan) {
         let urlDetail = '/RiwayatPasien/detailpenanganan?idKunjungan=';
         urlDetail += idKunjungan;
@@ -143,13 +169,22 @@
             url: urlDetail,
             data: null,
             success: function (data) {
-                $('#id-pasien').html(data[0].ID_PASIEN);
-                $('#nama-pasien').html(data[0].NAMA_PASIEN);
-                $('#keluhan').val(data[0].KELUHAN);
-                $('#pemeriksaan').val(data[0].PEMERIKSAAN);
-                $('#diagnosa').val(data[0].DIAGNOSA);
-                $('#resep-obat').val(data[0].RESEP_OBAT);
-                $('#keterangan').val(data[0].KETERANGAN);
+                let dt = data[0];
+
+                urlCetakDataPenanganan = '/Report/DataPenangananPasien.aspx?idKunjunganPasien=' + dt.ID_KUNJUNGAN_PASIEN;
+
+                $('#tgl-pemeriksaan').html(dt.TGL_KUNJUNGAN);
+                $('#id-pasien').html(dt.ID_PASIEN);
+                $('#nama-pasien').html(dt.NAMA_PASIEN);
+                $('#nama-dokter').html(dt.NAMA_DOKTER);
+                $('#id-dokter').html(dt.ID_DOKTER);
+
+                $('#KELUHAN').val(dt.KELUHAN);
+                $('#PEMERIKSAAN').val(dt.PEMERIKSAAN);
+                $('#DIAGNOSA').val(dt.DIAGNOSA);
+                $('#RESEP_OBAT').val(dt.RESEP_OBAT);
+                $('#KETERANGAN').val(dt.KETERANGAN);
+
                 ShowModalKw('data-pemeriksaan', 'grid');
             },
             error: function () {
@@ -157,7 +192,7 @@
                 ShowModalKw('data-pemeriksaan', 'none');
             }
         });
-
-        
     }
+
+    
 </script>

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsDataPenangananPasien" targetNamespace="http://tempuri.org/dsDataPenangananPasien.xsd" xmlns:mstns="http://tempuri.org/dsDataPenangananPasien.xsd" xmlns="http://tempuri.org/dsDataPenangananPasien.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsDataPenangananPasien" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsDataPenangananPasien" msprop:Generator_UserDSName="dsDataPenangananPasien">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tb_DataPenangananPasien" msprop:Generator_TableClassName="tb_DataPenangananPasienDataTable" msprop:Generator_TableVarName="tabletb_DataPenangananPasien" msprop:Generator_TablePropName="tb_DataPenangananPasien" msprop:Generator_RowDeletingName="tb_DataPenangananPasienRowDeleting" msprop:Generator_RowChangingName="tb_DataPenangananPasienRowChanging" msprop:Generator_RowEvHandlerName="tb_DataPenangananPasienRowChangeEventHandler" msprop:Generator_RowDeletedName="tb_DataPenangananPasienRowDeleted" msprop:Generator_UserTableName="tb_DataPenangananPasien" msprop:Generator_RowChangedName="tb_DataPenangananPasienRowChanged" msprop:Generator_RowEvArgName="tb_DataPenangananPasienRowChangeEvent" msprop:Generator_RowClassName="tb_DataPenangananPasienRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_KUNJUNGAN" msprop:Generator_ColumnVarNameInTable="columnID_KUNJUNGAN" msprop:Generator_ColumnPropNameInRow="ID_KUNJUNGAN" msprop:Generator_ColumnPropNameInTable="ID_KUNJUNGANColumn" msprop:Generator_UserColumnName="ID_KUNJUNGAN" type="xs:string" minOccurs="0" />
+              <xs:element name="ID_PASIEN" msprop:Generator_ColumnVarNameInTable="columnID_PASIEN" msprop:Generator_ColumnPropNameInRow="ID_PASIEN" msprop:Generator_ColumnPropNameInTable="ID_PASIENColumn" msprop:Generator_UserColumnName="ID_PASIEN" type="xs:string" minOccurs="0" />
+              <xs:element name="NAMA_PASIEN" msprop:Generator_ColumnVarNameInTable="columnNAMA_PASIEN" msprop:Generator_ColumnPropNameInRow="NAMA_PASIEN" msprop:Generator_ColumnPropNameInTable="NAMA_PASIENColumn" msprop:Generator_UserColumnName="NAMA_PASIEN" type="xs:string" minOccurs="0" />
+              <xs:element name="KELUHAN" msprop:Generator_ColumnVarNameInTable="columnKELUHAN" msprop:Generator_ColumnPropNameInRow="KELUHAN" msprop:Generator_ColumnPropNameInTable="KELUHANColumn" msprop:Generator_UserColumnName="KELUHAN" type="xs:string" minOccurs="0" />
+              <xs:element name="PEMERIKSAAN" msprop:Generator_ColumnVarNameInTable="columnPEMERIKSAAN" msprop:Generator_ColumnPropNameInRow="PEMERIKSAAN" msprop:Generator_ColumnPropNameInTable="PEMERIKSAANColumn" msprop:Generator_UserColumnName="PEMERIKSAAN" type="xs:string" minOccurs="0" />
+              <xs:element name="DIAGNOSA" msprop:Generator_ColumnVarNameInTable="columnDIAGNOSA" msprop:Generator_ColumnPropNameInRow="DIAGNOSA" msprop:Generator_ColumnPropNameInTable="DIAGNOSAColumn" msprop:Generator_UserColumnName="DIAGNOSA" type="xs:string" minOccurs="0" />
+              <xs:element name="RESEP_OBAT" msprop:Generator_ColumnVarNameInTable="columnRESEP_OBAT" msprop:Generator_ColumnPropNameInRow="RESEP_OBAT" msprop:Generator_ColumnPropNameInTable="RESEP_OBATColumn" msprop:Generator_UserColumnName="RESEP_OBAT" type="xs:string" minOccurs="0" />
+              <xs:element name="KETERANGAN" msprop:Generator_ColumnVarNameInTable="columnKETERANGAN" msprop:Generator_ColumnPropNameInRow="KETERANGAN" msprop:Generator_ColumnPropNameInTable="KETERANGANColumn" msprop:Generator_UserColumnName="KETERANGAN" type="xs:string" minOccurs="0" />
+              <xs:element name="ID_DOKTER" msprop:Generator_ColumnVarNameInTable="columnID_DOKTER" msprop:Generator_ColumnPropNameInRow="ID_DOKTER" msprop:Generator_ColumnPropNameInTable="ID_DOKTERColumn" msprop:Generator_UserColumnName="ID_DOKTER" type="xs:string" minOccurs="0" />
+              <xs:element name="NAMA_DOKTER" msprop:Generator_ColumnVarNameInTable="columnNAMA_DOKTER" msprop:Generator_ColumnPropNameInRow="NAMA_DOKTER" msprop:Generator_ColumnPropNameInTable="NAMA_DOKTERColumn" msprop:Generator_UserColumnName="NAMA_DOKTER" type="xs:string" minOccurs="0" />
+              <xs:element name="TGL_KUNJUNGAN" msprop:Generator_ColumnVarNameInTable="columnTGL_KUNJUNGAN" msprop:Generator_ColumnPropNameInRow="TGL_KUNJUNGAN" msprop:Generator_ColumnPropNameInTable="TGL_KUNJUNGANColumn" msprop:Generator_UserColumnName="TGL_KUNJUNGAN" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

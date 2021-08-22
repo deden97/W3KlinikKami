@@ -25,19 +25,8 @@ namespace W3KlinikKami.Controllers
             if (!this.CekSession())
                 return Json(new { @dataPasien = "null" }, JsonRequestBehavior.AllowGet);
 
-            var data = this.riwayatPasien.GetDetailPenangananById(idKunjungan);
-            return Json(data.Select(d => new
-            {
-                @ID_PASIEN = d.TB_KUNJUNGAN_PASIEN.TB_PASIEN.ID,
-                @NAMA_PASIEN = d.TB_KUNJUNGAN_PASIEN.TB_PASIEN.NAMA,
-                @ID_DOKTER = d.TB_USER.ID,
-                @NAMA_DOKTER = d.TB_USER.NAMA,
-                d.KELUHAN,
-                d.PEMERIKSAAN,
-                d.DIAGNOSA,
-                d.RESEP_OBAT,
-                d.KETERANGAN
-            }), JsonRequestBehavior.AllowGet);
+            object data = this.riwayatPasien.GetDetailPenangananById(idKunjungan);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

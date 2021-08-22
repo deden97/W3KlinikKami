@@ -41,11 +41,26 @@ namespace W3KlinikKami.Models
         }
 
         // ambil data pada tabel 'TB_DATA_PENANGANAN_PASIEN' sesuai dengan 'ID_KUNJUNGAN_PASIEN'
-        public IQueryable<TB_DATA_PENANGANAN_PASIEN> GetDetailPenangananById(int idPemeriksaan)
+        public object GetDetailPenangananById(int idPemeriksaan)
         {
             var data = this.db
                 .TB_DATA_PENANGANAN_PASIEN
-                .Where(d => d.ID_KUNJUNGAN_PASIEN == idPemeriksaan);
+                .AsEnumerable()
+                .Where(d => d.ID_KUNJUNGAN_PASIEN == idPemeriksaan)
+                .Select(d => new
+                {
+                    @ID_KUNJUNGAN_PASIEN = d.TB_KUNJUNGAN_PASIEN.ID,
+                    @TGL_KUNJUNGAN = d.TB_KUNJUNGAN_PASIEN.TANGGAL_KUNJUNGAN.Date.ToString("dd/MM/yyyy"),
+                    @ID_PASIEN = d.TB_KUNJUNGAN_PASIEN.TB_PASIEN.ID,
+                    @NAMA_PASIEN = d.TB_KUNJUNGAN_PASIEN.TB_PASIEN.NAMA,
+                    d.KELUHAN,
+                    d.PEMERIKSAAN,
+                    d.DIAGNOSA,
+                    d.RESEP_OBAT,
+                    d.KETERANGAN,
+                    @ID_DOKTER = d.TB_USER.ID,
+                    @NAMA_DOKTER = d.TB_USER.NAMA
+                });
             return data;
         }
     }

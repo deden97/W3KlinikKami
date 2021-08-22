@@ -74,7 +74,7 @@
 
 @* PAGEGING *@
 <link href="~/Content/PagedList.css" rel="stylesheet" />
-<div class="form-item-flex">
+<div class="form-item-flex flex-sb-w100persen">
     @Html.PagedListPager(Model,
         page => Url.Action("DataPasien", new { page, search, pageSize }),
         new PagedListRenderOptions()

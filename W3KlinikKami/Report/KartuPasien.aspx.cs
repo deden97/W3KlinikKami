@@ -9,13 +9,13 @@ using W3KlinikKami.Core;
 
 namespace W3KlinikKami.Report
 {
-    public partial class DataPasien : System.Web.UI.Page
+    public partial class DataPasien : Page
     {
         private bool CekSession()
         {
             int id = Convert.ToInt32(Session["ID"]);
             string jabatan = Convert.ToString(Session["JABATAN"]);
-            using(Models.DbEntities db = new Models.DbEntities())
+            using(DbEntities db = new DbEntities())
             {
                 if (db.TB_USER.Any(j => j.ID == id && j.JABATAN == jabatan))
                 {
