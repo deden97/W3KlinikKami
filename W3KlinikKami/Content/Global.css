@@ -338,6 +338,10 @@ input[type="checkbox"] {
     width: 200px;
 }
 
+.width-max-content {
+    width: max-content;
+}
+
 .notif-btn-submenu {
     position: absolute;
     padding: 2px 6px;

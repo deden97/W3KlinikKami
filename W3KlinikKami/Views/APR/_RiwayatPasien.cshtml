@@ -1,0 +1,7 @@
+﻿@using PagedList
+@model IPagedList<TB_KUNJUNGAN_PASIEN>
+
+@{
+    ViewData["controller"] = "APR";
+    Html.RenderPartial("~/Views/Shared/_RiwayatPasien.cshtml", Model, ViewData);
+}

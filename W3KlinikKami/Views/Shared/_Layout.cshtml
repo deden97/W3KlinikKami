@@ -19,7 +19,7 @@
     <header id="head">
         @* Foto profil, nama, jabatan *@
         <nav>
-            <div class="form-item-flex margin-bottom-10px width-200px">
+            <div class="form-item-flex margin-bottom-10px width-200px width-max-content">
                 <img src="@Url.Content(dtUser.FOTO)" alt="Foto - @dtUser.NAMA" title="@dtUser.NAMA" class="foto-profil" />
                 <div class="form-item">
                     @dtUser.NAMA
@@ -36,7 +36,7 @@
         @* Edit, Logout *@
         <nav>
             <ul class="nav-menu">
-                <li>@Html.ActionLink("Edit", "EditData", "Index", null, new { @class = "btn-edit" })</li>
+                <li>@Html.ActionLink("Edit Profil", "EditData", "Index", null, new { @class = "btn-edit" })</li>
                 <li><button type="button" class="btn-logout" onclick="ShowModalKw('logout', 'grid')">Logout</button></li>
             </ul>
         </nav>

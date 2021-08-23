@@ -288,6 +288,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ADMController.cs" />
     <Compile Include="Controllers\AntrianController.cs" />
+    <Compile Include="Controllers\APRController.cs" />
     <Compile Include="Controllers\DKRController.cs" />
     <Compile Include="Controllers\RiwayatPasienController.cs" />
     <Compile Include="Core\csmSession.cs" />
@@ -397,6 +398,9 @@
     <Content Include="Views\Antrian\AntrianBerobat.cshtml" />
     <Content Include="Views\Shared\_RiwayatPasien.cshtml" />
     <Content Include="Views\ADM\_RiwayatPasien.cshtml" />
+    <Content Include="Views\APR\Index.cshtml" />
+    <Content Include="Views\APR\_RiwayatPasien.cshtml" />
+    <Content Include="Views\APR\_RacikObat.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

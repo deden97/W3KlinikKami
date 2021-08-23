@@ -110,7 +110,9 @@ namespace W3KlinikKami.Controllers
                         dt.TERDAFTAR = DateTime.Now;
                         this.db.TB_USER.Add(dt);
                         this.db.SaveChanges();
-                        FlashMessage.TemFlashMessageLogin();
+                        FlashMessage.SetFlashMessage(
+                            "Daftar Akun Berhasil, Silahkan Untuk Login",
+                            FlashMessage.FlashMessageType.Success);
                         return RedirectToAction("Login");
                     }
                     else // jika username sudah terdaftar

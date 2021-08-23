@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = ViewBag.TitlePage ?? "Index";
+    Html.RenderPartial("~/Views/Shared/FlashMessage.cshtml");
+}
+
+<div class="body-content">
+    <div class="submenu-body-content">
+        <div id="RacikObat" class="btn-submenu width-200px" onclick="clickLinkByDiv('rObat')">
+            <div class="notif-btn-submenu" id="notif" style="visibility: hidden;"></div>
+            @Html.ActionLink("Racik Obat", "RacikObat", "APR", null, new { id = "rObat" })
+        </div>
+
+        <div id="RiwayatPasien" class="btn-submenu width-200px" onclick="clickLinkByDiv('rPasien')">
+            @Html.ActionLink("Riwayat Pasien", "RiwayatPasien", "APR", null, new { id = "rPasien" })
+        </div>
+    </div>
+
+    <div class="content-body-content">
+        <div class="form-content">
+            <input type="hidden" id="menu" value="@ViewBag.Menu" />
+            <script type="text/javascript">
+                changeClassName(
+                    ['RacikObat', 'RiwayatPasien'],
+                    document.getElementById('menu').value,
+                    "btn-submenu width-200px margin-bottom-15px",
+                    "btn-submenu-active width-200px margin-bottom-15px"
+                );
+            </script>
+
+            @Html.Partial($"~/Views/APR/_{ViewBag.Menu}.cshtml", ViewData["Data"])
+        </div>
+    </div>
+</div>

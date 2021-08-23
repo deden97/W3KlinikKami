@@ -1,0 +1,59 @@
+﻿@model IEnumerable<TB_KUNJUNGAN_PASIEN>
+
+
+
+<div class="body-content">
+    <table>
+
+
+        <tr class="ver-alg-0">
+            <td class="min-max-width-400-px">
+                @* judul & table untuk menampilkan data antrian *@
+                <h4><u>Antrian Pasien</u></h4>
+                <b>Jumlah Antrian Pasien:</b> @Model.Count()
+                <table class="table-csm">
+                    <tr>
+                        <th>ID Pasien</th>
+                        <th>Nama Pasien</th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="@item.ID">
+                            <td>@item.TB_PASIEN.ID</td>
+                            <td class="table-csm-text-align-left min-max-width-400-px">@item.TB_PASIEN.NAMA</td>
+                        </tr>
+                    }
+                </table>
+            </td>
+
+            <td>
+                <div class="content-body-content height-max-content">
+                    <div class="form-item">
+                        <div class="label-form-item">@Html.Label("Keluhan")</div>
+                        @Html.TextArea("KELUHAN", new { @placeholder = "Keluhan", @readonly = "true" })
+                    </div>
+
+                    <div class="form-item">
+                        <div class="label-form-item">@Html.Label("Pemeriksaan")</div>
+                        @Html.TextArea("PEMERIKSAAN", new { @placeholder = "Pemeriksaan", @readonly = "true" })
+                    </div>
+
+                    <div class="form-item">
+                        <div class="label-form-item">@Html.Label("Diagnosa")</div>
+                        @Html.TextArea("DIAGNOSA", new { @placeholder = "Diagnosa", @readonly = "true" })
+                    </div>
+
+                    <div class="form-item">
+                        <div class="label-form-item">@Html.Label("Resep Obat")</div>
+                        @Html.TextArea("RESEP_OBAT", new { @placeholder = "Resep Obat", @readonly = "true" })
+                    </div>
+
+                    <div class="form-item">
+                        <div class="label-form-item">@Html.Label("Keterangan")</div>
+                        @Html.TextArea("KETERANGAN", new { @placeholder = "Keterangan", @readonly = "true" })
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

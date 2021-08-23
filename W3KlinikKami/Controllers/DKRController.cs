@@ -29,18 +29,16 @@ namespace W3KlinikKami.Controllers
                 else
                 {
                     FlashMessage.SetFlashMessage(
-                        "Link Yang Anda Tuju Hanya Dapat Diakses Oleh 'Dokter'.",
+                        "Url Yang Anda Tuju Hanya Dapat Diakses Oleh 'Dokter'.",
                         FlashMessage.FlashMessageType.Warning);
-                    return false;
                 }
             }
             else
             {
-                FlashMessage.SetFlashMessage(
-                    "Anda Harus Login Terlebih Dahulu.",
-                    FlashMessage.FlashMessageType.Warning);
-                return false;
+                FlashMessage.TemFlashMessageLogin();
             }
+
+            return false;
         }
 
         [HttpGet]
