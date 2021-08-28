@@ -69,8 +69,14 @@ namespace W3KlinikKami.Controllers
         }
 
         /* Begin: Tangani Pasien -------------------------------------------------------------------------------------------------*/
+        public ActionResult pilihPasien(FormCollection data)
+        {
+            TempData["id"] = data["id-pasien"];
+            return RedirectToAction("TanganiPasien");
+        }
         
-        public ActionResult TanganiPasien(int? idPasien)
+        [HttpGet, ActionName("TanganiPasien")]
+        public ActionResult TanganiPasienGet()
         {
             if (!this.CekSession())
                 return RedirectToAction("Index", "Index");
@@ -85,6 +91,10 @@ namespace W3KlinikKami.Controllers
                         d.PENANGANAN_DOKTER == null &&
                         (d.PENGAMBILAN_OBAT == null || d.PENGAMBILAN_OBAT == false))
                     .OrderBy(d => d.TANGGAL_KUNJUNGAN);
+
+                int? idPasien = null;
+                if (TempData["id"] != null)
+                    idPasien = Convert.ToInt32(TempData["id"]);
 
                 // jika ada pasien yg dipilih (untuk ditangani oleh dokter) bukan nol / lebih dari nol.
                 if (idPasien > 0)
@@ -146,8 +156,8 @@ namespace W3KlinikKami.Controllers
             return View("Index");
         }
 
-        [HttpPost]
-        public ActionResult TanganiPasien()
+        [HttpPost, ActionName("TanganiPasien")]
+        public ActionResult TanganiPasienPost()
         {
             if (!this.CekSession())
                 return RedirectToAction("Index", "Index");

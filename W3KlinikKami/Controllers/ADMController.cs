@@ -166,9 +166,10 @@ namespace W3KlinikKami.Controllers
                         this.db.SaveChanges();
 
                         // simpan ke db -> TB_ANTRIAN_BEROBAT
-                        List<TB_KUNJUNGAN_PASIEN> pasienHariIni = this.db.TB_KUNJUNGAN_PASIEN
+                        List<TB_KUNJUNGAN_PASIEN> pasienHariIni = this.db
+                            .TB_KUNJUNGAN_PASIEN
                             .AsEnumerable()
-                            .Where(d => d.TANGGAL_KUNJUNGAN.Date == DateTime.Today)
+                            .Where(d => d.TANGGAL_KUNJUNGAN.Date == DateTime.Today && d.ID_PASIEN == dt.ID)
                             .OrderByDescending(d => d.TANGGAL_KUNJUNGAN)
                             .ToList();
 

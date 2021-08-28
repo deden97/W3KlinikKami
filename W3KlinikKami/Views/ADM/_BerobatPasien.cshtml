@@ -73,7 +73,7 @@
 
                 @* Paging *@
                 <link href="~/Content/PagedList.css" rel="stylesheet" />
-                <div class="form-item-flex">
+                <div class="form-item-flex flex-sb-w100persen">
                     @Html.PagedListPager(Model,
                        page => Url.Action("BerobatPasien", new { page, search }),
                        new PagedListRenderOptions()

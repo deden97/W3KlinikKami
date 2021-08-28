@@ -41,7 +41,7 @@
                     {
                         <tr>
                             <td colspan="3">
-                                <b class="text-error">Antrian Kosong.</b>
+                                <b class="text-error">Tidak Ada Antrian.</b>
                             </td>
                         </tr>
                     }
@@ -75,13 +75,22 @@
                     <div class="form-item">
                         <div class="form-item-flex">
                             @{
-                                if (Model.Count() > 0)
+                                @* tombol untuk memanggil antrian berikutnya. *@
+                                using (Html.BeginForm("pilihPasien", "DKR", FormMethod.Post, new { @id = "form-antrian" }))
                                 {
-                                    <script>idPasienNext = @Model.ToList().First().ID_PASIEN</script>
+                                    <input type="hidden" name="id-pasien" id="panggil-antrian" />
+                                    <button type="button" class="m-btn s-btn-foresgreen" onclick="getIdPasien();">
+                                        Antrian Berikutnya
+                                    </button>
                                 }
 
-                                @* tombol untuk memanggil antrian berikutnya. *@
-                                <button type="button" class="m-btn s-btn-foresgreen" onclick="getIdPasien()">Antrian Berikutnya</button>
+                                if (Model.Count() > 0)
+                                {
+                                    <script type="text/javascript">
+                                        idPasienNext = @Model.ToList().First().ID_PASIEN;
+                                        document.getElementById('panggil-antrian').value = idPasienNext;
+                                    </script>
+                                }
                             }
                             &nbsp;
                             @{
@@ -235,7 +244,7 @@
     // function untuk cek 'idPasienNext' jika id pasien tidak kosong maka panggil antrian
     function getIdPasien() {
         if (idPasienNext > 0) {
-            OpenLink('/DKR/TanganiPasien?idPasien=' + idPasienNext);
+            SubmitForm('form-antrian');
         } else {
             alert('Tidak Ada Antrian.');
         }

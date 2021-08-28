@@ -47,12 +47,12 @@ namespace W3KlinikKami.Controllers
         public ActionResult Index()
         {
             if (this.CekSession())
-                return RedirectToAction("RiwayatPasien");
+                return RedirectToAction("RacikObat");
             else
                 return RedirectToAction("Index", "Index");
         }
 
-        public ActionResult RacikObat()
+        public ActionResult RacikObat(FormCollection formData)
         {
             if (!this.CekSession())
                 return RedirectToAction("Index", "Index");
@@ -65,6 +65,9 @@ namespace W3KlinikKami.Controllers
                     .Where(d => d.TANGGAL_KUNJUNGAN.Date == DateTime.Today &&
                         d.PENANGANAN_DOKTER == true &&
                         d.PENGAMBILAN_OBAT == null);
+
+                if(formData.Count == 1)
+                    ViewBag.IdPasienTerpilih = Convert.ToInt32(formData["ID_KUNJUNGAN_PASIEN"]);
             }
             catch(Exception e)
             {
