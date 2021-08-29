@@ -31,5 +31,6 @@ namespace W3KlinikKami.Models
         public virtual ICollection<TB_DATA_PENANGANAN_PASIEN> TB_DATA_PENANGANAN_PASIEN { get; set; }
         public virtual TB_PASIEN TB_PASIEN { get; set; }
         public virtual TB_ANTRIAN_BEROBAT TB_ANTRIAN_BEROBAT { get; set; }
+        public virtual TB_ANTRIAN_PENGAMBILAN_OBAT TB_ANTRIAN_PENGAMBILAN_OBAT { get; set; }
     }
 }

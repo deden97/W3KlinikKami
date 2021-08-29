@@ -150,13 +150,11 @@ namespace W3KlinikKami.Controllers
                         .AsEnumerable()
                         .Any(d => d.ID_PASIEN == dt.ID &&
                             d.TANGGAL_KUNJUNGAN.Date == DateTime.Today &&
-                            (d.PENANGANAN_DOKTER == null ||
-                             d.PENGAMBILAN_OBAT == null ||
-                             d.PENGAMBILAN_OBAT == false));
+                            (d.PENANGANAN_DOKTER == null || d.PENGAMBILAN_OBAT == null));
 
                     if (!cekAntrianPasien)
                     {
-                        // simpan ke db -> TB_KUNJUNGAN_PASIEN
+                        // simpan ID Pasien terpilih ke db -> TB_KUNJUNGAN_PASIEN
                         TB_KUNJUNGAN_PASIEN tB_KUNJUNGAN_PASIEN = new TB_KUNJUNGAN_PASIEN()
                         {
                             TANGGAL_KUNJUNGAN = DateTime.Now,
@@ -165,25 +163,29 @@ namespace W3KlinikKami.Controllers
                         this.db.Entry(tB_KUNJUNGAN_PASIEN).State = EntityState.Added;
                         this.db.SaveChanges();
 
-                        // simpan ke db -> TB_ANTRIAN_BEROBAT
+                        // ambil data dari db sesuai dengan tanggal hari ini saja -> TB_ANTRIAN_BEROBAT
                         List<TB_KUNJUNGAN_PASIEN> pasienHariIni = this.db
                             .TB_KUNJUNGAN_PASIEN
                             .AsEnumerable()
-                            .Where(d => d.TANGGAL_KUNJUNGAN.Date == DateTime.Today && d.ID_PASIEN == dt.ID)
+                            .Where(d => d.TANGGAL_KUNJUNGAN.Date == DateTime.Today)
                             .OrderByDescending(d => d.TANGGAL_KUNJUNGAN)
                             .ToList();
 
+                        // jika jumlah data dari 'pasienHariIni' lebih dari 0 atau minimal 1
                         if (pasienHariIni.Count() > 0)
                         {
+                            // ambil 'id kunjungan' dari 'pasienHariIni' yg paling akhir di input.
                             int idKunjungan = pasienHariIni.First().ID;
+
+                            // jika 'idKunjungan' belum ada di dalam 'TB_ANTRIAN_BEROBAT'
                             if (!this.db.TB_ANTRIAN_BEROBAT.Any(d => d.ID_KUNJUNGAN_PASIEN == idKunjungan))
                             {
+                                // tambah antrian berobat
                                 TB_ANTRIAN_BEROBAT antrian = new TB_ANTRIAN_BEROBAT
                                 {
                                     ID_KUNJUNGAN_PASIEN = idKunjungan,
                                     NO_ANTRIAN = pasienHariIni.Count()
                                 };
-
                                 this.db.TB_ANTRIAN_BEROBAT.Add(antrian);
                                 this.db.SaveChanges();
                             }

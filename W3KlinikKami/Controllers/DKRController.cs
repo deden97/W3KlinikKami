@@ -88,8 +88,7 @@ namespace W3KlinikKami.Controllers
                     .TB_KUNJUNGAN_PASIEN
                     .AsEnumerable()
                     .Where(d => d.TANGGAL_KUNJUNGAN.Date == DateTime.Today &&
-                        d.PENANGANAN_DOKTER == null &&
-                        (d.PENGAMBILAN_OBAT == null || d.PENGAMBILAN_OBAT == false))
+                        d.PENANGANAN_DOKTER == null && d.PENGAMBILAN_OBAT == null)
                     .OrderBy(d => d.TANGGAL_KUNJUNGAN);
 
                 int? idPasien = null;
@@ -104,7 +103,7 @@ namespace W3KlinikKami.Controllers
                         .AsEnumerable()
                         .Any(d => d.ID_PASIEN == idPasien &&
                             d.TANGGAL_KUNJUNGAN.Date == DateTime.Today &&
-                            (d.PENANGANAN_DOKTER == null || d.PENANGANAN_DOKTER == false));
+                            d.PENANGANAN_DOKTER == null);
 
                     // cek pasien di antrian, jika sudah terdaftar di antrian.
                     if (cekPasienDiAntrian)

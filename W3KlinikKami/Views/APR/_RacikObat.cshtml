@@ -1,91 +1,210 @@
 ﻿@model IEnumerable<TB_KUNJUNGAN_PASIEN>
 
-
-
 <div class="body-content">
     <table>
 
-
         <tr class="ver-alg-0">
+
+
             <td class="min-max-width-400-px">
                 @* judul & table untuk menampilkan data antrian *@
                 <h4><u>Antrian Pasien</u></h4>
-                <b>Jumlah Antrian Pasien:</b> @Model.Count()
-            <table class="table-csm">
-                <tr>
-                    <th>ID Pasien</th>
-                    <th>Nama Pasien</th>
-                </tr>
-                @if (Model.Count() > 0)
-                {
-                    foreach (var item in Model)
+                <b>Jumlah Antrian Pasien:</b> <text id="jml-antrian">@Model.Count()</text>
+                <table class="table-csm" id="tb-antrian">
+                    <tr>
+                        <th>ID Pasien</th>
+                        <th>Nama Pasien</th>
+                    </tr>
+                    @if (Model.Count() > 0)
                     {
-                        <tr id="@item.ID">
-                            <td>@item.TB_PASIEN.ID</td>
-                            <td class="table-csm-text-align-left min-max-width-400-px">@item.TB_PASIEN.NAMA</td>
+                        foreach (var item in Model)
+                        {
+                            <tr id="@item.ID">
+                                <td>@item.TB_PASIEN.ID</td>
+                                <td class="table-csm-text-align-left min-max-width-400-px">@item.TB_PASIEN.NAMA</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="2">
+                                <text class="text-error">Tidak Ada Antrian.</text>
+                            </td>
                         </tr>
                     }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="2">
-                            <text class="text-error">Tidak Ada Antrian.</text>
-                        </td>
-                    </tr>
-                }
-            </table>
+                </table>
             </td>
+
 
             <td>
                 <div class="content-body-content height-max-content">
+                    @{
+                        TB_DATA_PENANGANAN_PASIEN dataPenanganan = new TB_DATA_PENANGANAN_PASIEN();
+                        if (ViewBag.IdPasienTerpilih != null)
+                        {
+                            int idKunjungan = Convert.ToInt32(ViewBag.IdPasienTerpilih);
+                            dataPenanganan = Model
+                                .Single(d => d.ID == idKunjungan)
+                                .TB_DATA_PENANGANAN_PASIEN
+                                .Single();
+                            <script type="text/javascript">
+                                document.getElementById(@dataPenanganan.ID_KUNJUNGAN_PASIEN).style.background = "greenyellow";
+                            </script>
+                        }
+                    }
                     <div class="form-item">
                         <div class="label-form-item">@Html.Label("Keluhan")</div>
-                        @Html.TextArea("KELUHAN", new { @placeholder = "Keluhan", @readonly = "true" })
+                        @Html.TextArea("KELUHAN", dataPenanganan.KELUHAN, new { @placeholder = "Keluhan", @readonly = "true" })
                     </div>
 
                     <div class="form-item">
                         <div class="label-form-item">@Html.Label("Pemeriksaan")</div>
-                        @Html.TextArea("PEMERIKSAAN", new { @placeholder = "Pemeriksaan", @readonly = "true" })
+                        @Html.TextArea("PEMERIKSAAN", dataPenanganan.PEMERIKSAAN, new { @placeholder = "Pemeriksaan", @readonly = "true" })
                     </div>
 
                     <div class="form-item">
                         <div class="label-form-item">@Html.Label("Diagnosa")</div>
-                        @Html.TextArea("DIAGNOSA", new { @placeholder = "Diagnosa", @readonly = "true" })
+                        @Html.TextArea("DIAGNOSA", dataPenanganan.DIAGNOSA, new { @placeholder = "Diagnosa", @readonly = "true" })
                     </div>
 
                     <div class="form-item">
                         <div class="label-form-item">@Html.Label("Resep Obat")</div>
-                        @Html.TextArea("RESEP_OBAT", new { @placeholder = "Resep Obat", @readonly = "true" })
+                        @Html.TextArea("RESEP_OBAT", dataPenanganan.RESEP_OBAT, new { @placeholder = "Resep Obat", @readonly = "true" })
                     </div>
 
                     <div class="form-item">
                         <div class="label-form-item">@Html.Label("Keterangan")</div>
-                        @Html.TextArea("KETERANGAN", new { @placeholder = "Keterangan", @readonly = "true" })
+                        @Html.TextArea("KETERANGAN", dataPenanganan.KETERANGAN, new { @placeholder = "Keterangan", @readonly = "true" })
                     </div>
 
-                    @if(ViewBag.IdPasienTerpilih != null)
-                    {
-                        int idKunjungan = Convert.ToInt32(ViewBag.IdPasienTerpilih);
-                        var tes = Model
-                            .Single(d => d.ID == idKunjungan)
-                            .TB_DATA_PENANGANAN_PASIEN
-                            .Single();
-                        
-                        <script type="text/javascript">
-                            console.log(@tes.ID)
-                        </script>
-                    }
-
                     <div class="form-item">
-                        @using(Html.BeginForm("RacikObat", "APR", FormMethod.Post))
-                        {
-                            @Html.Hidden("ID_KUNJUNGAN_PASIEN", Model.First().ID)
-                            <input type="submit" value="submit" />
-                        }
+                        <div class="form-item-flex">
+                            @if (Model.Count() > 0)
+                            {
+                                <script type="text/javascript">
+                                    idSelanjutnya = @Model.First().ID;
+                                </script>
+                            }
+
+                            @using (Html.BeginForm("RacikObat", "APR", FormMethod.Post, new { @id = "form-id-selanjutnya" }))
+                            {
+                                @Html.Hidden("ID_KUNJUNGAN_PASIEN")
+                                <button type="button" class="m-btn s-btn-foresgreen" onclick="sbmForm('ID_KUNJUNGAN_PASIEN', 'form-id-selanjutnya');">
+                                    Racik Obat
+                                </button>
+                            }&nbsp;
+
+                            @if (ViewBag.IdPasienTerpilih != null)
+                            {
+                                <button type="button" onclick="ShowModalKw('data-recep-obat', 'grid')">
+                                    Tes
+                                </button>
+                                @*using (Html.BeginForm("SimpanObat", "APR", FormMethod.Post, new { @id = "form-simpan" }))
+                                {
+                                    @Html.Hidden("ID_KUNJUNGAN_PASIEN_S")
+                                    <button type="button" class="m-btn s-btn-foresgreen" onclick="sbmForm('ID_KUNJUNGAN_PASIEN_S', 'form-simpan')">
+                                        Simpan
+                                    </button>
+                                }*@
+                            }
+                        </div>
                     </div>
                 </div>
             </td>
+
+
         </tr>
     </table>
 </div>
+
+@* 
+    Buat form model-kw:
+    1.) resep obat dari dokter.
+    2.) aturan minum,
+    3.) harga total.
+*@
+
+@if(ViewBag.IdPasienTerpilih != null)
+{
+    <div class="modal-kw-dialog" id="data-recep-obat" style="display: none">
+        <div class="modal-kw-content">
+            <div class="close-modal-kw-dialog" onclick="ShowModalKw('data-recep-obat', 'none')" title="close">X</div>
+
+            <div class="form-item-flex">
+                <h3>
+                    <u>Data Penanganan Pasien.</u>
+                </h3>
+            </div>
+
+            @using (Html.BeginForm("SimpanObat", "APR", FormMethod.Post, new { @id = "form-simpan" }))
+            {
+                <div class="form-item">
+                    <div class="label-form-item">@Html.Label("Resep Obat")</div>
+                    @Html.TextArea("RESEP_OBAT", dataPenanganan.RESEP_OBAT, new { @placeholder = "Resep Obat", @readonly = "true" })
+                </div>
+
+                <div class="form-item">
+                    <div class="label-form-item">@Html.Label("Aturan Pakai")</div>
+                    @Html.TextArea("ATURAN_PAKAI", dataPenanganan.RESEP_OBAT, new { @placeholder = "Resep Obat" })
+                </div>
+
+                <div class="form-item">
+                    @Html.Hidden("ID_KUNJUNGAN_PASIEN_S")
+                    <button type="button" class="m-btn s-btn-foresgreen" onclick="sbmForm('ID_KUNJUNGAN_PASIEN_S', 'form-simpan')">
+                        Simpan
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+
+<script type="text/javascript">
+    var idSelanjutnya;
+    var jmlDataSaatIni = @Model.Count();
+
+    // function untuk 'antrian berikutnya' dan 'simpan data ke antrian'
+    function sbmForm(nameField, idForm) {
+        if (idSelanjutnya > 0 || idSelanjutnya !== undefined) {
+            document.getElementById(nameField).value = idSelanjutnya;
+            SubmitForm(idForm);
+        } else {
+            alert('Tidak Ada Antrian.');
+        }
+    }
+
+    // cek update data antrian/pasien
+    setInterval(function () {
+        $.ajax({
+            type: 'get',
+            url: '/APR/UpdateData',
+            data: null,
+            success: function (data) {
+                if (data.length > jmlDataSaatIni) {
+                    // jika data sebelumnya kosong
+                    if (jmlDataSaatIni < 1) {
+                        idSelanjutnya = data[0].ID;
+                        $('#tb-antrian').html('<tr><th> ID Pasien</th><th>Nama Pasien</th></tr>');
+                    }
+
+                    // tambahkan data antrian ke table
+                    for (let i = jmlDataSaatIni; i < data.length; i++) {
+                        $('#tb-antrian').append(
+                            '<tr id="' + data[i].ID +
+                            '" style="background-color: yellow;">' +
+                            '<td>' + data[i].ID_PASIEN + '</td>' +
+                            '<td class="table-csm-text-align-left min-max-width-400-px">' +
+                            data[i].NAMA + '</td></tr>'
+                        );
+                    }
+
+                    // update jumlah data saat ini
+                    jmlDataSaatIni = data.length;
+                    $('#jml-antrian').html(jmlDataSaatIni);
+                }
+            }
+        });
+    }, 1000);
+</script>

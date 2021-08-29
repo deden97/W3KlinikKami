@@ -94,6 +94,11 @@
       <End Role="TB_PASIEN" EntitySet="TB_PASIEN" />
       <End Role="TB_PASIEN_TERHAPUS" EntitySet="TB_PASIEN_TERHAPUS" />
     </AssociationSet>
+    <EntitySet Name="TB_ANTRIAN_PENGAMBILAN_OBAT" EntityType="Models.TB_ANTRIAN_PENGAMBILAN_OBAT" />
+    <AssociationSet Name="FK__TB_ANTRIA__ID_KU__0D7A0286" Association="Models.FK__TB_ANTRIA__ID_KU__0D7A0286">
+      <End Role="TB_KUNJUNGAN_PASIEN" EntitySet="TB_KUNJUNGAN_PASIEN" />
+      <End Role="TB_ANTRIAN_PENGAMBILAN_OBAT" EntitySet="TB_ANTRIAN_PENGAMBILAN_OBAT" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="TB_PASIEN">
     <Key>
@@ -138,6 +143,7 @@
     <NavigationProperty Name="TB_DATA_PENANGANAN_PASIEN" Relationship="Models.FK__TB_DATA_P__ID_KU__5AEE82B9" FromRole="TB_KUNJUNGAN_PASIEN" ToRole="TB_DATA_PENANGANAN_PASIEN" />
     <NavigationProperty Name="TB_PASIEN" Relationship="Models.FK__TB_KUNJUN__ID_PA__52593CB8" FromRole="TB_KUNJUNGAN_PASIEN" ToRole="TB_PASIEN" />
     <NavigationProperty Name="TB_ANTRIAN_BEROBAT" Relationship="Models.FK__TB_ANTRIA__ID_KU__5DCAEF64" FromRole="TB_KUNJUNGAN_PASIEN" ToRole="TB_ANTRIAN_BEROBAT" />
+    <NavigationProperty Name="TB_ANTRIAN_PENGAMBILAN_OBAT" Relationship="Models.FK__TB_ANTRIA__ID_KU__0D7A0286" FromRole="TB_KUNJUNGAN_PASIEN" ToRole="TB_ANTRIAN_PENGAMBILAN_OBAT" />
   </EntityType>
   <Association Name="FK__TB_DATA_P__ID_KU__5AEE82B9">
     <End Type="Models.TB_KUNJUNGAN_PASIEN" Role="TB_KUNJUNGAN_PASIEN" Multiplicity="0..1" />
@@ -212,6 +218,27 @@
       </Principal>
       <Dependent Role="TB_PASIEN_TERHAPUS">
         <PropertyRef Name="ID_PASIEN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="TB_ANTRIAN_PENGAMBILAN_OBAT">
+    <Key>
+      <PropertyRef Name="ID_KUNJUNGAN_PASIEN" />
+    </Key>
+    <Property Name="ID_KUNJUNGAN_PASIEN" Type="Int32" Nullable="false" />
+    <Property Name="NO_ANTRIAN" Type="Int32" Nullable="false" />
+    <Property Name="STATUS_PANGGILAN" Type="Boolean" />
+    <NavigationProperty Name="TB_KUNJUNGAN_PASIEN" Relationship="Models.FK__TB_ANTRIA__ID_KU__0D7A0286" FromRole="TB_ANTRIAN_PENGAMBILAN_OBAT" ToRole="TB_KUNJUNGAN_PASIEN" />
+  </EntityType>
+  <Association Name="FK__TB_ANTRIA__ID_KU__0D7A0286">
+    <End Type="Models.TB_KUNJUNGAN_PASIEN" Role="TB_KUNJUNGAN_PASIEN" Multiplicity="1" />
+    <End Type="Models.TB_ANTRIAN_PENGAMBILAN_OBAT" Role="TB_ANTRIAN_PENGAMBILAN_OBAT" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TB_KUNJUNGAN_PASIEN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TB_ANTRIAN_PENGAMBILAN_OBAT">
+        <PropertyRef Name="ID_KUNJUNGAN_PASIEN" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

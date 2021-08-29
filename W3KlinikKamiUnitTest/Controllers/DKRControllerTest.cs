@@ -49,7 +49,7 @@ namespace W3KlinikKamiUnitTest.Controllers
             DKRController dKRController = new DKRController();
             csmSession.Set(13, "DKR");
             int idPasien = 1;
-            var result = (ViewResult)dKRController.TanganiPasien(idPasien);
+            var result = (ViewResult)dKRController.TanganiPasienGet();
             
             Assert.AreEqual(DKRController.menu.TanganiPasien.ToString(), result.ViewBag.Menu);
             Assert.IsNotNull(result.ViewData["Data"]);
@@ -63,7 +63,7 @@ namespace W3KlinikKamiUnitTest.Controllers
         {
             DKRController dKRController = new DKRController();
             csmSession.Set(-1, "null");
-            var result = (RedirectToRouteResult)dKRController.TanganiPasien(null);
+            var result = (RedirectToRouteResult)dKRController.TanganiPasienGet();
 
             Assert.AreEqual("Index", result.RouteValues["action"]);
             Assert.AreEqual("Index", result.RouteValues["controller"]);
@@ -74,7 +74,7 @@ namespace W3KlinikKamiUnitTest.Controllers
         {
             DKRController dKRController = new DKRController();
 
-            var result = (ViewResult)dKRController.TanganiPasien();
+            var result = (ViewResult)dKRController.TanganiPasienPost();
             Assert.AreEqual("Index", result.ViewName);
 
         }

@@ -21,6 +21,14 @@
           <Property Name="NO_ANTRIAN" Type="int" Nullable="false" />
           <Property Name="STATUS_PANGGILAN" Type="bit" />
         </EntityType>
+        <EntityType Name="TB_ANTRIAN_PENGAMBILAN_OBAT">
+          <Key>
+            <PropertyRef Name="ID_KUNJUNGAN_PASIEN" />
+          </Key>
+          <Property Name="ID_KUNJUNGAN_PASIEN" Type="int" Nullable="false" />
+          <Property Name="NO_ANTRIAN" Type="int" Nullable="false" />
+          <Property Name="STATUS_PANGGILAN" Type="bit" />
+        </EntityType>
         <EntityType Name="TB_DATA_PENANGANAN_PASIEN">
           <Key>
             <PropertyRef Name="ID" />
@@ -93,6 +101,18 @@
             </Principal>
             <Dependent Role="TB_AKUN">
               <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_ANTRIA__ID_KU__0D7A0286">
+          <End Role="TB_KUNJUNGAN_PASIEN" Type="Self.TB_KUNJUNGAN_PASIEN" Multiplicity="1" />
+          <End Role="TB_ANTRIAN_PENGAMBILAN_OBAT" Type="Self.TB_ANTRIAN_PENGAMBILAN_OBAT" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TB_KUNJUNGAN_PASIEN">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TB_ANTRIAN_PENGAMBILAN_OBAT">
+              <PropertyRef Name="ID_KUNJUNGAN_PASIEN" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -171,6 +191,7 @@
         <EntityContainer Name="ModelsStoreContainer">
           <EntitySet Name="TB_AKUN" EntityType="Self.TB_AKUN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_ANTRIAN_BEROBAT" EntityType="Self.TB_ANTRIAN_BEROBAT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_ANTRIAN_PENGAMBILAN_OBAT" EntityType="Self.TB_ANTRIAN_PENGAMBILAN_OBAT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_DATA_PENANGANAN_PASIEN" EntityType="Self.TB_DATA_PENANGANAN_PASIEN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_JABATAN" EntityType="Self.TB_JABATAN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_KUNJUNGAN_PASIEN" EntityType="Self.TB_KUNJUNGAN_PASIEN" Schema="dbo" store:Type="Tables" />
@@ -180,6 +201,10 @@
           <AssociationSet Name="FK__TB_AKUN__ID__2A4B4B5E" Association="Self.FK__TB_AKUN__ID__2A4B4B5E">
             <End Role="TB_USER" EntitySet="TB_USER" />
             <End Role="TB_AKUN" EntitySet="TB_AKUN" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_ANTRIA__ID_KU__0D7A0286" Association="Self.FK__TB_ANTRIA__ID_KU__0D7A0286">
+            <End Role="TB_KUNJUNGAN_PASIEN" EntitySet="TB_KUNJUNGAN_PASIEN" />
+            <End Role="TB_ANTRIAN_PENGAMBILAN_OBAT" EntitySet="TB_ANTRIAN_PENGAMBILAN_OBAT" />
           </AssociationSet>
           <AssociationSet Name="FK__TB_ANTRIA__ID_KU__5DCAEF64" Association="Self.FK__TB_ANTRIA__ID_KU__5DCAEF64">
             <End Role="TB_KUNJUNGAN_PASIEN" EntitySet="TB_KUNJUNGAN_PASIEN" />
@@ -304,6 +329,11 @@
             <End Role="TB_PASIEN" EntitySet="TB_PASIEN" />
             <End Role="TB_PASIEN_TERHAPUS" EntitySet="TB_PASIEN_TERHAPUS" />
           </AssociationSet>
+          <EntitySet Name="TB_ANTRIAN_PENGAMBILAN_OBAT" EntityType="Models.TB_ANTRIAN_PENGAMBILAN_OBAT" />
+          <AssociationSet Name="FK__TB_ANTRIA__ID_KU__0D7A0286" Association="Models.FK__TB_ANTRIA__ID_KU__0D7A0286">
+            <End Role="TB_KUNJUNGAN_PASIEN" EntitySet="TB_KUNJUNGAN_PASIEN" />
+            <End Role="TB_ANTRIAN_PENGAMBILAN_OBAT" EntitySet="TB_ANTRIAN_PENGAMBILAN_OBAT" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="TB_PASIEN">
           <Key>
@@ -348,6 +378,7 @@
           <NavigationProperty Name="TB_DATA_PENANGANAN_PASIEN" Relationship="Models.FK__TB_DATA_P__ID_KU__5AEE82B9" FromRole="TB_KUNJUNGAN_PASIEN" ToRole="TB_DATA_PENANGANAN_PASIEN" />
           <NavigationProperty Name="TB_PASIEN" Relationship="Models.FK__TB_KUNJUN__ID_PA__52593CB8" FromRole="TB_KUNJUNGAN_PASIEN" ToRole="TB_PASIEN" />
           <NavigationProperty Name="TB_ANTRIAN_BEROBAT" Relationship="Models.FK__TB_ANTRIA__ID_KU__5DCAEF64" FromRole="TB_KUNJUNGAN_PASIEN" ToRole="TB_ANTRIAN_BEROBAT" />
+          <NavigationProperty Name="TB_ANTRIAN_PENGAMBILAN_OBAT" Relationship="Models.FK__TB_ANTRIA__ID_KU__0D7A0286" FromRole="TB_KUNJUNGAN_PASIEN" ToRole="TB_ANTRIAN_PENGAMBILAN_OBAT" />
         </EntityType>
         <Association Name="FK__TB_DATA_P__ID_KU__5AEE82B9">
           <End Type="Models.TB_KUNJUNGAN_PASIEN" Role="TB_KUNJUNGAN_PASIEN" Multiplicity="0..1" />
@@ -422,6 +453,27 @@
             </Principal>
             <Dependent Role="TB_PASIEN_TERHAPUS">
               <PropertyRef Name="ID_PASIEN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TB_ANTRIAN_PENGAMBILAN_OBAT">
+          <Key>
+            <PropertyRef Name="ID_KUNJUNGAN_PASIEN" />
+          </Key>
+          <Property Name="ID_KUNJUNGAN_PASIEN" Type="Int32" Nullable="false" />
+          <Property Name="NO_ANTRIAN" Type="Int32" Nullable="false" />
+          <Property Name="STATUS_PANGGILAN" Type="Boolean" />
+          <NavigationProperty Name="TB_KUNJUNGAN_PASIEN" Relationship="Models.FK__TB_ANTRIA__ID_KU__0D7A0286" FromRole="TB_ANTRIAN_PENGAMBILAN_OBAT" ToRole="TB_KUNJUNGAN_PASIEN" />
+        </EntityType>
+        <Association Name="FK__TB_ANTRIA__ID_KU__0D7A0286">
+          <End Type="Models.TB_KUNJUNGAN_PASIEN" Role="TB_KUNJUNGAN_PASIEN" Multiplicity="1" />
+          <End Type="Models.TB_ANTRIAN_PENGAMBILAN_OBAT" Role="TB_ANTRIAN_PENGAMBILAN_OBAT" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TB_KUNJUNGAN_PASIEN">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TB_ANTRIAN_PENGAMBILAN_OBAT">
+              <PropertyRef Name="ID_KUNJUNGAN_PASIEN" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -515,6 +567,15 @@
             <EntityTypeMapping TypeName="Models.TB_PASIEN_TERHAPUS">
               <MappingFragment StoreEntitySet="TB_PASIEN_TERHAPUS">
                 <ScalarProperty Name="ID_PASIEN" ColumnName="ID_PASIEN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_ANTRIAN_PENGAMBILAN_OBAT">
+            <EntityTypeMapping TypeName="Models.TB_ANTRIAN_PENGAMBILAN_OBAT">
+              <MappingFragment StoreEntitySet="TB_ANTRIAN_PENGAMBILAN_OBAT">
+                <ScalarProperty Name="STATUS_PANGGILAN" ColumnName="STATUS_PANGGILAN" />
+                <ScalarProperty Name="NO_ANTRIAN" ColumnName="NO_ANTRIAN" />
+                <ScalarProperty Name="ID_KUNJUNGAN_PASIEN" ColumnName="ID_KUNJUNGAN_PASIEN" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

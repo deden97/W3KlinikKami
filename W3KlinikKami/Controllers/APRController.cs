@@ -52,6 +52,22 @@ namespace W3KlinikKami.Controllers
                 return RedirectToAction("Index", "Index");
         }
 
+        public JsonResult UpdateData()
+        {
+            var dt = this.db
+                    .TB_KUNJUNGAN_PASIEN
+                    .AsEnumerable()
+                    .Where(d => d.TANGGAL_KUNJUNGAN.Date == DateTime.Today &&
+                        d.PENANGANAN_DOKTER == true &&
+                        d.PENGAMBILAN_OBAT == null);
+            return Json(dt.Select(d => new
+            {
+                d.ID,
+                d.ID_PASIEN,
+                d.TB_PASIEN.NAMA
+            }), JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult RacikObat(FormCollection formData)
         {
             if (!this.CekSession())
@@ -77,6 +93,42 @@ namespace W3KlinikKami.Controllers
             ViewBag.TitlePage = "Racik Obat";
             ViewBag.Menu = menu.RacikObat.ToString();
             return View("Index");
+        }
+
+        public ActionResult SimpanObat(FormCollection formData)
+        {
+            if (!this.CekSession())
+                return RedirectToAction("Index", "Index");
+
+            if(formData["ID_KUNJUNGAN_PASIEN_S"] != null)
+            {
+                var ID_KUNJUNGAN_PASIEN = Convert.ToInt32(formData["ID_KUNJUNGAN_PASIEN_S"]);
+
+                //1. tambah ke antrian
+                var noAntrian = this.db
+                    .TB_ANTRIAN_PENGAMBILAN_OBAT
+                    .AsEnumerable()
+                    .Where(d => d.TB_KUNJUNGAN_PASIEN.TANGGAL_KUNJUNGAN.Date == DateTime.Today)
+                    .Count() + 1;
+
+                var dt = new TB_ANTRIAN_PENGAMBILAN_OBAT
+                {
+                    ID_KUNJUNGAN_PASIEN = ID_KUNJUNGAN_PASIEN,
+                    NO_ANTRIAN = noAntrian
+                };
+                this.db.TB_ANTRIAN_PENGAMBILAN_OBAT.Add(dt);
+
+                //2. pada tb kunjungan pengambilan obat jadi false
+                var kunj = this.db
+                    .TB_KUNJUNGAN_PASIEN
+                    .Find(ID_KUNJUNGAN_PASIEN);
+                kunj.PENGAMBILAN_OBAT = false;
+                this.db.Entry(kunj).State = System.Data.Entity.EntityState.Modified;
+
+                this.db.SaveChanges();
+            }
+
+            return RedirectToAction("RacikObat");
         }
 
         public ActionResult RiwayatPasien(string search, int? page, int? pageSize)

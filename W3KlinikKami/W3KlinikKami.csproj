@@ -320,6 +320,9 @@
     <Compile Include="Models\TB_ANTRIAN_BEROBAT.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_ANTRIAN_PENGAMBILAN_OBAT.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_DATA_PENANGANAN_PASIEN.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>

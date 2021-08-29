@@ -16,7 +16,7 @@
 
                 @* judul & table untuk menampilkan data antrian *@
                 <h4><u>Antrian Pasien</u></h4>
-                <b>Jumlah Antrian Pasien:</b> @Model.Count()
+                <b>Jumlah Antrian Pasien:</b> <text id="jml-pasien">@Model.Count()</text>
                 <table class="table-csm" id="tb-antrian-pasien">
                     <tr>
                         <th>No.</th>
@@ -289,6 +289,8 @@
 
                     // update jumlah data
                     jmlDataSaatIni = data.length;
+
+                    $('#jml-pasien').html(jmlDataSaatIni);
                 }
             }
         });

@@ -88,5 +88,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TB_ANTRIAN_PENGAMBILAN_OBAT">
+      <EntityTypeMapping TypeName="Models.TB_ANTRIAN_PENGAMBILAN_OBAT">
+        <MappingFragment StoreEntitySet="TB_ANTRIAN_PENGAMBILAN_OBAT">
+          <ScalarProperty Name="STATUS_PANGGILAN" ColumnName="STATUS_PANGGILAN" />
+          <ScalarProperty Name="NO_ANTRIAN" ColumnName="NO_ANTRIAN" />
+          <ScalarProperty Name="ID_KUNJUNGAN_PASIEN" ColumnName="ID_KUNJUNGAN_PASIEN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
