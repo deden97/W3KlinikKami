@@ -32,5 +32,6 @@ namespace W3KlinikKami.Models
         public virtual TB_PASIEN TB_PASIEN { get; set; }
         public virtual TB_ANTRIAN_BEROBAT TB_ANTRIAN_BEROBAT { get; set; }
         public virtual TB_ANTRIAN_PENGAMBILAN_OBAT TB_ANTRIAN_PENGAMBILAN_OBAT { get; set; }
+        public virtual TB_OBAT_PASIEN TB_OBAT_PASIEN { get; set; }
     }
 }

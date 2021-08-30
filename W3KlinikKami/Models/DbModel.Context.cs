@@ -34,5 +34,6 @@ namespace W3KlinikKami.Models
         public virtual DbSet<TB_ANTRIAN_BEROBAT> TB_ANTRIAN_BEROBAT { get; set; }
         public virtual DbSet<TB_PASIEN_TERHAPUS> TB_PASIEN_TERHAPUS { get; set; }
         public virtual DbSet<TB_ANTRIAN_PENGAMBILAN_OBAT> TB_ANTRIAN_PENGAMBILAN_OBAT { get; set; }
+        public virtual DbSet<TB_OBAT_PASIEN> TB_OBAT_PASIEN { get; set; }
     }
 }

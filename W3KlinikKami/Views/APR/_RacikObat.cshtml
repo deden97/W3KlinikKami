@@ -41,9 +41,10 @@
                 <div class="content-body-content height-max-content">
                     @{
                         TB_DATA_PENANGANAN_PASIEN dataPenanganan = new TB_DATA_PENANGANAN_PASIEN();
+                        int? idKunjungan = null;
                         if (ViewBag.IdPasienTerpilih != null)
                         {
-                            int idKunjungan = Convert.ToInt32(ViewBag.IdPasienTerpilih);
+                            idKunjungan = Convert.ToInt32(ViewBag.IdPasienTerpilih);
                             dataPenanganan = Model
                                 .Single(d => d.ID == idKunjungan)
                                 .TB_DATA_PENANGANAN_PASIEN
@@ -53,26 +54,32 @@
                             </script>
                         }
                     }
+
+                    @* Keluhan Pasien *@
                     <div class="form-item">
                         <div class="label-form-item">@Html.Label("Keluhan")</div>
                         @Html.TextArea("KELUHAN", dataPenanganan.KELUHAN, new { @placeholder = "Keluhan", @readonly = "true" })
                     </div>
 
+                    @* Pemeriksaan Pasien *@
                     <div class="form-item">
                         <div class="label-form-item">@Html.Label("Pemeriksaan")</div>
                         @Html.TextArea("PEMERIKSAAN", dataPenanganan.PEMERIKSAAN, new { @placeholder = "Pemeriksaan", @readonly = "true" })
                     </div>
 
+                    @* Diagnosa *@
                     <div class="form-item">
                         <div class="label-form-item">@Html.Label("Diagnosa")</div>
                         @Html.TextArea("DIAGNOSA", dataPenanganan.DIAGNOSA, new { @placeholder = "Diagnosa", @readonly = "true" })
                     </div>
 
+                    @* Resep Obat *@
                     <div class="form-item">
                         <div class="label-form-item">@Html.Label("Resep Obat")</div>
                         @Html.TextArea("RESEP_OBAT", dataPenanganan.RESEP_OBAT, new { @placeholder = "Resep Obat", @readonly = "true" })
                     </div>
 
+                    @* Keterangan *@
                     <div class="form-item">
                         <div class="label-form-item">@Html.Label("Keterangan")</div>
                         @Html.TextArea("KETERANGAN", dataPenanganan.KETERANGAN, new { @placeholder = "Keterangan", @readonly = "true" })
@@ -87,26 +94,21 @@
                                 </script>
                             }
 
+                            @* menangani/racik obat untuk pasien berikutnya *@
                             @using (Html.BeginForm("RacikObat", "APR", FormMethod.Post, new { @id = "form-id-selanjutnya" }))
                             {
-                                @Html.Hidden("ID_KUNJUNGAN_PASIEN")
-                                <button type="button" class="m-btn s-btn-foresgreen" onclick="sbmForm('ID_KUNJUNGAN_PASIEN', 'form-id-selanjutnya');">
-                                    Racik Obat
+                                @Html.Hidden("ID_KUNJUNGAN_PASIEN_B")
+                                <button type="button" class="m-btn s-btn-foresgreen" onclick="sbmForm('ID_KUNJUNGAN_PASIEN_B', 'form-id-selanjutnya');">
+                                    Pasien Berikutnya
                                 </button>
                             }&nbsp;
 
+                            @* jika ada pasien terpilih untuk ditangani *@
                             @if (ViewBag.IdPasienTerpilih != null)
                             {
-                                <button type="button" onclick="ShowModalKw('data-recep-obat', 'grid')">
-                                    Tes
+                                <button type="button" class="m-btn s-btn-orangered" onclick="ShowModalKw('data-racik-obat', 'grid')">
+                                    Racik Obat
                                 </button>
-                                @*using (Html.BeginForm("SimpanObat", "APR", FormMethod.Post, new { @id = "form-simpan" }))
-                                {
-                                    @Html.Hidden("ID_KUNJUNGAN_PASIEN_S")
-                                    <button type="button" class="m-btn s-btn-foresgreen" onclick="sbmForm('ID_KUNJUNGAN_PASIEN_S', 'form-simpan')">
-                                        Simpan
-                                    </button>
-                                }*@
                             }
                         </div>
                     </div>
@@ -118,60 +120,138 @@
     </table>
 </div>
 
-@* 
-    Buat form model-kw:
-    1.) resep obat dari dokter.
-    2.) aturan minum,
-    3.) harga total.
-*@
-
-@if(ViewBag.IdPasienTerpilih != null)
+@* Begin: model kw -> form data racik obat --------------------------------------------------------------------------------- *@
+@if (ViewBag.IdPasienTerpilih != null)
 {
-    <div class="modal-kw-dialog" id="data-recep-obat" style="display: none">
+    var dtPasien = Model.Single(d => d.ID == idKunjungan);
+    var dtDokter = new DbEntities().TB_DATA_PENANGANAN_PASIEN.Single(d => d.ID_KUNJUNGAN_PASIEN == idKunjungan).TB_USER;
+    <div class="modal-kw-dialog" id="data-racik-obat" style="display: none">
         <div class="modal-kw-content">
-            <div class="close-modal-kw-dialog" onclick="ShowModalKw('data-recep-obat', 'none')" title="close">X</div>
+            <div class="close-modal-kw-dialog" onclick="ShowModalKw('data-racik-obat', 'none')" title="close">X</div>
 
             <div class="form-item-flex">
                 <h3>
-                    <u>Data Penanganan Pasien.</u>
+                    <u>Data Racik Obat.</u>
                 </h3>
             </div>
 
-            @using (Html.BeginForm("SimpanObat", "APR", FormMethod.Post, new { @id = "form-simpan" }))
+            <div class="form-item-flex flex-sb-w100persen">
+                <table>
+                    <tr>
+                        <td><b>Tanggal Kunjungan</b></td>
+                        <td>: <text class="text-error" id="tgl-pemeriksaan">@dtPasien.TANGGAL_KUNJUNGAN</text></td>
+                    </tr>
+                    <tr>
+                        <td><b>Nama Pasien</b></td>
+                        <td>: <text class="text-error" id="nama-pasien">@dtPasien.TB_PASIEN.NAMA</text></td>
+                    </tr>
+                    <tr>
+                        <td><b>ID Pasien</b></td>
+                        <td>: <text class="text-error" id="id-pasien">@dtPasien.TB_PASIEN.ID</text></td>
+                    </tr>
+                    <tr>
+                        <td><b>Nama Dokter</b></td>
+                        <td>: <text class="text-error" id="nama-dokter">@dtDokter.NAMA</text></td>
+                    </tr>
+                    <tr>
+                        <td><b>ID Dokter</b></td>
+                        <td>: <text class="text-error" id="id-dokter">@dtDokter.ID</text></td>
+                    </tr>
+                </table>
+            </div>
+
+            @using (Html.BeginForm("SimpanDataObat", "APR", FormMethod.Post, new { @id = "form-data-racik-obat" }))
             {
+                // ID Kunjungan Pasien
+                @Html.Hidden("ID_KUNJUNGAN_PASIEN", idKunjungan)
+
+                // Resep Obat
                 <div class="form-item">
                     <div class="label-form-item">@Html.Label("Resep Obat")</div>
                     @Html.TextArea("RESEP_OBAT", dataPenanganan.RESEP_OBAT, new { @placeholder = "Resep Obat", @readonly = "true" })
                 </div>
 
+                // Aturan Pakai Obat
                 <div class="form-item">
-                    <div class="label-form-item">@Html.Label("Aturan Pakai")</div>
-                    @Html.TextArea("ATURAN_PAKAI", dataPenanganan.RESEP_OBAT, new { @placeholder = "Resep Obat" })
+                    <div class="label-form-item">@Html.Label("Aturan Pakai Obat")</div>
+                    @Html.TextArea("ATURAN_PAKAI", null, new { @placeholder = "Aturan Pakai Obat" })
+                    <span id="aturan-pakai-err" class="text-error"></span>
                 </div>
 
+                // Harga Total Obat
                 <div class="form-item">
-                    @Html.Hidden("ID_KUNJUNGAN_PASIEN_S")
-                    <button type="button" class="m-btn s-btn-foresgreen" onclick="sbmForm('ID_KUNJUNGAN_PASIEN_S', 'form-simpan')">
-                        Simpan
+                    <div class="label-form-item">@Html.Label("Harga Total Obat")</div>
+                    @Html.TextBox("HARGA_OBAT", null, new { @placeholder = "Harga Total Obat", @type = "number" })
+                    <span id="harga-obat-err" class="text-error"></span>
+                </div>
+
+                // Keterangan
+                <div class="form-item">
+                    <div class="label-form-item">@Html.Label("Keterangan")</div>
+                    @Html.TextArea("KETERANGAN", null, new { @placeholder = "Keterangan" })
+                </div>
+
+                // tommbol submit
+                <div class="form-item">
+                    <button type="button" class="m-btn s-btn-foresgreen" onclick="submitFormDataRacikObat();">
+                        Submit
                     </button>
                 </div>
             }
         </div>
     </div>
 }
+@* End: model kw -> form data racik obat --------------------------------------------------------------------------------- *@
 
+<audio id="notif">
+    <source src="~/Audio/EQLDS52-start-button.mp3" type="audio/mpeg" />
+</audio>
 
+@* Begin: Javascript ------------------------------------------------------------------------------------------------------- *@
+@*<script src="~/Scripts/jquery-3.6.0.js"></script>*@
 <script type="text/javascript">
     var idSelanjutnya;
     var jmlDataSaatIni = @Model.Count();
 
-    // function untuk 'antrian berikutnya' dan 'simpan data ke antrian'
+    // function untuk 'antrian berikutnya'
     function sbmForm(nameField, idForm) {
         if (idSelanjutnya > 0 || idSelanjutnya !== undefined) {
             document.getElementById(nameField).value = idSelanjutnya;
             SubmitForm(idForm);
         } else {
             alert('Tidak Ada Antrian.');
+        }
+    }
+
+    // function untuk submit form 'form-data-racik-obat' yg berisi:
+    // - aturan pakai obat,
+    // - harga total obat,
+    // - keterangan.
+    function submitFormDataRacikObat() {
+        let verSubmit = [];
+
+        if ($('#ATURAN_PAKAI').val().length > 0) {
+            $('#aturan-pakai-err').html('');
+            verSubmit.push(true);
+        } else {
+            $('#aturan-pakai-err').html('Aturan Pakai Obat Harus Diisi.');
+            verSubmit.push(false);
+        }
+
+        if ($('#HARGA_OBAT').val().length > 0) {
+            $('#harga-obat-err').html('');
+            verSubmit.push(true);
+        } else {
+            $('#harga-obat-err').html('Harga Obat Harus Diisi.');
+            verSubmit.push(false);
+        }
+
+        let submit = verSubmit.every(function (v) {
+            return v == true;
+        });
+
+        if (submit) {
+            SubmitForm('form-data-racik-obat');
         }
     }
 
@@ -200,6 +280,8 @@
                         );
                     }
 
+                    //document.getElementById('notif').play;
+
                     // update jumlah data saat ini
                     jmlDataSaatIni = data.length;
                     $('#jml-antrian').html(jmlDataSaatIni);
@@ -208,3 +290,4 @@
         });
     }, 1000);
 </script>
+@* End: Javascript ------------------------------------------------------------------------------------------------------- *@

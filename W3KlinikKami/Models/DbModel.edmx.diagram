@@ -5,23 +5,25 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="3fc2c8f6e1d6469daee73fc0c9a8abd2" Name="Diagram1">
-        <EntityTypeShape EntityType="Models.TB_AKUN" Width="1.5" PointX="9" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.TB_JABATAN" Width="1.5" PointX="5.125" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.TB_USER" Width="1.5" PointX="7.125" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.TB_AKUN" Width="1.5" PointX="9.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.TB_JABATAN" Width="1.5" PointX="5.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.TB_USER" Width="1.5" PointX="7.5" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="Models.FK__TB_AKUN__ID__2A4B4B5E" ManuallyRouted="false" />
         <AssociationConnector Association="Models.FK__TB_USER__JABATAN__276EDEB3" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Models.TB_PASIEN" Width="1.5" PointX="3.125" PointY="5.5" />
-        <EntityTypeShape EntityType="Models.TB_DATA_PENANGANAN_PASIEN" Width="1.5" PointX="7" PointY="5.5" />
+        <EntityTypeShape EntityType="Models.TB_DATA_PENANGANAN_PASIEN" Width="1.5" PointX="7.5" PointY="4.125" />
         <EntityTypeShape EntityType="Models.TB_KUNJUNGAN_PASIEN" Width="1.5" PointX="5" PointY="5.5" />
         <AssociationConnector Association="Models.FK__TB_DATA_P__ID_KU__5AEE82B9" />
         <AssociationConnector Association="Models.FK__TB_KUNJUN__ID_PA__52593CB8" />
         <AssociationConnector Association="Models.FK__TB_DATA_P__ID_DO__5BE2A6F2" ></AssociationConnector>
-        <EntityTypeShape EntityType="Models.TB_ANTRIAN_BEROBAT" Width="1.5" PointX="5" PointY="8.75" />
+        <EntityTypeShape EntityType="Models.TB_ANTRIAN_BEROBAT" Width="1.5" PointX="5" PointY="9.125" />
         <AssociationConnector Association="Models.FK__TB_ANTRIA__ID_KU__5DCAEF64" />
         <EntityTypeShape EntityType="Models.TB_PASIEN_TERHAPUS" Width="1.5" PointX="1.125" PointY="5.5" />
         <AssociationConnector Association="Models.FK__TB_PASIEN_TE__ID__6FE99F9F" />
         <EntityTypeShape EntityType="Models.TB_ANTRIAN_PENGAMBILAN_OBAT" Width="2.75" PointX="3.875" PointY="3.25" />
         <AssociationConnector Association="Models.FK__TB_ANTRIA__ID_KU__0D7A0286" />
+        <EntityTypeShape EntityType="Models.TB_OBAT_PASIEN" Width="1.625" PointX="7.5" PointY="7.25" />
+        <AssociationConnector Association="Models.FK__TB_OBAT_P__ID_KU__10566F31" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

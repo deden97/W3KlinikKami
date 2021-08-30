@@ -55,6 +55,15 @@
     <Property Name="KETERANGAN" Type="text" />
     <Property Name="PENGAMBILAN_OBAT" Type="bit" />
   </EntityType>
+  <EntityType Name="TB_OBAT_PASIEN">
+    <Key>
+      <PropertyRef Name="ID_KUNJUNGAN_PASIEN" />
+    </Key>
+    <Property Name="ID_KUNJUNGAN_PASIEN" Type="int" Nullable="false" />
+    <Property Name="ATURAN_PAKAI" Type="text" Nullable="false" />
+    <Property Name="HARGA_OBAT" Type="money" Nullable="false" />
+    <Property Name="KETERANGAN" Type="text" />
+  </EntityType>
   <EntityType Name="TB_PASIEN">
     <Key>
       <PropertyRef Name="ID" />
@@ -159,6 +168,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__TB_OBAT_P__ID_KU__10566F31">
+    <End Role="TB_KUNJUNGAN_PASIEN" Type="Self.TB_KUNJUNGAN_PASIEN" Multiplicity="1" />
+    <End Role="TB_OBAT_PASIEN" Type="Self.TB_OBAT_PASIEN" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TB_KUNJUNGAN_PASIEN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TB_OBAT_PASIEN">
+        <PropertyRef Name="ID_KUNJUNGAN_PASIEN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__TB_PASIEN_TE__ID__6FE99F9F">
     <End Role="TB_PASIEN" Type="Self.TB_PASIEN" Multiplicity="1" />
     <End Role="TB_PASIEN_TERHAPUS" Type="Self.TB_PASIEN_TERHAPUS" Multiplicity="0..1" />
@@ -190,6 +211,7 @@
     <EntitySet Name="TB_DATA_PENANGANAN_PASIEN" EntityType="Self.TB_DATA_PENANGANAN_PASIEN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_JABATAN" EntityType="Self.TB_JABATAN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_KUNJUNGAN_PASIEN" EntityType="Self.TB_KUNJUNGAN_PASIEN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_OBAT_PASIEN" EntityType="Self.TB_OBAT_PASIEN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_PASIEN" EntityType="Self.TB_PASIEN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_PASIEN_TERHAPUS" EntityType="Self.TB_PASIEN_TERHAPUS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_USER" EntityType="Self.TB_USER" Schema="dbo" store:Type="Tables" />
@@ -216,6 +238,10 @@
     <AssociationSet Name="FK__TB_KUNJUN__ID_PA__52593CB8" Association="Self.FK__TB_KUNJUN__ID_PA__52593CB8">
       <End Role="TB_PASIEN" EntitySet="TB_PASIEN" />
       <End Role="TB_KUNJUNGAN_PASIEN" EntitySet="TB_KUNJUNGAN_PASIEN" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TB_OBAT_P__ID_KU__10566F31" Association="Self.FK__TB_OBAT_P__ID_KU__10566F31">
+      <End Role="TB_KUNJUNGAN_PASIEN" EntitySet="TB_KUNJUNGAN_PASIEN" />
+      <End Role="TB_OBAT_PASIEN" EntitySet="TB_OBAT_PASIEN" />
     </AssociationSet>
     <AssociationSet Name="FK__TB_PASIEN_TE__ID__6FE99F9F" Association="Self.FK__TB_PASIEN_TE__ID__6FE99F9F">
       <End Role="TB_PASIEN" EntitySet="TB_PASIEN" />

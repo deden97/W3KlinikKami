@@ -83,7 +83,7 @@ namespace W3KlinikKami.Controllers
                         d.PENGAMBILAN_OBAT == null);
 
                 if(formData.Count == 1)
-                    ViewBag.IdPasienTerpilih = Convert.ToInt32(formData["ID_KUNJUNGAN_PASIEN"]);
+                    ViewBag.IdPasienTerpilih = Convert.ToInt32(formData["ID_KUNJUNGAN_PASIEN_B"]);
             }
             catch(Exception e)
             {
@@ -95,37 +95,61 @@ namespace W3KlinikKami.Controllers
             return View("Index");
         }
 
-        public ActionResult SimpanObat(FormCollection formData)
+        [ActionName("SimpanDataObat")]
+        public ActionResult RacikObat([Bind(Include = "ID_KUNJUNGAN_PASIEN, ATURAN_PAKAI, HARGA_OBAT, KETERANGAN")]TB_OBAT_PASIEN formData)
         {
             if (!this.CekSession())
                 return RedirectToAction("Index", "Index");
 
-            if(formData["ID_KUNJUNGAN_PASIEN_S"] != null)
+            try
             {
-                var ID_KUNJUNGAN_PASIEN = Convert.ToInt32(formData["ID_KUNJUNGAN_PASIEN_S"]);
-
-                //1. tambah ke antrian
-                var noAntrian = this.db
-                    .TB_ANTRIAN_PENGAMBILAN_OBAT
-                    .AsEnumerable()
-                    .Where(d => d.TB_KUNJUNGAN_PASIEN.TANGGAL_KUNJUNGAN.Date == DateTime.Today)
-                    .Count() + 1;
-
-                var dt = new TB_ANTRIAN_PENGAMBILAN_OBAT
+                var ID_KUNJUNGAN_PASIEN = formData.ID_KUNJUNGAN_PASIEN;
+                if (this.db.TB_KUNJUNGAN_PASIEN.Any(d => d.ID == ID_KUNJUNGAN_PASIEN))
                 {
-                    ID_KUNJUNGAN_PASIEN = ID_KUNJUNGAN_PASIEN,
-                    NO_ANTRIAN = noAntrian
-                };
-                this.db.TB_ANTRIAN_PENGAMBILAN_OBAT.Add(dt);
+                    //1. tambah ke antrian
+                    var noAntrian = this.db
+                        .TB_ANTRIAN_PENGAMBILAN_OBAT
+                        .AsEnumerable()
+                        .Where(d => d.TB_KUNJUNGAN_PASIEN.TANGGAL_KUNJUNGAN.Date == DateTime.Today)
+                        .Count() + 1;
 
-                //2. pada tb kunjungan pengambilan obat jadi false
-                var kunj = this.db
-                    .TB_KUNJUNGAN_PASIEN
-                    .Find(ID_KUNJUNGAN_PASIEN);
-                kunj.PENGAMBILAN_OBAT = false;
-                this.db.Entry(kunj).State = System.Data.Entity.EntityState.Modified;
+                    var dt = new TB_ANTRIAN_PENGAMBILAN_OBAT
+                    {
+                        ID_KUNJUNGAN_PASIEN = ID_KUNJUNGAN_PASIEN,
+                        NO_ANTRIAN = noAntrian
+                    };
+                    this.db.TB_ANTRIAN_PENGAMBILAN_OBAT.Add(dt);
 
-                this.db.SaveChanges();
+                    //2. pada tb kunjungan pengambilan obat jadi false
+                    var kunj = this.db
+                        .TB_KUNJUNGAN_PASIEN
+                        .Find(ID_KUNJUNGAN_PASIEN);
+                    kunj.PENGAMBILAN_OBAT = false;
+                    this.db.Entry(kunj).State = System.Data.Entity.EntityState.Modified;
+
+                    // 3. simpan data ke Db 'TB_OBAT_PASIEN'
+                    this.db.TB_OBAT_PASIEN.Add(formData);
+
+                    this.db.SaveChanges();
+
+                    // flashmessage
+                    var dtPasien = this.db
+                        .TB_KUNJUNGAN_PASIEN
+                        .Single(d => d.ID == ID_KUNJUNGAN_PASIEN)
+                        .TB_PASIEN;
+
+                    FlashMessage.SetFlashMessage(
+                        $"Data Atas Nama : '{dtPasien.NAMA}' Dengan ID : '{dtPasien.ID}' Telah Disimpan",
+                        FlashMessage.FlashMessageType.Success);
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            catch(Exception e)
+            {
+                e.ToString();
             }
 
             return RedirectToAction("RacikObat");

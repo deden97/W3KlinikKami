@@ -97,5 +97,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TB_OBAT_PASIEN">
+      <EntityTypeMapping TypeName="Models.TB_OBAT_PASIEN">
+        <MappingFragment StoreEntitySet="TB_OBAT_PASIEN">
+          <ScalarProperty Name="KETERANGAN" ColumnName="KETERANGAN" />
+          <ScalarProperty Name="HARGA_OBAT" ColumnName="HARGA_OBAT" />
+          <ScalarProperty Name="ATURAN_PAKAI" ColumnName="ATURAN_PAKAI" />
+          <ScalarProperty Name="ID_KUNJUNGAN_PASIEN" ColumnName="ID_KUNJUNGAN_PASIEN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
