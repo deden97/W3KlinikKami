@@ -32,3 +32,30 @@
         </div>
     </div>
 </div>
+
+@{ 
+    if(ViewBag.Menu != "RacikObat")
+    {
+        <script type="text/javascript">
+            var jmlDataSaatIni = 0;
+
+            setInterval(function () {
+                $.ajax({
+                    type: 'get',
+                    url: '/APR/UpdateData',
+                    data: null,
+                    success: function (data) {
+                        var notif = document.getElementById('notif');
+                        if (data.length > jmlDataSaatIni) {
+
+                            jmlDataSaatIni = data.length;
+                            notif.innerHTML = jmlDataSaatIni;
+                            notif.style.visibility = 'visible';
+                        }
+                    }
+                });
+            }, 1000);
+            
+        </script>
+    }
+}

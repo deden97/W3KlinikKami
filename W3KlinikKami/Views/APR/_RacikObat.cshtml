@@ -2,10 +2,8 @@
 
 <div class="body-content">
     <table>
-
         <tr class="ver-alg-0">
-
-
+            @{ #region Table Antrian Penaganan/Racik Obat }
             <td class="min-max-width-400-px">
                 @* judul & table untuk menampilkan data antrian *@
                 <h4><u>Antrian Pasien</u></h4>
@@ -35,8 +33,9 @@
                     }
                 </table>
             </td>
+            @{ #endregion Table Antrian Penaganan/Racik Obat }
 
-
+            @{ #region Form Data Pemeriksaan Pasien }
             <td>
                 <div class="content-body-content height-max-content">
                     @{
@@ -114,13 +113,12 @@
                     </div>
                 </div>
             </td>
-
-
+            @{ #endregion Form Data Pemeriksaan Pasien }
         </tr>
     </table>
 </div>
 
-@* Begin: model kw -> form data racik obat --------------------------------------------------------------------------------- *@
+@{ #region model kw -> form data racik obat }
 @if (ViewBag.IdPasienTerpilih != null)
 {
     var dtPasien = Model.Single(d => d.ID == idKunjungan);
@@ -201,13 +199,13 @@
         </div>
     </div>
 }
-@* End: model kw -> form data racik obat --------------------------------------------------------------------------------- *@
+@{ #endregion model kw -> form data racik obat }
 
 <audio id="notif">
     <source src="~/Audio/EQLDS52-start-button.mp3" type="audio/mpeg" />
 </audio>
 
-@* Begin: Javascript ------------------------------------------------------------------------------------------------------- *@
+@{ #region Javascript}
 @*<script src="~/Scripts/jquery-3.6.0.js"></script>*@
 <script type="text/javascript">
     var idSelanjutnya;
@@ -290,4 +288,4 @@
         });
     }, 1000);
 </script>
-@* End: Javascript ------------------------------------------------------------------------------------------------------- *@
+@{ #endregion Javascript}

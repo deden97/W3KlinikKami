@@ -17,7 +17,7 @@ namespace W3KlinikKami.Controllers
         private int id { get; set; }
         private string jabatan { get; set; }
 
-        // ambil data pasien yg masih aktif
+        #region ambil data pasien yg masih aktif
         private List<TB_PASIEN> GetDataPasienAktif(out int totalData)
         {
             // ambil semua data pasien
@@ -36,6 +36,7 @@ namespace W3KlinikKami.Controllers
             // mengembalikan data pasien aktif
             return pasienAktif;
         }
+        #endregion ambil data pasien yg masih aktif
 
         public enum PenangananPasien 
         {
@@ -46,6 +47,7 @@ namespace W3KlinikKami.Controllers
             RiwayatPasien
         }
 
+        #region Cek Session
         private bool CekSession()
         {
             this.id = csmSession.GetIdSession();
@@ -76,6 +78,7 @@ namespace W3KlinikKami.Controllers
                 return false;
             }
         }
+        #endregion Cek Session
 
         public ActionResult Index()
         {
@@ -85,7 +88,7 @@ namespace W3KlinikKami.Controllers
                 return RedirectToAction("Index", "Index");
         }
 
-        /* Begin: BerobatPasien -------------------------------------------------------------------- */
+        #region BerobatPasien
         [HttpGet]
         public ActionResult BerobatPasien(int? page, string search)
         {
@@ -150,7 +153,7 @@ namespace W3KlinikKami.Controllers
                         .AsEnumerable()
                         .Any(d => d.ID_PASIEN == dt.ID &&
                             d.TANGGAL_KUNJUNGAN.Date == DateTime.Today &&
-                            (d.PENANGANAN_DOKTER == null || d.PENGAMBILAN_OBAT == null));
+                            (d.PENANGANAN_DOKTER == null || d.PENGAMBILAN_OBAT == null || d.PENGAMBILAN_OBAT == false));
 
                     if (!cekAntrianPasien)
                     {
@@ -218,9 +221,9 @@ namespace W3KlinikKami.Controllers
 
             return RedirectToAction("BerobatPasien", new { page, search });
         }
-        /* End: BerobatPasien -------------------------------------------------------------------- */
+        #endregion BerobatPasien
 
-        /* Begin: PengambilanObat -------------------------------------------------------------------- */
+        #region Pengambilan Obat
         [HttpGet]
         public ActionResult PengambilanObat()
         {
@@ -239,9 +242,9 @@ namespace W3KlinikKami.Controllers
                 return RedirectToAction("Index", "Index");
             }
         }
-        /* End: PengambilanObat -------------------------------------------------------------------- */
+        #endregion Pengambilan Obat
 
-        /* Begin: DataPasien -------------------------------------------------------------------- */
+        #region Data Pasien
         public ActionResult DataPasien(int? page, string search, int? pageSize)
         {
             if (!this.CekSession())
@@ -348,9 +351,9 @@ namespace W3KlinikKami.Controllers
 
             return RedirectToAction("DataPasien");
         }
-        /* End: DataPasien -------------------------------------------------------------------- */
+        #endregion Data Pasien
 
-        /* Begin: DaftarPasienBaru -------------------------------------------------------------------- */
+        #region Daftar Pasien Baru
         [HttpGet]
         public ActionResult DaftarPasienBaru()
         {
@@ -400,8 +403,9 @@ namespace W3KlinikKami.Controllers
             // ModelState.IsValid -> true / false tetap return ke -> "Index"
             return View("Index");
         }
-        /* End: DaftarPasienBaru -------------------------------------------------------------------- */
+        #endregion Daftar Pasien Baru
 
+        #region Riwayat Pasien
         [HttpGet]
         public ActionResult RiwayatPasien(string search, int? page, int? pageSize)
         {
@@ -422,5 +426,6 @@ namespace W3KlinikKami.Controllers
             ViewBag.TitlePage = "Riwayat Pasien";
             return View("Index");
         }
+        #endregion Riwayat Pasien
     }
 }

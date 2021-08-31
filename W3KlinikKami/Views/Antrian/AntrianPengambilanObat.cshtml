@@ -1,0 +1,10 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Antrian Pengambilan Obat";
+    ViewData["JudulAntrian"] = "Antrian Pengambilan Obat";
+    ViewData["Persilahkan"] = "Silahkan Kebagian Pengambilan Obat";
+    ViewData["Audio"] = "/Audio/panggil-antrian-pengambilan-obat.mp3";
+    ViewData["Url1"] = "/antrian/UpdateAntrianPengambilanObat";
+    ViewData["Url2"] = "/antrian/UpdateAntrianPengambilanObat?statusPanggilan=false";
+    Html.RenderPartial("~/Views/Antrian/Shared/SistemAntrian.cshtml", ViewData);
+}

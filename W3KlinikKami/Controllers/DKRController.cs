@@ -15,6 +15,8 @@ namespace W3KlinikKami.Controllers
         private int ID { get; set; }
         private string JABATAN { get; set; }
         public enum menu { TanganiPasien, RiwayatPasien }
+
+        #region Cek Session
         private bool CekSession()
         {
             this.ID = csmSession.GetIdSession();
@@ -41,6 +43,9 @@ namespace W3KlinikKami.Controllers
             return false;
         }
 
+        #endregion Cek Session
+
+        #region Index
         [HttpGet]
         public ActionResult Index()
         {
@@ -49,7 +54,9 @@ namespace W3KlinikKami.Controllers
             else
                 return RedirectToAction("TanganiPasien");
         }
+        #endregion Index
 
+        #region JSon
         [HttpGet]
         public JsonResult UpdateAntrianPasien()
         {
@@ -67,8 +74,9 @@ namespace W3KlinikKami.Controllers
             }),
             JsonRequestBehavior.AllowGet);
         }
+        #endregion JSon
 
-        /* Begin: Tangani Pasien -------------------------------------------------------------------------------------------------*/
+        #region Tangani Pasien
         public ActionResult pilihPasien(FormCollection data)
         {
             TempData["id"] = data["id-pasien"];
@@ -196,8 +204,9 @@ namespace W3KlinikKami.Controllers
 
             return RedirectToAction("TanganiPasien");
         }
-        /* End: Tangani Pasien -------------------------------------------------------------------------------------------------*/
+        #endregion Tangani Pasien
 
+        #region Riwayat Pasien
         [HttpGet]
         public ActionResult RiwayatPasien(string search, int? page, int? pageSize)
         {
@@ -222,5 +231,6 @@ namespace W3KlinikKami.Controllers
 
             return View("Index");
         }
+        #endregion Riwayat Pasien
     }
 }

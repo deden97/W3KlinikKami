@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Audio\panggil-antrian-berobat.mp3" />
+    <Content Include="Audio\panggil-antrian-pengambilan-obat.mp3" />
     <Content Include="Content\Antrian\Antrian.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -407,6 +408,8 @@
     <Content Include="Views\APR\Index.cshtml" />
     <Content Include="Views\APR\_RiwayatPasien.cshtml" />
     <Content Include="Views\APR\_RacikObat.cshtml" />
+    <Content Include="Views\Antrian\Shared\SistemAntrian.cshtml" />
+    <Content Include="Views\Antrian\AntrianPengambilanObat.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
